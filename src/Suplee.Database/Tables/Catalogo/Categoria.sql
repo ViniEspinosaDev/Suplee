@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Categoria]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [Nome] NVARCHAR(250) NOT NULL, 
+    [Descricao] NVARCHAR(500) NOT NULL, 
+    [Icone] NVARCHAR(250) NOT NULL, 
+    [Cor] INT NOT NULL
+)
