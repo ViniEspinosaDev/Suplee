@@ -43,6 +43,12 @@ namespace Suplee.Catalogo.Domain.Commands
         public List<string> Imagens { get; protected set; }
         public List<Guid> Efeitos { get; protected set; }
         public InformacaoNutricional InformacaoNutricional { get; protected set; }
+
+        public override bool IsValid()
+        {
+            ValidationResult = new AdicionarProdutoCommandValidation().Validate(this);
+            return ValidationResult.IsValid;
+        }
     }
 
     public class AdicionarProdutoCommandValidation : AbstractValidator<AdicionarProdutoCommand>

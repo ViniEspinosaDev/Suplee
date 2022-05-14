@@ -1,10 +1,13 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Suplee.Catalogo.Api.Configurations.AutoMapper;
 using Suplee.Catalogo.CrossCuttingIoC;
+using System;
 
 namespace Suplee.Catalogo.Api
 {
@@ -23,8 +26,24 @@ namespace Suplee.Catalogo.Api
             services.AddControllers();
 
             services.AddAutoMapper(typeof(DomainToViewModelProfile), typeof(InputModelToDomainProfile));
-
+            services.AddMediatR(typeof(Startup));
             NativeInjectionCatalogo.ConfigurarDependencias(services, Configuration);
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo()
+                {
+                    Version = $"V1",
+                    Title = $"Suplee - API Catalogo",
+                    Description = $"API interactive for the Catalogo domain",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Suplee - Digital Team",
+                        Email = "viniespinosa.developer@gmail.com",
+                        Url = new Uri("https://www.facebook.com/profile.php?id=100075558064236")
+                    }
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +63,13 @@ namespace Suplee.Catalogo.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(opt =>
+            {
+                opt.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalogo");
             });
         }
     }

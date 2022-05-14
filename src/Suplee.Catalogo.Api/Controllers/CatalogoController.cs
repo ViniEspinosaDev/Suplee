@@ -30,6 +30,10 @@ namespace Suplee.Catalogo.Api.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Obter todos os produtos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ObterProdutos()
         {
@@ -41,6 +45,10 @@ namespace Suplee.Catalogo.Api.Controllers
             return Ok(produtos);
         }
 
+        /// <summary>
+        /// Obter todos os efeitos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("efeitos")]
         public async Task<ActionResult> ObterEfeitos()
         {
@@ -52,6 +60,10 @@ namespace Suplee.Catalogo.Api.Controllers
             return Ok(efeitos);
         }
 
+        /// <summary>
+        /// Obter todas as categorias
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("categorias")]
         public async Task<ActionResult> ObterCategorias()
         {
@@ -63,6 +75,11 @@ namespace Suplee.Catalogo.Api.Controllers
             return Ok(efeitos);
         }
 
+        /// <summary>
+        /// Criar produto
+        /// </summary>
+        /// <param name="produtoInputModel"></param>
+        /// <returns></returns>
         [HttpPost("produto")]
         public async Task<ActionResult> CriarProduto(ProdutoInputModel produtoInputModel)
         {
