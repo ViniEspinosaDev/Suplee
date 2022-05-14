@@ -28,11 +28,17 @@ namespace Suplee.Catalogo.Data.Mappings
                 .WithMany()
                 .HasForeignKey(p => p.CategoriaId);
 
-            //builder.HasMany(p => p.Efeitos)
-            //    .WithOne()
-            //    .HasForeignKey(p => p.)
+            builder.HasOne(p => p.InformacaoNutricional)
+                .WithMany()
+                .HasForeignKey(p => p.InformacaoNutricionalId);
 
-            // TODO: Fazer o mapping certo das imagens e dos efeitos do Produto, depois dar continuidade nos endpoints, api, events, commands, etc...
+            builder.HasMany(p => p.Efeitos)
+                .WithOne(e => e.Produto)
+                .HasForeignKey(e => e.ProdutoId);
+
+            builder.HasMany(p => p.Imagens)
+                .WithOne(i => i.Produto)
+                .HasForeignKey(i => i.ProdutoId);
         }
     }
 }

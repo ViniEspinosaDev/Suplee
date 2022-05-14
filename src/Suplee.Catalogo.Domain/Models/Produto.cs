@@ -7,6 +7,11 @@ namespace Suplee.Catalogo.Domain.Models
 {
     public class Produto : Entity, IAggregateRoot
     {
+        protected Produto()
+        {
+
+        }
+
         public Produto(
             Guid informacaoNutricionalId,
             Guid categoriaId,
@@ -35,9 +40,10 @@ namespace Suplee.Catalogo.Domain.Models
         public int QuantidadeDisponivel { get; protected set; }
         public decimal Preco { get; protected set; }
         public Dimensoes Dimensoes { get; protected set; }
-        public ICollection<Efeito> Efeitos { get; protected set; }
 
-        public ICollection<ProdutoImagem> Imagens { get; protected set; }
         public Categoria Categoria { get; protected set; }
+        public InformacaoNutricional InformacaoNutricional { get; protected set; }
+        public ICollection<ProdutoEfeito> Efeitos { get; protected set; }
+        public ICollection<ProdutoImagem> Imagens { get; protected set; }
     }
 }

@@ -5,6 +5,11 @@ namespace Suplee.Catalogo.Domain.Models
 {
     public class CompostoNutricional : Entity
     {
+        protected CompostoNutricional()
+        {
+
+        }
+
         public CompostoNutricional(Guid informacaoNutricionalId, string composto, string porcao, string valorDiario)
         {
             InformacaoNutricionalId = informacaoNutricionalId;
@@ -17,5 +22,7 @@ namespace Suplee.Catalogo.Domain.Models
         public string Composto { get; protected set; }
         public string Porcao { get; protected set; }
         public string ValorDiario { get; protected set; }
+
+        public InformacaoNutricional InformacaoNutricional { get; protected set; }
     }
 }

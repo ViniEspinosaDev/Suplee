@@ -5,6 +5,11 @@ namespace Suplee.Catalogo.Domain.Models
 {
     public class InformacaoNutricional : Entity
     {
+        protected InformacaoNutricional()
+        {
+
+        }
+
         public InformacaoNutricional(string cabecalho, string legenda)
         {
             Cabecalho = cabecalho;
