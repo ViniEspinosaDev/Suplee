@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.Catalogo.CrossCuttin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.Catalogo.Api", "src\Suplee.Catalogo.Api\Suplee.Catalogo.Api.csproj", "{72F9FA56-BF64-44BC-8611-B0B335E21264}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{43930DFC-D7B5-48BB-9F88-081C49DAFC82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.EventSourcing", "src\Suplee.EventSourcing\Suplee.EventSourcing.csproj", "{3E8F1C51-7AE0-4AEA-93E9-57486ED0003F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +57,10 @@ Global
 		{72F9FA56-BF64-44BC-8611-B0B335E21264}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72F9FA56-BF64-44BC-8611-B0B335E21264}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72F9FA56-BF64-44BC-8611-B0B335E21264}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E8F1C51-7AE0-4AEA-93E9-57486ED0003F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E8F1C51-7AE0-4AEA-93E9-57486ED0003F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E8F1C51-7AE0-4AEA-93E9-57486ED0003F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E8F1C51-7AE0-4AEA-93E9-57486ED0003F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +73,7 @@ Global
 		{A85DED76-23C9-4AA1-9F6E-0CF385B6C11B} = {73A71841-0F6B-4717-B772-6446A712BC7B}
 		{5F752736-2C29-486C-B0E6-F00B933B087B} = {73A71841-0F6B-4717-B772-6446A712BC7B}
 		{72F9FA56-BF64-44BC-8611-B0B335E21264} = {73A71841-0F6B-4717-B772-6446A712BC7B}
+		{3E8F1C51-7AE0-4AEA-93E9-57486ED0003F} = {43930DFC-D7B5-48BB-9F88-081C49DAFC82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D537C530-F823-4ED5-8DAD-F1023CA0B6C2}

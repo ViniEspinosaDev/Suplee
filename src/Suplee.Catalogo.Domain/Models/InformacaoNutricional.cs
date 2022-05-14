@@ -10,10 +10,11 @@ namespace Suplee.Catalogo.Domain.Models
 
         }
 
-        public InformacaoNutricional(string cabecalho, string legenda)
+        public InformacaoNutricional(string cabecalho, string legenda, List<CompostoNutricional> compostosNutricionais = null)
         {
             Cabecalho = cabecalho;
             Legenda = legenda;
+            CompostosNutricionais = compostosNutricionais ?? new List<CompostoNutricional>();
         }
 
         public string Cabecalho { get; protected set; }

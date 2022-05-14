@@ -45,5 +45,9 @@ namespace Suplee.Catalogo.Domain.Models
         public InformacaoNutricional InformacaoNutricional { get; protected set; }
         public ICollection<ProdutoEfeito> Efeitos { get; protected set; }
         public ICollection<ProdutoImagem> Imagens { get; protected set; }
+
+        public void AdicionarProdutoEfeito(ProdutoEfeito produtoEfeito) => Efeitos.Add(produtoEfeito);
+        public void AdicionarProdutoImagem(ProdutoImagem produtoImagem) => Imagens.Add(produtoImagem);
+        public void AdicionarInformacaoNutricional(InformacaoNutricional informacaoNutricional) => InformacaoNutricional = informacaoNutricional;
     }
 }

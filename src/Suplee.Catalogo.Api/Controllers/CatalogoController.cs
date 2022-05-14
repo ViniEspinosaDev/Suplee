@@ -1,18 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Suplee.Catalogo.Api.Controllers.InputModels;
+using Suplee.Catalogo.Domain.Commands;
 using Suplee.Catalogo.Domain.Interfaces;
+using Suplee.Catalogo.Domain.Models;
+using Suplee.Catalogo.Domain.ValueObjects;
+using Suplee.Core.Communication.Mediator;
+using Suplee.Core.Messages.CommonMessages.Notifications;
 using System.Threading.Tasks;
 
 namespace Suplee.Catalogo.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class CatalogoController : Controller
+    public class CatalogoController : ControllerBase
     {
         private readonly IProdutoRepository _produtoRepository;
+        private readonly IMapper _mapper;
+        private readonly IMediatorHandler _mediatorHandler;
 
-        public CatalogoController(IProdutoRepository produtoRepository)
+        public CatalogoController(
+            INotificationHandler<DomainNotification> notifications,
+            IMediatorHandler mediatorHandler,
+            IProdutoRepository produtoRepository,
+            IMapper mapper) : base(notifications, mediatorHandler)
         {
+            _mediatorHandler = mediatorHandler;
             _produtoRepository = produtoRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -46,6 +61,31 @@ namespace Suplee.Catalogo.Api.Controllers
                 return BadRequest();
 
             return Ok(efeitos);
+        }
+
+        [HttpPost("produto")]
+        public async Task<ActionResult> CriarProduto(ProdutoInputModel produtoInputModel)
+        {
+            var informacaoNutricional = _mapper.Map<InformacaoNutricional>(produtoInputModel.InformacaoNutricional);
+
+            var comando = new AdicionarProdutoCommand(
+                categoriaId: produtoInputModel.CategoriaId,
+                nome: produtoInputModel.Nome,
+                descricao: produtoInputModel.Descricao,
+                composicao: produtoInputModel.Composicao,
+                quantidadeDisponivel: produtoInputModel.QuantidadeDisponivel,
+                preco: produtoInputModel.Preco,
+                dimensoes: new Dimensoes(produtoInputModel.Profundidade, produtoInputModel.Altura, produtoInputModel.Largura),
+                imagens: produtoInputModel.Imagens,
+                efeitos: produtoInputModel.Efeitos,
+                informacaoNutricional: informacaoNutricional);
+
+            await _mediatorHandler.EnviarComando(comando);
+
+            if (OperacaoValida())
+                return BadRequest(new { Success = false, Errors = ObterMensagensErro() });
+
+            return Ok();
         }
     }
 }

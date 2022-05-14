@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Suplee.Catalogo.Api.Configurations.AutoMapper;
 using Suplee.Catalogo.CrossCuttingIoC;
 
 namespace Suplee.Catalogo.Api
@@ -20,6 +21,8 @@ namespace Suplee.Catalogo.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddAutoMapper(typeof(DomainToViewModelProfile), typeof(InputModelToDomainProfile));
 
             NativeInjectionCatalogo.ConfigurarDependencias(services, Configuration);
         }

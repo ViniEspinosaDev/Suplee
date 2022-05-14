@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Suplee.Catalogo.Data\Suplee.Catalogo.Data.csproj" />
     <ProjectReference Include="..\Suplee.Catalogo.Domain\Suplee.Catalogo.Domain.csproj" />
+    <ProjectReference Include="..\Suplee.EventSourcing\Suplee.EventSourcing.csproj" />
   </ItemGroup>
 
 </Project>
