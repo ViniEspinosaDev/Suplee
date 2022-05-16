@@ -9,6 +9,8 @@ namespace Suplee.Catalogo.Domain.Interfaces
     public interface IProdutoRepository : IRepository<Produto>
     {
         Task<Produto> ObterProduto(Guid produtoId);
+        Task<Categoria> ObterCategoria(Guid categoriaId);
+        Task<Efeito> ObterEfeito(Guid efeitoId);
         Task<IEnumerable<Produto>> ObterProdutos();
         Task<IEnumerable<Produto>> ObterProdutosPorCategoria(Guid categoriaId);
         Task<IEnumerable<Produto>> ObterProdutosPorEfeito(Guid efeitoId);

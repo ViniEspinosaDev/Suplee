@@ -20,6 +20,16 @@ namespace Suplee.Catalogo.Data.Repository
 
         public IUnitOfWork UnitOfWork => _catalogoContext;
 
+        public async Task<Categoria> ObterCategoria(Guid categoriaId)
+        {
+            return await _catalogoContext.Categorias.FindAsync(categoriaId);
+        }
+
+        public async Task<Efeito> ObterEfeito(Guid efeitoId)
+        {
+            return await _catalogoContext.Efeitos.FindAsync(efeitoId);
+        }
+
         public async Task<IEnumerable<Categoria>> ObterCategorias()
         {
             return await _catalogoContext.Categorias.AsNoTracking().ToListAsync();
