@@ -8,6 +8,8 @@ using Microsoft.OpenApi.Models;
 using Suplee.Catalogo.Api.Configurations.AutoMapper;
 using Suplee.Catalogo.CrossCuttingIoC;
 using System;
+using System.IO;
+using System.Reflection;
 
 namespace Suplee.Catalogo.Api
 {
@@ -43,6 +45,12 @@ namespace Suplee.Catalogo.Api
                         Url = new Uri("https://www.facebook.com/profile.php?id=100075558064236")
                     }
                 });
+
+                var assembly = Assembly.GetAssembly(typeof(Startup));
+
+                var xmlFile = $"{assembly.GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
             });
         }
 

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Suplee.Catalogo.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProdutos">
+            <summary>
+            Obter todos os produtos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterEfeitos">
+            <summary>
+            Obter todos os efeitos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterCategorias">
+            <summary>
+            Obter todas as categorias
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.CriarProduto(Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel)">
+            <summary>
+            Criar produto
+            </summary>
+            <param name="produtoInputModel"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
