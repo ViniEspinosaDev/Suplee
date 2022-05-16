@@ -10,7 +10,6 @@ using Suplee.Catalogo.Domain.ValueObjects;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Suplee.Catalogo.Api.Controllers
@@ -111,32 +110,5 @@ namespace Suplee.Catalogo.Api.Controllers
 
             return Ok();
         }
-
-
-        //public async Task<ActionResult> AtualizarProduto(ProdutoInputModel produtoInputModel)
-        //{
-
-        //    var comando = new AtualizarProdutoCommand(
-        //        produtoId: produtoInputModel.Id,
-        //        nome: produtoInputModel.Nome,
-        //        descricao: produtoInputModel.Descricao,
-        //        composicao: produtoInputModel.Composicao,
-        //        quantidadeDisponivel: produtoInputModel.QuantidadeDisponivel,
-        //        preco: produtoInputModel.Preco,
-        //        dimensoes: new Dimensoes(produtoInputModel.Profundidade, produtoInputModel.Altura, produtoInputModel.Largura),
-        //        categoriaId: produtoInputModel.CategoriaId,
-        //        imagens: produtoInputModel.Imagens.ForEach(x => new ProdutoImagem(produtoInputModel.Id, imagem,
-        //        efeitos: produtoInputModel.Efeitos,
-        //        informacaoNutricional: produtoInputModel.InformacaoNutricional);
-
-        //    if (produtoOriginal is null)
-        //        return BadRequest(ObjetoErro("Produto não existe na base de dados"));
-
-        //    produtoOriginal.AtualizarInformacoes();
-
-        //    await _mediatorHandler.EnviarComando()
-        //}
-
-
     }
 }

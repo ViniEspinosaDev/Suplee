@@ -34,15 +34,5 @@ namespace Suplee.Catalogo.Api.Controllers
         {
             _mediatorHandler.PublicarNotificacao(new DomainNotification(codigo, mensagem));
         }
-
-        public object ObjetoErro(string erro)
-        {
-            return ObjetoErro(new List<string>() { erro });
-        }
-
-        public object ObjetoErro(List<string> erros)
-        {
-            return new { Success = false, Errors = erros };
-        }
     }
 }
