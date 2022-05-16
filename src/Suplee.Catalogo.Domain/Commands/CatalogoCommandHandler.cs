@@ -39,6 +39,9 @@ namespace Suplee.Catalogo.Domain.Commands
             request.Imagens.ForEach(x => produto.AdicionarProdutoImagem(new ProdutoImagem(produto.Id, x)));
             request.Efeitos.ForEach(x => produto.AdicionarProdutoEfeito(new ProdutoEfeito(produto.Id, x)));
 
+            // Insiro a imagem e recupero a URL
+            // Atualizo o produto com a URL
+
             _produtoRepository.Adicionar(produto);
 
             return await _produtoRepository.UnitOfWork.Commit();

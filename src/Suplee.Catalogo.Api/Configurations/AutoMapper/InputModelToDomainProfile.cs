@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Suplee.Catalogo.Api.Controllers.InputModels;
 using Suplee.Catalogo.Domain.Models;
+using Suplee.Catalogo.Domain.ValueObjects;
 
 namespace Suplee.Catalogo.Api.Configurations.AutoMapper
 {

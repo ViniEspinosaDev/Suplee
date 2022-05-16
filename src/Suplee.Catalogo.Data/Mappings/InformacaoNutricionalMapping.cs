@@ -13,7 +13,7 @@ namespace Suplee.Catalogo.Data.Mappings
             builder.HasKey(i => i.Id);
 
             builder.HasMany(i => i.CompostosNutricionais)
-                .WithOne()
+                .WithOne(i => i.InformacaoNutricional)
                 .HasForeignKey(c => c.InformacaoNutricionalId);
         }
     }

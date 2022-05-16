@@ -9,7 +9,8 @@ namespace Suplee.Catalogo.Domain.Models
     {
         protected Produto()
         {
-
+            Efeitos = new List<ProdutoEfeito>();
+            Imagens = new List<ProdutoImagem>();
         }
 
         public Produto(
@@ -20,7 +21,7 @@ namespace Suplee.Catalogo.Domain.Models
             string composicao,
             int quantidadeDisponivel,
             decimal preco,
-            Dimensoes dimensoes)
+            Dimensoes dimensoes) : this()
         {
             InformacaoNutricionalId = informacaoNutricionalId;
             CategoriaId = categoriaId;

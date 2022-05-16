@@ -15,6 +15,8 @@ namespace Suplee.Catalogo.Data
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Efeito> Efeitos { get; set; }
+        public DbSet<ProdutoEfeito> ProdutosEfeitos { get; set; }
+        public DbSet<ProdutoImagem> ProdutosImagens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
