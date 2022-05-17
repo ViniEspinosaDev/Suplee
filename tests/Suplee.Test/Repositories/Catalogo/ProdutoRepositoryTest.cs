@@ -1,7 +1,10 @@
 ﻿using Suplee.Catalogo.Data.Repository;
 using Suplee.Catalogo.Domain.Enums;
 using Suplee.Catalogo.Domain.Interfaces;
+using Suplee.Catalogo.Domain.Models;
 using Suplee.Test.Builder.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -33,10 +36,13 @@ namespace Suplee.Test.Repositories.Catalogo
 
             DbContext.SaveChanges();
 
-            var categorias = await _produtoRepository.ObterCategorias();
+            var categoriaAdicionada = await _produtoRepository.ObterCategoria(categoria.Id);
 
-            Assert.NotNull(categorias);
-            Assert.Equal(categoria.Nome, categorias.FirstOrDefault().Nome);
+            Assert.NotNull(categoriaAdicionada);
+            Assert.Equal(categoria.Nome, categoriaAdicionada.Nome);
+            Assert.Equal(categoria.Descricao, categoriaAdicionada.Descricao);
+            Assert.Equal(categoria.Icone, categoriaAdicionada.Icone);
+            Assert.Equal(categoria.Cor, categoriaAdicionada.Cor);
         }
 
         [Fact]
@@ -64,6 +70,87 @@ namespace Suplee.Test.Repositories.Catalogo
             Assert.Equal("Nova Descrição", categoriaAtualizada.Descricao);
             Assert.Equal("Novo Icone", categoriaAtualizada.Icone);
             Assert.Equal(ECor.GreenLight, categoriaAtualizada.Cor);
+        }
+
+        [Fact]
+        public async void Deve_Criar_Um_Efeito()
+        {
+            var efeito = new EfeitoBuilder()
+                .PadraoValido()
+                .Build();
+
+            _produtoRepository.Adicionar(efeito);
+
+            DbContext.SaveChanges();
+
+            var efeitoAdicionado = await _produtoRepository.ObterEfeito(efeito.Id);
+
+            Assert.NotNull(efeitoAdicionado);
+            Assert.Equal(efeito.Nome, efeitoAdicionado.Nome);
+            Assert.Equal(efeito.Descricao, efeitoAdicionado.Descricao);
+            Assert.Equal(efeito.Icone, efeitoAdicionado.Icone);
+        }
+
+
+        [Fact]
+        public async void Deve_Atualizar_Um_Efeito()
+        {
+            var efeito = new EfeitoBuilder()
+                .PadraoValido()
+                .Build();
+
+            _produtoRepository.Adicionar(efeito);
+
+            DbContext.SaveChanges();
+
+            var efeitoAdicionado = await _produtoRepository.ObterEfeito(efeito.Id);
+
+            efeitoAdicionado.Atualizar(nome: "Novo Nome", descricao: "Nova Descrição", icone: "Novo Icone");
+
+            _produtoRepository.Atualizar(efeitoAdicionado);
+
+            DbContext.SaveChanges();
+
+            var efeitoAtualizado = await _produtoRepository.ObterEfeito(efeito.Id);
+
+            Assert.Equal("Novo Nome", efeitoAtualizado.Nome);
+            Assert.Equal("Nova Descrição", efeitoAtualizado.Descricao);
+            Assert.Equal("Novo Icone", efeitoAtualizado.Icone);
+        }
+
+        [Fact]
+        public async void Deve_Criar_Um_Produto()
+        {
+            var produtoId = Guid.NewGuid();
+
+            var categoria = new CategoriaBuilder().PadraoValido().Build();
+
+            var efeito = new EfeitoBuilder().PadraoValido().Build();
+
+            var efeitos = new List<ProdutoEfeito>() { new ProdutoEfeitoBuilder().PadraoValido(produtoId, categoria.Id).Build() };
+            var imagens = new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().ComProdutoId(produtoId).Build() };
+
+            var produto = new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(categoria)
+                .ComEfeitos(efeitos)
+                .ComImagens(imagens)
+                .Build();
+
+            _produtoRepository.Adicionar(efeito);
+            _produtoRepository.Adicionar(produto);
+
+            DbContext.SaveChanges();
+
+            var produtoAdicionado = await _produtoRepository.ObterProduto(produto.Id);
+
+            Assert.Equal(produto.Nome, produtoAdicionado.Nome);
+            Assert.Equal(produto.QuantidadeDisponivel, produtoAdicionado.QuantidadeDisponivel);
+            Assert.Equal(produto.Categoria.Id, produtoAdicionado.Categoria.Id);
+            Assert.Equal(produto.InformacaoNutricional.Id, produtoAdicionado.InformacaoNutricional.Id);
+            Assert.Equal(1, produtoAdicionado.InformacaoNutricional.CompostosNutricionais.Count);
+            Assert.Equal(efeitos.FirstOrDefault().Id, produtoAdicionado.Efeitos.FirstOrDefault().Id);
+            Assert.Equal(imagens.FirstOrDefault().Id, produtoAdicionado.Imagens.FirstOrDefault().Id);
         }
     }
 }

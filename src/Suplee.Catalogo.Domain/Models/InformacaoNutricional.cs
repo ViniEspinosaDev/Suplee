@@ -8,7 +8,7 @@ namespace Suplee.Catalogo.Domain.Models
     {
         protected InformacaoNutricional()
         {
-
+            CompostosNutricionais = new List<CompostoNutricional>();
         }
 
         public InformacaoNutricional(string cabecalho, string legenda, List<CompostoNutricional> compostosNutricionais = null)

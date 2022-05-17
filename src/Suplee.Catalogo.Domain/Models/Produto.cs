@@ -7,7 +7,7 @@ namespace Suplee.Catalogo.Domain.Models
 {
     public class Produto : Entity, IAggregateRoot
     {
-        protected Produto()
+        protected Produto() 
         {
             Efeitos = new List<ProdutoEfeito>();
             Imagens = new List<ProdutoImagem>();
