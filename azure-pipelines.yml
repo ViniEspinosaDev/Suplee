@@ -33,14 +33,3 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
-- task: SqlDacpacDeploymentOnMachineGroup@0
-  inputs:
-    TaskType: 'dacpac'
-    DacpacFile: '$(Build.SourcesDirectory)\src\Suplee.Database\bin\Release\Suplee.Database.docpac'
-    TargetMethod: 'server'
-    ServerName: 'localhost'
-    DatabaseName: 'suplee'
-    AuthScheme: 'sqlServerAuthentication'
-    SqlUsername: 'sa'
-    SqlPassword: '1q2w3e4r@#$'
