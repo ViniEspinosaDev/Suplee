@@ -46,8 +46,8 @@ namespace Suplee.Catalogo.CrossCuttingIoC
 
         private static void ConfigurarDependenciasDatabase(IServiceCollection services, IConfiguration config)
         {
-            services.AddDbContext<CatalogoContext>(opt => opt.UseInMemoryDatabase("Database"));
-            //services.AddDbContext<CatalogoContext>(opt => opt.UseSqlServer(config.GetConnectionString(ConexaoSQL)));
+            //services.AddDbContext<CatalogoContext>(opt => opt.UseInMemoryDatabase("Database"));
+            services.AddDbContext<CatalogoContext>(opt => opt.UseSqlServer(config.GetConnectionString(ConexaoSQL)));
         }
 
         private static void ConfigurarDependenciasRepository(IServiceCollection services)

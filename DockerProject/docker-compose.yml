@@ -1,0 +1,80 @@
+version: '3.7'
+
+services:
+  identidade.api:
+    image: identidade.api
+    container_name: identidade.api
+    restart: always
+    build:
+      context: ../Container/Identidade.Api
+      dockerfile: Dockerfile
+    ports:
+      - "5002:80"
+    depends_on:
+    - sd.rabbitmq
+    - sd.mongodb
+    - sd.database
+
+  seguranca.api:
+    image: seguranca.api
+    container_name: seguranca.api
+    restart: always
+    build:
+      context: ../Container/Seguranca.Api
+      dockerfile: Dockerfile
+    ports:
+      - "5003:80"
+    depends_on:
+    - sd.rabbitmq
+    - sd.mongodb
+    - sd.database
+
+  notificacao.api:
+    image: notificacao.api
+    container_name: notificacao.api
+    restart: always
+    build:
+      context: ../Container/Notificacao.Api
+      dockerfile: Dockerfile
+    ports:
+      - "5001:80"
+    depends_on:
+    - sd.rabbitmq
+    - sd.mongodb
+    - sd.database
+      
+  sd.rabbitmq:
+    image: rabbitmq:3-management
+    container_name: sdrabbitmq
+    ports:
+      - "15672:15672"
+      - "5671:5671"
+      - "5672:5672"
+    environment: 
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_USER: guest
+
+  sd.database:
+    image: microsoft/mssql-server-linux:2017-latest
+    container_name: sdSqlServer
+    ports:
+    - "11433:1433"
+    environment: 
+      MSSQL_SA_PASSWORD: ea!@#12345
+      MSSQL_PID: Developer
+      ACCEPT_EULA: 'Y'
+    volumes:
+       - .\SQLServerNeo:/var/opt/mssql
+
+  sd.mongodb:
+    image: mongo
+    container_name: sdmongodb
+    ports:
+      - "27017:27017"
+
+  sd.redis:
+    image: redis
+    container_name: sdredis
+    command: redis-server --requirepass ea!@#12345
+    ports:
+      - "6379:6379"
