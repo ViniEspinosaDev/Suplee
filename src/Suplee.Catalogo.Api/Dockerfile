@@ -6,7 +6,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Suplee.Catalogo.Api.csproj", "Suplee.Catalogo.Api/"]
+COPY ["Suplee.Catalogo.Domain.csproj", "Suplee.Catalogo.Domain/"]
 RUN dotnet restore "Suplee.Catalogo.Api/Suplee.Catalogo.Api.csproj"
+RUN dotnet resto "Suplee.Catalogo.Domain/Suplee.Catalogo.Domain.csproj"
 COPY . .
 #WORKDIR "/src/Suplee.Catalogo.Api"
 RUN dotnet build "Suplee.Catalogo.Api/Suplee.Catalogo.Api.csproj" -c Release -o /app/build

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Suplee.Catalogo.Domain\Suplee.Catalogo.Domain.csproj" />
+    <ProjectReference Include="..\Suplee.Catalogo.CrossCuttingIoC\Suplee.Catalogo.CrossCuttingIoC.csproj" />
   </ItemGroup>
 
 
