@@ -36,13 +36,13 @@ namespace Suplee.Catalogo.Api
                 options.SwaggerDoc("v1", new OpenApiInfo()
                 {
                     Version = $"V1",
-                    Title = $"Suplee - API Catalogo",
-                    Description = $"API interactive for the Catalogo domain",
+                    Title = $"Suplee - API",
+                    Description = $"API interactive for the Suplee App",
                     Contact = new OpenApiContact
                     {
                         Name = "Suplee - Digital Team",
-                        Email = "viniespinosa.developer@gmail.com",
-                        Url = new Uri("https://www.facebook.com/profile.php?id=100075558064236")
+                        Email = "suplee.app@gmail.com",
+                        Url = new Uri("https://suplee.vercel.app/")
                     }
                 });
 
