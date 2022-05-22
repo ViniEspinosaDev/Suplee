@@ -4,20 +4,30 @@ using Suplee.Catalogo.Domain.Models;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages;
 using Suplee.Core.Messages.CommonMessages.Notifications;
+using Suplee.ExternalService.Imgbb.DTO;
+using Suplee.ExternalService.Imgbb.Interfaces;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Suplee.Catalogo.Domain.Commands
 {
-    public class CatalogoCommandHandler : IRequestHandler<AdicionarProdutoCommand, bool>
+    public class CatalogoCommandHandler :
+        IRequestHandler<AdicionarProdutoCommand, bool>,
+        IRequestHandler<AtualizarProdutoCommand, bool>
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly IMediatorHandler _mediatorHandler;
+        private readonly IImgbbService _imgbbService;
 
-        public CatalogoCommandHandler(IProdutoRepository produtoRepository, IMediatorHandler mediatorHandler)
+        public CatalogoCommandHandler(
+            IProdutoRepository produtoRepository,
+            IMediatorHandler mediatorHandler,
+            IImgbbService imgbbService)
         {
             _produtoRepository = produtoRepository;
             _mediatorHandler = mediatorHandler;
+            _imgbbService = imgbbService;
         }
 
         public async Task<bool> Handle(AdicionarProdutoCommand request, CancellationToken cancellationToken)
@@ -36,15 +46,26 @@ namespace Suplee.Catalogo.Domain.Commands
 
             produto.AdicionarInformacaoNutricional(request.InformacaoNutricional);
 
-            request.Imagens.ForEach(x => produto.AdicionarProdutoImagem(new ProdutoImagem(produto.Id, x)));
             request.Efeitos.ForEach(x => produto.AdicionarProdutoEfeito(new ProdutoEfeito(produto.Id, x)));
 
-            // Insiro a imagem e recupero a URL
-            // Atualizo o produto com a URL
+            //request.Imagens.ForEach(x => produto.AdicionarProdutoImagem(new ProdutoImagem(produto.Id, x)));
+
+            foreach(var imagem in request.Imagens)
+            {
+                var retorno = await _imgbbService.UploadImage(new ImgbbUploadInputModel(request.Imagens.FirstOrDefault(), imagem.Nome));
+
+                // TODO: 
+            }
+            
 
             _produtoRepository.Adicionar(produto);
 
-            return await _produtoRepository.UnitOfWork.Commit();
+            return true;//await _produtoRepository.UnitOfWork.Commit();
+        }
+
+        public Task<bool> Handle(AtualizarProdutoCommand request, CancellationToken cancellationToken)
+        {
+            throw new System.NotImplementedException();
         }
 
         private bool ValidarComando(Command message)

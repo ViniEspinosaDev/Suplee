@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Suplee.Catalogo.Api.Configurations.AutoMapper;
 using Suplee.Catalogo.CrossCuttingIoC;
+using Suplee.ExternalService.CrossCuttingIoC;
+using Suplee.ExternalService.Imgbb.DTO;
 using System;
 using System.IO;
 using System.Reflection;
@@ -29,7 +31,11 @@ namespace Suplee.Catalogo.Api
 
             services.AddAutoMapper(typeof(DomainToViewModelProfile), typeof(InputModelToDomainProfile));
             services.AddMediatR(typeof(Startup));
+
+            services.Configure<ImgbbConfiguracao>(Configuration.GetSection("ExternalService:Imgbb"));
+
             NativeInjectionCatalogo.ConfigurarDependencias(services, Configuration);
+            NativeInjectionExternalService.ConfigurarDependencias(services, Configuration);
 
             services.AddSwaggerGen(options =>
             {

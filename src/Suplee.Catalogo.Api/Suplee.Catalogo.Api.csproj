@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Suplee.Catalogo.CrossCuttingIoC\Suplee.Catalogo.CrossCuttingIoC.csproj" />
+    <ProjectReference Include="..\Suplee.ExternalService.CrossCuttingIoC\Suplee.ExternalService.CrossCuttingIoC.csproj" />
   </ItemGroup>
 
 
