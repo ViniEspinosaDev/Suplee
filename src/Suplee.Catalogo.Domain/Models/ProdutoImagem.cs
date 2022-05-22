@@ -5,19 +5,17 @@ namespace Suplee.Catalogo.Domain.Models
 {
     public class ProdutoImagem : Entity
     {
-        protected ProdutoImagem()
-        {
-
-        }
-
-        public ProdutoImagem(Guid produtoId, string imagem)
+        protected ProdutoImagem() { }
+        public ProdutoImagem(Guid produtoId, string nomeImagem, string url)
         {
             ProdutoId = produtoId;
-            Imagem = imagem;
+            NomeImagem = nomeImagem;
+            Url = url;
         }
 
         public Guid ProdutoId { get; protected set; }
-        public string Imagem { get; protected set; }
+        public string NomeImagem { get; protected set; }
+        public string Url { get; protected set; }
 
         public Produto Produto { get; protected set; }
     }

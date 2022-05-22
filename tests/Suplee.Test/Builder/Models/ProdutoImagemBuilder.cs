@@ -5,9 +5,17 @@ namespace Suplee.Test.Builder.Models
 {
     public class ProdutoImagemBuilder : ProdutoImagem
     {
+        public ProdutoImagemBuilder(
+            Guid produtoId = default,
+            string nomeImagem = default,
+            string url = default) : base(produtoId, nomeImagem, url)
+        {
+        }
+
         public ProdutoImagemBuilder PadraoValido()
         {
-            Imagem = "Imagem";
+            NomeImagem = "Imagem";
+            Url = "www.imagem.com";
 
             return this;
         }

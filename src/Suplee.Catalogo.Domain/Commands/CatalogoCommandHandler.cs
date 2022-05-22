@@ -48,19 +48,20 @@ namespace Suplee.Catalogo.Domain.Commands
 
             request.Efeitos.ForEach(x => produto.AdicionarProdutoEfeito(new ProdutoEfeito(produto.Id, x)));
 
-            //request.Imagens.ForEach(x => produto.AdicionarProdutoImagem(new ProdutoImagem(produto.Id, x)));
+            int contador = 1;
 
-            foreach(var imagem in request.Imagens)
+            foreach (var imagem in request.Imagens)
             {
-                var retorno = await _imgbbService.UploadImage(new ImgbbUploadInputModel(request.Imagens.FirstOrDefault(), imagem.Nome));
+                string nomeImagem = $"{produto.Nome.Split(' ').First()}_{contador++}";
 
-                // TODO: 
+                var retorno = await _imgbbService.UploadImage(new ImgbbUploadInputModel(imagem, nomeImagem));
+
+                produto.AdicionarProdutoImagem(new ProdutoImagem(produto.Id, nomeImagem, retorno.Data.data.Url));
             }
-            
 
             _produtoRepository.Adicionar(produto);
 
-            return true;//await _produtoRepository.UnitOfWork.Commit();
+            return await _produtoRepository.UnitOfWork.Commit();
         }
 
         public Task<bool> Handle(AtualizarProdutoCommand request, CancellationToken cancellationToken)

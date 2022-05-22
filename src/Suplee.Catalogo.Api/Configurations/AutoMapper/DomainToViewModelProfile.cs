@@ -28,7 +28,7 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.QuantidadeDisponivel, opt => opt.MapFrom(m => m.QuantidadeDisponivel))
                 .ForMember(i => i.Preco, opt => opt.MapFrom(m => m.Preco))
                 .ForMember(i => i.CategoriaId, opt => opt.MapFrom(m => m.CategoriaId))
-                .ForMember(i => i.Imagens, opt => opt.MapFrom(m => m.Imagens.ToList().Select(x => x.Imagem)))
+                .ForMember(i => i.Imagens, opt => opt.MapFrom(m => m.Imagens.ToList().Select(x => x.Url)))
                 .ForMember(i => i.Efeitos, opt => opt.MapFrom(m => m.Efeitos.ToList().Select(x => x.EfeitoId.ToString())))
                 .ForMember(i => i.InformacaoNutricional, opt => opt.MapFrom(m => m.InformacaoNutricional));
         }

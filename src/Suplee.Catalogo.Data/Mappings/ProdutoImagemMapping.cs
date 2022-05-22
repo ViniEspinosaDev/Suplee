@@ -11,6 +11,12 @@ namespace Suplee.Catalogo.Data.Mappings
             builder.ToTable("ProdutoImagem");
 
             builder.HasKey(p => p.Id);
+
+            builder.Property(p => p.NomeImagem)
+                .HasColumnName("NomeImagem");
+
+            builder.Property(p => p.Url)
+                .HasColumnName("Url");
         }
     }
 }
