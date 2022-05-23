@@ -17,6 +17,8 @@ namespace Suplee.Catalogo.Api
 {
     public class Startup
     {
+        readonly string CorsPolicy = "_corsPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -58,6 +60,18 @@ namespace Suplee.Catalogo.Api
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: CorsPolicy,
+                                  builder =>
+                                  {
+                                      builder.AllowAnyOrigin()
+                                       .AllowAnyMethod()
+                                       .AllowAnyHeader()
+                                       .AllowCredentials();
+                                  });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +81,8 @@ namespace Suplee.Catalogo.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(CorsPolicy);
 
             app.UseHttpsRedirection();
 
