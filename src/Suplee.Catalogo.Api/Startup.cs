@@ -17,7 +17,7 @@ namespace Suplee.Catalogo.Api
 {
     public class Startup
     {
-        readonly string CorsPolicy = "_corsPolicy";
+        readonly string CorsPolicy = "_myAllowSpecificOrigins";
 
         public Startup(IConfiguration configuration)
         {
@@ -63,13 +63,15 @@ namespace Suplee.Catalogo.Api
 
             services.AddCors(options =>
             {
-                options.AddPolicy(name: CorsPolicy,
+                options.AddPolicy(name: "_myAllowSpecificOrigins",
                                   builder =>
                                   {
-                                      builder.AllowAnyOrigin()
-                                       .AllowAnyMethod()
-                                       .AllowAnyHeader()
-                                       .AllowCredentials();
+                                      builder
+                                        .WithOrigins("https://supleeapiv1.herokuapp.com/", "http://192.168.1.70:3000/", "https://suplee.vercel.app/")
+                                        .SetIsOriginAllowed(_ => true)
+                                        .AllowAnyMethod()
+                                        .AllowAnyHeader()
+                                        .AllowCredentials();
                                   });
             });
         }
