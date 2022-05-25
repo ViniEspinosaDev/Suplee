@@ -33,6 +33,16 @@ namespace Suplee.Catalogo.Api.Controllers
         }
 
         /// <summary>
+        /// Para saber se o CI/CD está funcionando
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("cicd")]
+        public async Task<ActionResult> CICDFuncionando()
+        {
+            return Ok("Está funcionando corretamente");
+        }
+
+        /// <summary>
         /// Obter todos os produtos
         /// </summary>
         /// <returns></returns>
