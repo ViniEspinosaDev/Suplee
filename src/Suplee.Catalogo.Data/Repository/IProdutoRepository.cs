@@ -51,42 +51,69 @@ namespace Suplee.Catalogo.Data.Repository
                 .FirstOrDefaultAsync(p => p.Id == produtoId);
         }
 
-        public async Task<IEnumerable<Produto>> ObterProdutos()
+        public async Task<IEnumerable<Produto>> ObterProdutosPaginado(int pagina = 0, int quantidade = 0)
         {
-            return await _catalogoContext.Produtos
+            var produtos = _catalogoContext.Produtos
                 .Include(p => p.Categoria)
                 .Include(p => p.InformacaoNutricional)
                     .ThenInclude(i => i.CompostosNutricionais)
                 .Include(p => p.Imagens)
                 .Include(p => p.Efeitos)
-                .AsNoTracking()
-                .ToListAsync();
+                .AsNoTracking();
+
+            if (pagina > 0)
+                produtos = produtos.Skip((pagina - 1) * quantidade);
+
+            if (quantidade > 0)
+                produtos = produtos.Take(quantidade);
+
+            return await produtos.ToListAsync();
         }
 
-        public async Task<IEnumerable<Produto>> ObterProdutosPorCategoria(Guid categoriaId)
+        public async Task<IEnumerable<Produto>> ObterProdutosPaginadoPorCategoria(
+            Guid categoriaId,
+            int pagina = 0,
+            int quantidade = 0)
         {
-            return await _catalogoContext.Produtos
+            var produtos = _catalogoContext.Produtos
                 .Include(p => p.Categoria)
                 .Include(p => p.InformacaoNutricional)
                     .ThenInclude(i => i.CompostosNutricionais)
                 .Include(p => p.Imagens)
                 .Include(p => p.Efeitos)
                 .AsNoTracking()
-                .Where(p => p.CategoriaId == categoriaId)
-                .ToListAsync();
+                .Where(p => p.CategoriaId == categoriaId);
+
+            if (pagina > 0)
+                produtos = produtos.Skip((pagina - 1) * quantidade);
+
+            if (quantidade > 0)
+                produtos = produtos.Take(quantidade);
+
+            return await produtos.ToListAsync();
         }
 
-        public async Task<IEnumerable<Produto>> ObterProdutosPorEfeito(Guid efeitoId)
+        public async Task<IEnumerable<Produto>> ObterProdutosPaginadoPorEfeito(
+            Guid efeitoId,
+            int pagina = 0,
+            int quantidade = 0)
         {
-            return await _catalogoContext.Produtos
+            var produtos = _catalogoContext.Produtos
                 .Include(p => p.Categoria)
                 .Include(p => p.InformacaoNutricional)
                     .ThenInclude(i => i.CompostosNutricionais)
                 .Include(p => p.Imagens)
                 .Include(p => p.Efeitos)
                 .AsNoTracking()
-                .Where(p => p.Efeitos.Any(e => e.EfeitoId == efeitoId))
-                .ToListAsync();
+                .Where(p => p.Efeitos.Any(e => e.EfeitoId == efeitoId));
+
+            if (pagina > 0)
+                produtos = produtos.Skip((pagina - 1) * quantidade);
+
+            if (quantidade > 0)
+                produtos = produtos.Take(quantidade);
+
+            return await produtos.ToListAsync();
         }
 
         public void Adicionar(Produto produto)

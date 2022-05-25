@@ -4,9 +4,27 @@
         <name>Suplee.Catalogo.Api</name>
     </assembly>
     <members>
-        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProdutos">
+        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProdutoPorEfeito(System.Guid,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
-            Obter todos os produtos
+            Obter produtos por Efeito
+            </summary>
+            <param name="efeitoId"></param>
+            <param name="pagina"></param>
+            <param name="quantidade"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProdutoPorCategoria(System.Guid,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            Obter produtos por Categoria
+            </summary>
+            <param name="categoriaId"></param>
+            <param name="pagina"></param>
+            <param name="quantidade"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProdutos(System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            Obter todos os produtos sem filtro
             </summary>
             <returns></returns>
         </member>

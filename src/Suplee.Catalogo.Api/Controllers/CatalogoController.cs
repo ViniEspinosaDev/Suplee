@@ -9,6 +9,7 @@ using Suplee.Catalogo.Domain.Models;
 using Suplee.Catalogo.Domain.ValueObjects;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -33,23 +34,63 @@ namespace Suplee.Catalogo.Api.Controllers
         }
 
         /// <summary>
-        /// Para saber se o CI/CD está funcionando
+        /// Obter produtos por Efeito
         /// </summary>
+        /// <param name="efeitoId"></param>
+        /// <param name="pagina"></param>
+        /// <param name="quantidade"></param>
         /// <returns></returns>
-        [HttpGet("cicd")]
-        public async Task<ActionResult> CICDFuncionando()
+        [HttpGet("produtos/efeito")]
+        public async Task<ActionResult> ObterProdutoPorEfeito(
+            [FromQuery] Guid efeitoId,
+            [FromQuery] int? pagina,
+            [FromQuery] int? quantidade)
         {
-            return Ok("Está funcionando corretamente");
+            var produtos = await _produtoRepository
+                .ObterProdutosPaginadoPorEfeito(efeitoId, pagina ?? 0, quantidade ?? 9);
+
+            if (produtos is null)
+                return BadRequest();
+
+            var produtosViewModel = _mapper.Map<List<ProdutoViewModel>>(produtos);
+
+            return Ok(produtosViewModel);
         }
 
         /// <summary>
-        /// Obter todos os produtos
+        /// Obter produtos por Categoria
+        /// </summary>
+        /// <param name="categoriaId"></param>
+        /// <param name="pagina"></param>
+        /// <param name="quantidade"></param>
+        /// <returns></returns>
+        [HttpGet("produtos/categoria")]
+        public async Task<ActionResult> ObterProdutoPorCategoria(
+            [FromQuery] Guid categoriaId,
+            [FromQuery] int? pagina,
+            [FromQuery] int? quantidade)
+        {
+            var produtos = await _produtoRepository
+                .ObterProdutosPaginadoPorCategoria(categoriaId, pagina ?? 0, quantidade ?? 9);
+
+            if (produtos is null)
+                return BadRequest();
+
+            var produtosViewModel = _mapper.Map<List<ProdutoViewModel>>(produtos);
+
+            return Ok(produtosViewModel);
+        }
+
+        /// <summary>
+        /// Obter todos os produtos sem filtro
         /// </summary>
         /// <returns></returns>
         [HttpGet("produtos")]
-        public async Task<ActionResult> ObterProdutos()
+        public async Task<ActionResult> ObterProdutos(
+            [FromQuery] int? pagina,
+            [FromQuery] int? quantidade)
         {
-            var produtos = await _produtoRepository.ObterProdutos();
+            var produtos = await _produtoRepository.ObterProdutosPaginado(pagina ?? 0, quantidade ?? 9);
 
             if (produtos is null)
                 return BadRequest();
