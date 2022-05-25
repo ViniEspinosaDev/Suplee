@@ -31,9 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.Test", "tests\Suplee
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Externals", "Externals", "{CDD61DF7-E5E2-4C33-8D7C-0D2FF344C000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.ExternalService", "src\Suplee.ExternalService\Suplee.ExternalService.csproj", "{100AC0AD-7563-418D-B1D8-831CA63F912F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.ExternalService", "src\Suplee.ExternalService\Suplee.ExternalService.csproj", "{100AC0AD-7563-418D-B1D8-831CA63F912F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.ExternalService.CrossCuttingIoC", "src\Suplee.ExternalService.CrossCuttingIoC\Suplee.ExternalService.CrossCuttingIoC.csproj", "{8FEBD001-3997-4C38-ADD6-AFE192CCB757}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.ExternalService.CrossCuttingIoC", "src\Suplee.ExternalService.CrossCuttingIoC\Suplee.ExternalService.CrossCuttingIoC.csproj", "{8FEBD001-3997-4C38-ADD6-AFE192CCB757}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,10 +50,8 @@ Global
 		{00C7231C-E5D4-4C57-A8A3-8895EBF83C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00C7231C-E5D4-4C57-A8A3-8895EBF83C1C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{753A3277-8A62-4529-865D-54C9BF5B7FBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{753A3277-8A62-4529-865D-54C9BF5B7FBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{753A3277-8A62-4529-865D-54C9BF5B7FBF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{753A3277-8A62-4529-865D-54C9BF5B7FBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{753A3277-8A62-4529-865D-54C9BF5B7FBF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{753A3277-8A62-4529-865D-54C9BF5B7FBF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{A85DED76-23C9-4AA1-9F6E-0CF385B6C11B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A85DED76-23C9-4AA1-9F6E-0CF385B6C11B}.Debug|Any CPU.Build.0 = Debug|Any CPU
