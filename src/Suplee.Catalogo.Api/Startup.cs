@@ -10,6 +10,7 @@ using Suplee.Catalogo.CrossCuttingIoC;
 using Suplee.ExternalService.CrossCuttingIoC;
 using Suplee.ExternalService.Imgbb.DTO;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -61,13 +62,21 @@ namespace Suplee.Catalogo.Api
                 options.IncludeXmlComments(xmlPath);
             });
 
+            var ips = new List<string>()
+                {
+                    "https://supleeapiv1.herokuapp.com/",
+                    "http://192.168.1.70:3000/",
+                    "https://192.168.1.70:3000/",
+                    "https://suplee.vercel.app/"
+                };
+
             services.AddCors(options =>
             {
                 options.AddPolicy(name: "_myAllowSpecificOrigins",
                                   builder =>
                                   {
                                       builder
-                                        .WithOrigins("https://supleeapiv1.herokuapp.com/", "http://192.168.1.70:3000/", "https://suplee.vercel.app/")
+                                        .WithOrigins(ips.ToArray())
                                         .SetIsOriginAllowed(_ => true)
                                         .AllowAnyMethod()
                                         .AllowAnyHeader()
