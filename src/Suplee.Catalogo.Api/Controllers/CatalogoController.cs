@@ -34,6 +34,27 @@ namespace Suplee.Catalogo.Api.Controllers
         }
 
         /// <summary>
+        /// Obter todas as informações de um produto
+        /// </summary>
+        /// <param name="produtoId"></param>
+        /// <returns></returns>
+        [HttpGet("{produtoId}")]
+        public async Task<ActionResult> ObterProduto(Guid produtoId)
+        {
+            if (produtoId == Guid.Empty)
+                return BadRequest(new { Success = false, Errors = "Necessário informar o Id do produto" });
+
+            var produto = await _produtoRepository.ObterProduto(produtoId);
+
+            if (produto is null)
+                return BadRequest(new { Success = false, Errors = "Não foi possível obter o produto" });
+
+            var produtoViewModel = _mapper.Map<ProdutoViewModel>(produto);
+
+            return Ok(produtoViewModel);
+        }
+
+        /// <summary>
         /// Obter produtos por Efeito
         /// </summary>
         /// <param name="efeitoId"></param>
@@ -50,9 +71,9 @@ namespace Suplee.Catalogo.Api.Controllers
                 .ObterProdutosPaginadoPorEfeito(efeitoId, pagina ?? 0, quantidade ?? 9);
 
             if (produtos is null)
-                return BadRequest();
+                return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
 
-            var produtosViewModel = _mapper.Map<List<ProdutoViewModel>>(produtos);
+            var produtosViewModel = _mapper.Map<List<ProdutoResumidoViewModel>>(produtos);
 
             return Ok(produtosViewModel);
         }
@@ -74,9 +95,9 @@ namespace Suplee.Catalogo.Api.Controllers
                 .ObterProdutosPaginadoPorCategoria(categoriaId, pagina ?? 0, quantidade ?? 9);
 
             if (produtos is null)
-                return BadRequest();
+                return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
 
-            var produtosViewModel = _mapper.Map<List<ProdutoViewModel>>(produtos);
+            var produtosViewModel = _mapper.Map<List<ProdutoResumidoViewModel>>(produtos);
 
             return Ok(produtosViewModel);
         }
@@ -93,9 +114,9 @@ namespace Suplee.Catalogo.Api.Controllers
             var produtos = await _produtoRepository.ObterProdutosPaginado(pagina ?? 0, quantidade ?? 9);
 
             if (produtos is null)
-                return BadRequest();
+                return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
 
-            var produtosViewModel = _mapper.Map<List<ProdutoViewModel>>(produtos);
+            var produtosViewModel = _mapper.Map<List<ProdutoResumidoViewModel>>(produtos);
 
             return Ok(produtosViewModel);
         }
@@ -110,7 +131,7 @@ namespace Suplee.Catalogo.Api.Controllers
             var efeitos = await _produtoRepository.ObterEfeitos();
 
             if (efeitos is null)
-                return BadRequest();
+                return BadRequest(new { Success = false, Errors = "Não foi possível obter os efeitos" });
 
             return Ok(efeitos);
         }
@@ -125,7 +146,7 @@ namespace Suplee.Catalogo.Api.Controllers
             var efeitos = await _produtoRepository.ObterCategorias();
 
             if (efeitos is null)
-                return BadRequest();
+                return BadRequest(new { Success = false, Errors = "Não foi possível obter as categorias" });
 
             return Ok(efeitos);
         }

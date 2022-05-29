@@ -55,10 +55,9 @@ namespace Suplee.Catalogo.Data.Repository
         {
             var produtos = _catalogoContext.Produtos
                 .Include(p => p.Categoria)
-                .Include(p => p.InformacaoNutricional)
-                    .ThenInclude(i => i.CompostosNutricionais)
                 .Include(p => p.Imagens)
                 .Include(p => p.Efeitos)
+                    .ThenInclude(e => e.Efeito)
                 .AsNoTracking();
 
             if (pagina > 0)
@@ -77,10 +76,9 @@ namespace Suplee.Catalogo.Data.Repository
         {
             var produtos = _catalogoContext.Produtos
                 .Include(p => p.Categoria)
-                .Include(p => p.InformacaoNutricional)
-                    .ThenInclude(i => i.CompostosNutricionais)
                 .Include(p => p.Imagens)
                 .Include(p => p.Efeitos)
+                    .ThenInclude(e => e.Efeito)
                 .AsNoTracking()
                 .Where(p => p.CategoriaId == categoriaId);
 
@@ -100,10 +98,9 @@ namespace Suplee.Catalogo.Data.Repository
         {
             var produtos = _catalogoContext.Produtos
                 .Include(p => p.Categoria)
-                .Include(p => p.InformacaoNutricional)
-                    .ThenInclude(i => i.CompostosNutricionais)
                 .Include(p => p.Imagens)
                 .Include(p => p.Efeitos)
+                    .ThenInclude(e => e.Efeito)
                 .AsNoTracking()
                 .Where(p => p.Efeitos.Any(e => e.EfeitoId == efeitoId));
 

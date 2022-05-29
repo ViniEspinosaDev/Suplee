@@ -4,6 +4,13 @@
         <name>Suplee.Catalogo.Api</name>
     </assembly>
     <members>
+        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProduto(System.Guid)">
+            <summary>
+            Obter todas as informações de um produto
+            </summary>
+            <param name="produtoId"></param>
+            <returns></returns>
+        </member>
         <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProdutoPorEfeito(System.Guid,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
             Obter produtos por Efeito

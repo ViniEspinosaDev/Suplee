@@ -22,6 +22,7 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.CompostosNutricionais, opt => opt.MapFrom(m => m.CompostosNutricionais));
 
             CreateMap<Produto, ProdutoViewModel>()
+                .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
                 .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome))
                 .ForMember(i => i.Descricao, opt => opt.MapFrom(m => m.Descricao))
                 .ForMember(i => i.Composicao, opt => opt.MapFrom(m => m.Composicao))
@@ -31,6 +32,15 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.Imagens, opt => opt.MapFrom(m => m.Imagens.ToList().Select(x => x.Url)))
                 .ForMember(i => i.Efeitos, opt => opt.MapFrom(m => m.Efeitos.ToList().Select(x => x.EfeitoId.ToString())))
                 .ForMember(i => i.InformacaoNutricional, opt => opt.MapFrom(m => m.InformacaoNutricional));
+
+            CreateMap<Produto, ProdutoResumidoViewModel>()
+                .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
+                .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome))
+                .ForMember(i => i.Preco, opt => opt.MapFrom(m => m.Preco))
+                .ForMember(i => i.NomeCategoria, opt => opt.MapFrom(m => m.Categoria.Nome))
+                .ForMember(i => i.NomeEfeito, opt => opt.MapFrom(m => m.Efeitos.FirstOrDefault().Efeito.Nome))
+                .ForMember(i => i.Imagem, opt => opt.MapFrom(m => m.Imagens.FirstOrDefault().Url));
+
         }
     }
 }
