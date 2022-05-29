@@ -10,7 +10,6 @@ using Suplee.Catalogo.CrossCuttingIoC;
 using Suplee.ExternalService.CrossCuttingIoC;
 using Suplee.ExternalService.Imgbb.DTO;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -18,8 +17,6 @@ namespace Suplee.Catalogo.Api
 {
     public class Startup
     {
-        readonly string CorsPolicy = "_myAllowSpecificOrigins";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -62,29 +59,7 @@ namespace Suplee.Catalogo.Api
                 options.IncludeXmlComments(xmlPath);
             });
 
-            var ips = new List<string>()
-                {
-                    "https://supleeapiv1.herokuapp.com/",
-                    "http://192.168.1.70:3000/",
-                    "https://192.168.1.70:3000/",
-                    "http://192.168.1.73:3000/",
-                    "https://192.168.1.73:3000/",
-                    "https://suplee.vercel.app/"
-                };
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: "_myAllowSpecificOrigins",
-                                  builder =>
-                                  {
-                                      builder
-                                        .WithOrigins(ips.ToArray())
-                                        .SetIsOriginAllowed(_ => true)
-                                        .AllowAnyMethod()
-                                        .AllowAnyHeader()
-                                        .AllowCredentials();
-                                  });
-            });
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,7 +70,11 @@ namespace Suplee.Catalogo.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(CorsPolicy);
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials());
 
             app.UseHttpsRedirection();
 
