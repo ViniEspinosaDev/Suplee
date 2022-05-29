@@ -65,7 +65,10 @@ namespace Suplee.Catalogo.Api
             var ips = new List<string>()
                 {
                     "https://supleeapiv1.herokuapp.com/",
+                    "http://192.168.1.70:3000/",
+                    "https://192.168.1.70:3000/",
                     "http://192.168.1.73:3000/",
+                    "https://192.168.1.73:3000/",
                     "https://suplee.vercel.app/"
                 };
 
