@@ -27,6 +27,7 @@ namespace Suplee.Test.Builder.Models
                 .Build();
 
             InformacaoNutricionalId = informacaoNutricional.Id;
+            InformacaoNutricional = informacaoNutricional;
             CategoriaId = Guid.Empty;
             Nome = "Nome";
             Descricao = "Descrição";
