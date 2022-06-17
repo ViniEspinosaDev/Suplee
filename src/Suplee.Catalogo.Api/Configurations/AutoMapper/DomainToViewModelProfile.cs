@@ -5,8 +5,14 @@ using System.Linq;
 
 namespace Suplee.Catalogo.Api.Configurations.AutoMapper
 {
+    /// <summary>
+    /// Mapeamento das entidades para View Model
+    /// </summary>
     public class DomainToViewModelProfile : Profile
     {
+        /// <summary>
+        /// Construtor do mapeamento
+        /// </summary>
         public DomainToViewModelProfile()
         {
             CreateMap<CompostoNutricional, CompostoNutricionalViewModel>()
@@ -38,7 +44,7 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome))
                 .ForMember(i => i.Preco, opt => opt.MapFrom(m => m.Preco))
                 .ForMember(i => i.NomeCategoria, opt => opt.MapFrom(m => m.Categoria.Nome))
-                .ForMember(i => i.NomeEfeito, opt => opt.MapFrom(m => m.Efeitos.FirstOrDefault().Efeito.Nome))
+                .ForMember(i => i.NomeEfeito, opt => opt.MapFrom(m => m.Efeitos.Select(x => x.Efeito.Nome)))
                 .ForMember(i => i.Imagem, opt => opt.MapFrom(m => m.Imagens.FirstOrDefault().Url));
 
         }

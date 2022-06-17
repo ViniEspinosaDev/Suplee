@@ -4,8 +4,14 @@ using Suplee.Catalogo.Domain.Models;
 
 namespace Suplee.Catalogo.Api.Configurations.AutoMapper
 {
+    /// <summary>
+    /// Mapeamento dos inputs de entrada para entidade
+    /// </summary>
     public class InputModelToDomainProfile : Profile
     {
+        /// <summary>
+        /// Construtor do mapeamento
+        /// </summary>
         public InputModelToDomainProfile()
         {
             CreateMap<CompostoNutricionalInputModel, CompostoNutricional>()

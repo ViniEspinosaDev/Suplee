@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace Suplee.Catalogo.Api.Controllers
 {
+    /// <summary>
+    /// Endpoints do Catalogo
+    /// </summary>
     [Route("api/[controller]")]
     public class CatalogoController : ControllerBase
     {
@@ -22,6 +25,13 @@ namespace Suplee.Catalogo.Api.Controllers
         private readonly IMapper _mapper;
         private readonly IMediatorHandler _mediatorHandler;
 
+        /// <summary>
+        /// Construtor do Catalogo
+        /// </summary>
+        /// <param name="notifications"></param>
+        /// <param name="mediatorHandler"></param>
+        /// <param name="produtoRepository"></param>
+        /// <param name="mapper"></param>
         public CatalogoController(
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler,
@@ -55,20 +65,20 @@ namespace Suplee.Catalogo.Api.Controllers
         }
 
         /// <summary>
-        /// Obter produtos por Efeito
+        /// Obter produtos por id do Efeito
         /// </summary>
         /// <param name="efeitoId"></param>
         /// <param name="pagina"></param>
         /// <param name="quantidade"></param>
         /// <returns></returns>
-        [HttpGet("produtos/efeito")]
-        public async Task<ActionResult> ObterProdutoPorEfeito(
+        [HttpGet("produtos/id-efeito")]
+        public async Task<ActionResult> ObterProdutoPorIdEfeito(
             [FromQuery] Guid efeitoId,
             [FromQuery] int? pagina,
             [FromQuery] int? quantidade)
         {
             var produtos = await _produtoRepository
-                .ObterProdutosPaginadoPorEfeito(efeitoId, pagina ?? 0, quantidade ?? 9);
+                .ObterProdutosPaginadoPorIdEfeito(efeitoId, pagina ?? 0, quantidade ?? 9);
 
             if (produtos is null)
                 return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
@@ -79,20 +89,68 @@ namespace Suplee.Catalogo.Api.Controllers
         }
 
         /// <summary>
-        /// Obter produtos por Categoria
+        /// Obter produtos por nome do Efeito
+        /// </summary>
+        /// <param name="nomeEfeito"></param>
+        /// <param name="pagina"></param>
+        /// <param name="quantidade"></param>
+        /// <returns></returns>
+        [HttpGet("produtos/nome-efeito/")]
+        public async Task<ActionResult> ObterProdutoPorNomeEfeito(
+            [FromQuery] string nomeEfeito,
+            [FromQuery] int? pagina,
+            [FromQuery] int? quantidade)
+        {
+            var produtos = await _produtoRepository
+                .ObterProdutosPaginadoPorNomeEfeito(nomeEfeito, pagina ?? 0, quantidade ?? 9);
+
+            if (produtos is null)
+                return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
+
+            var produtosViewModel = _mapper.Map<List<ProdutoResumidoViewModel>>(produtos);
+
+            return Ok(produtosViewModel);
+        }
+
+        /// <summary>
+        /// Obter produtos por id da Categoria
         /// </summary>
         /// <param name="categoriaId"></param>
         /// <param name="pagina"></param>
         /// <param name="quantidade"></param>
         /// <returns></returns>
-        [HttpGet("produtos/categoria")]
-        public async Task<ActionResult> ObterProdutoPorCategoria(
+        [HttpGet("produtos/id-categoria")]
+        public async Task<ActionResult> ObterProdutoPorIdCategoria(
             [FromQuery] Guid categoriaId,
             [FromQuery] int? pagina,
             [FromQuery] int? quantidade)
         {
             var produtos = await _produtoRepository
-                .ObterProdutosPaginadoPorCategoria(categoriaId, pagina ?? 0, quantidade ?? 9);
+                .ObterProdutosPaginadoPorIdCategoria(categoriaId, pagina ?? 0, quantidade ?? 9);
+
+            if (produtos is null)
+                return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
+
+            var produtosViewModel = _mapper.Map<List<ProdutoResumidoViewModel>>(produtos);
+
+            return Ok(produtosViewModel);
+        }
+
+        /// <summary>
+        /// Obter produtos por nome da Categoria
+        /// </summary>
+        /// <param name="nomeCategoria"></param>
+        /// <param name="pagina"></param>
+        /// <param name="quantidade"></param>
+        /// <returns></returns>
+        [HttpGet("produtos/nome-categoria")]
+        public async Task<ActionResult> ObterProdutoPorNomeCategoria(
+            [FromQuery] string nomeCategoria,
+            [FromQuery] int? pagina,
+            [FromQuery] int? quantidade)
+        {
+            var produtos = await _produtoRepository
+                .ObterProdutosPaginadoPorNomeCategoria(nomeCategoria, pagina ?? 0, quantidade ?? 9);
 
             if (produtos is null)
                 return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
