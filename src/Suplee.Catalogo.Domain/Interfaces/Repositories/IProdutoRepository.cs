@@ -16,6 +16,7 @@ namespace Suplee.Catalogo.Domain.Interfaces
         Task<IEnumerable<Produto>> ObterProdutosPaginadoPorNomeCategoria(string nomeCategoria, int pagina, int quantidade);
         Task<IEnumerable<Produto>> ObterProdutosPaginadoPorIdEfeito(Guid efeitoId, int pagina, int quantidade);
         Task<IEnumerable<Produto>> ObterProdutosPaginadoPorNomeEfeito(string nomeEfeito, int pagina, int quantidade);
+        Task<IEnumerable<Produto>> ObterProdutosPorNome(string nome, int pagina, int quantidade);
 
         Task<IEnumerable<Categoria>> ObterCategorias();
         Task<IEnumerable<Efeito>> ObterEfeitos();

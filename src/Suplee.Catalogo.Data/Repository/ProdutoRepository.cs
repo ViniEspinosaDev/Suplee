@@ -92,8 +92,8 @@ namespace Suplee.Catalogo.Data.Repository
         }
 
         public async Task<IEnumerable<Produto>> ObterProdutosPaginadoPorNomeCategoria(
-            string nomeCategoria, 
-            int pagina = 0, 
+            string nomeCategoria,
+            int pagina = 0,
             int quantidade = 0)
         {
             var produtos = _catalogoContext.Produtos
@@ -136,13 +136,13 @@ namespace Suplee.Catalogo.Data.Repository
         }
 
         public async Task<IEnumerable<Produto>> ObterProdutosPaginadoPorNomeEfeito(
-            string nomeEfeito, 
+            string nomeEfeito,
             int pagina = 0,
             int quantidade = 0)
         {
             var efeito = _catalogoContext.Efeitos.FirstOrDefault(e => e.Nome == nomeEfeito);
 
-            if(efeito is null)
+            if (efeito is null)
                 return null;
 
             var produtos = _catalogoContext.Produtos
@@ -152,6 +152,28 @@ namespace Suplee.Catalogo.Data.Repository
                       .ThenInclude(e => e.Efeito)
                   .AsNoTracking()
                   .Where(p => p.Efeitos.Any(e => e.EfeitoId == efeito.Id));
+
+            if (pagina > 0)
+                produtos = produtos.Skip((pagina - 1) * quantidade);
+
+            if (quantidade > 0)
+                produtos = produtos.Take(quantidade);
+
+            return await produtos.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Produto>> ObterProdutosPorNome(
+            string nome, 
+            int pagina = 0, 
+            int quantidade = 0)
+        {
+            var produtos = _catalogoContext.Produtos
+                .Include(p => p.Categoria)
+                .Include(p => p.Imagens)
+                .Include(p => p.Efeitos)
+                    .ThenInclude(e => e.Efeito)
+                .AsNoTracking()
+                .Where(p => p.Nome.Contains(nome));
 
             if (pagina > 0)
                 produtos = produtos.Skip((pagina - 1) * quantidade);
