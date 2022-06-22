@@ -11,6 +11,7 @@
     [Profundidade] DECIMAL(18, 2) NOT NULL, 
     [InformacaoNutricionalId] UNIQUEIDENTIFIER NOT NULL, 
     [CategoriaId] UNIQUEIDENTIFIER NOT NULL,
+    [DataCadastro] DATETIME NOT NULL DEFAULT GETDATE(), 
 
     CONSTRAINT [FK_Produto_InformacaoNutricionalId] FOREIGN KEY ([InformacaoNutricionalId]) REFERENCES [InformacaoNutricional]([Id]),
     CONSTRAINT [FK_Produto_CategoriaId] FOREIGN KEY ([CategoriaId]) REFERENCES [Categoria]([Id]),

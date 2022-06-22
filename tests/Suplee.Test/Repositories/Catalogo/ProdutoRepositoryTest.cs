@@ -152,5 +152,61 @@ namespace Suplee.Test.Repositories.Catalogo
             Assert.Equal(efeitos.FirstOrDefault().Id, produtoAdicionado.Efeitos.FirstOrDefault().Id);
             Assert.Equal(imagens.FirstOrDefault().Id, produtoAdicionado.Imagens.FirstOrDefault().Id);
         }
+
+        // Deve_Atualizar_Um_Produto
+        //[Fact]
+        //public async void Deve_Atualizar_Um_Produto()
+        //{
+        //    var produtoId = Guid.NewGuid();
+
+        //    var categoria = new CategoriaBuilder().PadraoValido().Build();
+
+        //    var efeito = new EfeitoBuilder().PadraoValido().Build();
+
+        //    var efeitos = new List<ProdutoEfeito>() { new ProdutoEfeitoBuilder().PadraoValido(produtoId, categoria.Id).Build() };
+        //    var imagens = new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().ComProdutoId(produtoId).Build() };
+
+        //    var produto = new ProdutoBuilder()
+        //        .PadraoValido()
+        //        .ComCategoria(categoria)
+        //        .ComEfeitos(efeitos)
+        //        .ComImagens(imagens)
+        //        .Build();
+
+        //    _produtoRepository.Adicionar(efeito);
+        //    _produtoRepository.Adicionar(produto);
+
+        //    DbContext.SaveChanges();
+
+        //    var produtoAdicionado = await _produtoRepository.ObterProduto(produto.Id);
+
+        //    produtoAdicionado.Atualizar("Nome atualizado", "Descrição atualizada", "Composição atualizada", 10, 10.99m);
+
+        //    _produtoRepository.Atualizar(produtoAdicionado);
+
+        //    DbContext.SaveChanges();
+
+        //    var produtoAtualizado = await _produtoRepository.ObterProduto(produto.Id);
+
+        //    Assert.Equal("Nome atualizado", produtoAtualizado.Nome);
+        //    Assert.Equal("Descrição atualizada", produtoAtualizado.Descricao);
+        //    Assert.Equal("Composição atualizada", produtoAtualizado.Composicao);
+        //    Assert.Equal(10, produtoAtualizado.QuantidadeDisponivel);
+        //    Assert.Equal(10.99m, produtoAtualizado.Preco);
+        //}
+
+        // Deve_Obter_Produto_Pelo_Id (Guid produtoId);
+        // Deve_Obter_Categoria_Pelo_Id (Guid categoriaId);
+        // Deve_Obter_Efeito_Pelo_Id (Guid efeitoId);
+        // Deve_Obter_Produtos_Paginado (int pagina, int quantidade);
+        // Deve_Obter_Produtos_Paginado_Pelo_Id_Categoria (Guid categoriaId, int pagina, int quantidade);
+        // Deve_Obter_Produtos_Paginado_Pelo_Nome_Categoria (string nomeCategoria, int pagina, int quantidade);
+        // Deve_Obter_Produtos_Paginado_Pelo_Id_Efeito (Guid efeitoId, int pagina, int quantidade);
+        // Deve_Obter_Produtos_Paginado_Pelo_Nome_Efeito (string nomeEfeito, int pagina, int quantidade);
+        // Deve_Obter_Produtos_Paginado_Pelo_Nome_Produto (string nome, int pagina, int quantidade);
+
+        // Deve_Obter_Categorias();
+        // Deve_Obter_Efeitos();
+
     }
 }

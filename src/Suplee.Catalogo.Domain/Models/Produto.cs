@@ -7,7 +7,7 @@ namespace Suplee.Catalogo.Domain.Models
 {
     public class Produto : Entity, IAggregateRoot
     {
-        protected Produto() 
+        protected Produto()
         {
             Efeitos = new List<ProdutoEfeito>();
             Imagens = new List<ProdutoImagem>();
@@ -50,5 +50,14 @@ namespace Suplee.Catalogo.Domain.Models
         public void AdicionarProdutoEfeito(ProdutoEfeito produtoEfeito) => Efeitos.Add(produtoEfeito);
         public void AdicionarProdutoImagem(ProdutoImagem produtoImagem) => Imagens.Add(produtoImagem);
         public void AdicionarInformacaoNutricional(InformacaoNutricional informacaoNutricional) => InformacaoNutricional = informacaoNutricional;
+
+        public void Atualizar(string nome, string descricao, string composicao, int quantidadeDisponivel, decimal preco)
+        {
+            Nome = nome;
+            Descricao = descricao;
+            Composicao = composicao;
+            QuantidadeDisponivel = quantidadeDisponivel;
+            Preco = preco;
+        }
     }
 }

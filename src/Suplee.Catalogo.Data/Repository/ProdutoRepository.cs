@@ -162,7 +162,7 @@ namespace Suplee.Catalogo.Data.Repository
             return await produtos.ToListAsync();
         }
 
-        public async Task<IEnumerable<Produto>> ObterProdutosPorNome(
+        public async Task<IEnumerable<Produto>> ObterProdutosPaginadoPorNomeProduto(
             string nome, 
             int pagina = 0, 
             int quantidade = 0)

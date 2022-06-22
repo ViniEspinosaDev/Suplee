@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Suplee.Catalogo.Api.Controllers.InputModels;
 using Suplee.Catalogo.Api.Controllers.ViewModels;
@@ -19,6 +20,7 @@ namespace Suplee.Catalogo.Api.Controllers
     /// Endpoints do Catalogo
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize]
     public class CatalogoController : ControllerBase
     {
         private readonly IProdutoRepository _produtoRepository;
@@ -53,6 +55,7 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="quantidade"></param>
         /// <returns></returns>
         [HttpGet("produtos/nome")]
+        [AllowAnonymous]
         public async Task<ActionResult> ObterProdutosPeloNome(
             [FromQuery] string nome,
             [FromQuery] int? pagina,
@@ -62,7 +65,7 @@ namespace Suplee.Catalogo.Api.Controllers
                 return NoContent();
 
             var produtos = await _produtoRepository
-                .ObterProdutosPorNome(nome, pagina ?? 0, quantidade ?? QuantidadePorPagina);
+                .ObterProdutosPaginadoPorNomeProduto(nome, pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             if (produtos is null)
                 return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
@@ -78,6 +81,7 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="produtoId"></param>
         /// <returns></returns>
         [HttpGet("{produtoId}")]
+        [AllowAnonymous]
         public async Task<ActionResult> ObterProduto(Guid produtoId)
         {
             if (produtoId == Guid.Empty)
@@ -102,6 +106,7 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="quantidade"></param>
         /// <returns></returns>
         [HttpGet("produtos/id-efeito")]
+        [AllowAnonymous]
         public async Task<ActionResult> ObterProdutoPorIdEfeito(
             [FromQuery] Guid efeitoId,
             [FromQuery] int? pagina,
@@ -126,6 +131,7 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="quantidade"></param>
         /// <returns></returns>
         [HttpGet("produtos/nome-efeito")]
+        [AllowAnonymous]
         public async Task<ActionResult> ObterProdutoPorNomeEfeito(
             [FromQuery] string nomeEfeito,
             [FromQuery] int? pagina,
@@ -150,6 +156,7 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="quantidade"></param>
         /// <returns></returns>
         [HttpGet("produtos/id-categoria")]
+        [AllowAnonymous]
         public async Task<ActionResult> ObterProdutoPorIdCategoria(
             [FromQuery] Guid categoriaId,
             [FromQuery] int? pagina,
@@ -174,6 +181,7 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="quantidade"></param>
         /// <returns></returns>
         [HttpGet("produtos/nome-categoria")]
+        [AllowAnonymous]
         public async Task<ActionResult> ObterProdutoPorNomeCategoria(
             [FromQuery] string nomeCategoria,
             [FromQuery] int? pagina,
@@ -195,6 +203,7 @@ namespace Suplee.Catalogo.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("produtos")]
+        [AllowAnonymous]
         public async Task<ActionResult> ObterProdutos(
             [FromQuery] int? pagina,
             [FromQuery] int? quantidade)
@@ -215,6 +224,7 @@ namespace Suplee.Catalogo.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("efeitos")]
+        [AllowAnonymous]
         public async Task<ActionResult> ObterEfeitos()
         {
             var efeitos = await _produtoRepository.ObterEfeitos();
@@ -230,6 +240,7 @@ namespace Suplee.Catalogo.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("categorias")]
+        [AllowAnonymous]
         public async Task<ActionResult> ObterCategorias()
         {
             var efeitos = await _produtoRepository.ObterCategorias();
@@ -246,6 +257,7 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="produtoInputModel"></param>
         /// <returns></returns>
         [HttpPost("produto")]
+        [AllowAnonymous]
         public async Task<ActionResult> CriarProduto(ProdutoInputModel produtoInputModel)
         {
             var informacaoNutricional = _mapper.Map<InformacaoNutricional>(produtoInputModel.InformacaoNutricional);
