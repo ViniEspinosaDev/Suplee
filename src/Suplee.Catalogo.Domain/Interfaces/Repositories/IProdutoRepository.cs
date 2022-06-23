@@ -21,6 +21,13 @@ namespace Suplee.Catalogo.Domain.Interfaces
         Task<IEnumerable<Categoria>> ObterCategorias();
         Task<IEnumerable<Efeito>> ObterEfeitos();
 
+        int QuantidadeTotalProdutos();
+        int QuantidadeProdutosPeloNome(string nome);
+        int QuantidadeProdutosPeloNomeCategoria(string nomeCategoria);
+        int QuantidadeProdutosPeloIdCategoria(Guid categoriaId);
+        int QuantidadeProdutosPeloNomeEfeito(string nomeEfeito);
+        int QuantidadeProdutosPeloIdEfeito(Guid efeitoId);
+
         void Adicionar(Produto produto);
         void Atualizar(Produto produto);
         void Adicionar(Categoria categoria);

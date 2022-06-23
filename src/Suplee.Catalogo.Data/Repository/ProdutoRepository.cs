@@ -163,8 +163,8 @@ namespace Suplee.Catalogo.Data.Repository
         }
 
         public async Task<IEnumerable<Produto>> ObterProdutosPaginadoPorNomeProduto(
-            string nome, 
-            int pagina = 0, 
+            string nome,
+            int pagina = 0,
             int quantidade = 0)
         {
             var produtos = _catalogoContext.Produtos
@@ -182,6 +182,38 @@ namespace Suplee.Catalogo.Data.Repository
                 produtos = produtos.Take(quantidade);
 
             return await produtos.ToListAsync();
+        }
+
+        public int QuantidadeTotalProdutos()
+        {
+            return _catalogoContext.Produtos.Count();
+        }
+
+        public int QuantidadeProdutosPeloNome(string nome)
+        {
+            return _catalogoContext.Produtos.Where(p => p.Nome.Contains(nome)).Count();
+        }
+
+        public int QuantidadeProdutosPeloNomeCategoria(string nomeCategoria)
+        {
+            return _catalogoContext.Produtos.Where(p => p.Categoria.Nome == nomeCategoria).Count();
+        }
+
+        public int QuantidadeProdutosPeloIdCategoria(Guid categoriaId)
+        {
+            return _catalogoContext.Produtos.Where(p => p.CategoriaId == categoriaId).Count();
+        }
+
+        public int QuantidadeProdutosPeloNomeEfeito(string nomeEfeito)
+        {
+            var efeito = _catalogoContext.Efeitos.FirstOrDefault(e => e.Nome == nomeEfeito);
+
+            return _catalogoContext.Produtos.Where(p => p.Efeitos.Any(e => e.EfeitoId == efeito.Id)).Count();
+        }
+
+        public int QuantidadeProdutosPeloIdEfeito(Guid efeitoId)
+        {
+            return _catalogoContext.Produtos.Where(p => p.Efeitos.Any(e => e.EfeitoId == efeitoId)).Count();
         }
 
         public void Adicionar(Produto produto)

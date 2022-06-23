@@ -70,9 +70,19 @@ namespace Suplee.Catalogo.Api.Controllers
             if (produtos is null)
                 return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
 
+            int quantidadeProdutos = _produtoRepository.QuantidadeTotalProdutos();
+            int quantidadeProdutosPeloNome = _produtoRepository.QuantidadeProdutosPeloNome(nome);
+
             var produtosViewModel = _mapper.Map<List<ProdutoResumidoViewModel>>(produtos);
 
-            return Ok(produtosViewModel);
+            var retorno = new
+            {
+                quantidadeTotalProdutos = quantidadeProdutos,
+                quantidadeProdutosPeloFiltro = quantidadeProdutosPeloNome,
+                produtos = produtosViewModel
+            };
+
+            return Ok(retorno);
         }
 
         /// <summary>
@@ -118,9 +128,19 @@ namespace Suplee.Catalogo.Api.Controllers
             if (produtos is null)
                 return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
 
+            int quantidadeProdutos = _produtoRepository.QuantidadeTotalProdutos();
+            int quantidadeProdutosPeloIdEfeito = _produtoRepository.QuantidadeProdutosPeloIdEfeito(efeitoId);
+
             var produtosViewModel = _mapper.Map<List<ProdutoResumidoViewModel>>(produtos);
 
-            return Ok(produtosViewModel);
+            var retorno = new
+            {
+                quantidadeTotalProdutos = quantidadeProdutos,
+                quantidadeProdutosPeloFiltro = quantidadeProdutosPeloIdEfeito,
+                produtos = produtosViewModel
+            };
+
+            return Ok(retorno);
         }
 
         /// <summary>
@@ -143,9 +163,19 @@ namespace Suplee.Catalogo.Api.Controllers
             if (produtos is null)
                 return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
 
+            int quantidadeProdutos = _produtoRepository.QuantidadeTotalProdutos();
+            int quantidadeProdutosPeloNomeEfeito = _produtoRepository.QuantidadeProdutosPeloNomeEfeito(nomeEfeito);
+
             var produtosViewModel = _mapper.Map<List<ProdutoResumidoViewModel>>(produtos);
 
-            return Ok(produtosViewModel);
+            var retorno = new
+            {
+                quantidadeTotalProdutos = quantidadeProdutos,
+                quantidadeProdutosPeloFiltro = quantidadeProdutosPeloNomeEfeito,
+                produtos = produtosViewModel
+            };
+
+            return Ok(retorno);
         }
 
         /// <summary>
@@ -168,9 +198,19 @@ namespace Suplee.Catalogo.Api.Controllers
             if (produtos is null)
                 return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
 
+            int quantidadeProdutos = _produtoRepository.QuantidadeTotalProdutos();
+            int quantidadeProdutosPeloIdCategoria = _produtoRepository.QuantidadeProdutosPeloIdCategoria(categoriaId);
+
             var produtosViewModel = _mapper.Map<List<ProdutoResumidoViewModel>>(produtos);
 
-            return Ok(produtosViewModel);
+            var retorno = new
+            {
+                quantidadeTotalProdutos = quantidadeProdutos,
+                quantidadeProdutosPeloFiltro = quantidadeProdutosPeloIdCategoria,
+                produtos = produtosViewModel
+            };
+
+            return Ok(retorno);
         }
 
         /// <summary>
@@ -193,9 +233,19 @@ namespace Suplee.Catalogo.Api.Controllers
             if (produtos is null)
                 return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
 
+            int quantidadeProdutos = _produtoRepository.QuantidadeTotalProdutos();
+            int quantidadeProdutosPeloNomeCategoria = _produtoRepository.QuantidadeProdutosPeloNomeCategoria(nomeCategoria);
+
             var produtosViewModel = _mapper.Map<List<ProdutoResumidoViewModel>>(produtos);
 
-            return Ok(produtosViewModel);
+            var retorno = new
+            {
+                quantidadeTotalProdutos = quantidadeProdutos,
+                quantidadeProdutosPeloFiltro = quantidadeProdutosPeloNomeCategoria,
+                produtos = produtosViewModel
+            };
+
+            return Ok(retorno);
         }
 
         /// <summary>
@@ -214,9 +264,18 @@ namespace Suplee.Catalogo.Api.Controllers
             if (produtos is null)
                 return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
 
+            int quantidadeProdutos = _produtoRepository.QuantidadeTotalProdutos();
+
             var produtosViewModel = _mapper.Map<List<ProdutoResumidoViewModel>>(produtos);
 
-            return Ok(produtosViewModel);
+            var retorno = new
+            {
+                quantidadeTotalProdutos = quantidadeProdutos,
+                quantidadeProdutosPeloFiltro = quantidadeProdutos,
+                produtos = produtosViewModel
+            };
+
+            return Ok(retorno);
         }
 
         /// <summary>
