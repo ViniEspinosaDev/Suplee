@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.Catalogo.Data", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.Catalogo.CrossCuttingIoC", "src\Suplee.Catalogo.CrossCuttingIoC\Suplee.Catalogo.CrossCuttingIoC.csproj", "{5F752736-2C29-486C-B0E6-F00B933B087B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.Api", "src\Suplee.Catalogo.Api\Suplee.Api.csproj", "{72F9FA56-BF64-44BC-8611-B0B335E21264}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.Api", "src\Suplee.Api\Suplee.Api.csproj", "{72F9FA56-BF64-44BC-8611-B0B335E21264}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{43930DFC-D7B5-48BB-9F88-081C49DAFC82}"
 EndProject
