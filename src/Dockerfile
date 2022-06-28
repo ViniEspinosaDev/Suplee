@@ -6,16 +6,16 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
 COPY . .
-RUN dotnet restore "Suplee.Catalogo.Api/Suplee.Catalogo.Api.csproj"
+RUN dotnet restore "Suplee.Api/Suplee.Api.csproj"
 COPY . .
-WORKDIR "/src/Suplee.Catalogo.Api"
-RUN dotnet build "Suplee.Catalogo.Api.csproj" -c Release -o /app/build
+WORKDIR "/src/Suplee.Api"
+RUN dotnet build "Suplee.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-WORKDIR "/src/Suplee.Catalogo.Api"
-RUN dotnet publish "Suplee.Catalogo.Api.csproj" -c Release -o /app/publish
+WORKDIR "/src/Suplee.Api"
+RUN dotnet publish "Suplee.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-CMD ASPNETCORE_URLS="http://*:$PORT" dotnet Suplee.Catalogo.Api.dll
+CMD ASPNETCORE_URLS="http://*:$PORT" dotnet Suplee.Api.dll
