@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Suplee.Catalogo.Api.Controllers.InputModels;
+using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
 using Suplee.Catalogo.Domain.Models;
 
 namespace Suplee.Catalogo.Api.Configurations.AutoMapper
@@ -13,6 +13,11 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
         /// Construtor do mapeamento
         /// </summary>
         public InputModelToDomainProfile()
+        {
+            MapeiaContextoCatalogo();
+        }
+
+        private void MapeiaContextoCatalogo()
         {
             CreateMap<CompostoNutricionalInputModel, CompostoNutricional>()
                 .ForMember(f => f.Composto, opt => opt.MapFrom(m => m.Composto))

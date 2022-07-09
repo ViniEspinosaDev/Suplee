@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Suplee.Catalogo.Api.Controllers.ViewModels;
+using Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels;
 using Suplee.Catalogo.Domain.Models;
 using System.Linq;
 
@@ -15,11 +15,16 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
         /// </summary>
         public DomainToViewModelProfile()
         {
+            MapeiaContextoCatalogo();
+        }
+
+        private void MapeiaContextoCatalogo()
+        {
             CreateMap<CompostoNutricional, CompostoNutricionalViewModel>()
-                .ForMember(i => i.Composto, opt => opt.MapFrom(m => m.Composto))
-                .ForMember(i => i.Porcao, opt => opt.MapFrom(m => m.Porcao))
-                .ForMember(i => i.ValorDiario, opt => opt.MapFrom(m => m.ValorDiario))
-                .ForMember(i => i.Ordem, opt => opt.MapFrom(m => m.Ordem));
+               .ForMember(i => i.Composto, opt => opt.MapFrom(m => m.Composto))
+               .ForMember(i => i.Porcao, opt => opt.MapFrom(m => m.Porcao))
+               .ForMember(i => i.ValorDiario, opt => opt.MapFrom(m => m.ValorDiario))
+               .ForMember(i => i.Ordem, opt => opt.MapFrom(m => m.Ordem));
 
 
             CreateMap<InformacaoNutricional, InformacaoNutricionalViewModel>()
@@ -46,7 +51,6 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.NomeCategoria, opt => opt.MapFrom(m => m.Categoria.Nome))
                 .ForMember(i => i.NomeEfeito, opt => opt.MapFrom(m => m.Efeitos.Select(x => x.Efeito.Nome)))
                 .ForMember(i => i.Imagem, opt => opt.MapFrom(m => m.Imagens.FirstOrDefault().Url));
-
         }
     }
 }

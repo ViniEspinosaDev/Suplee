@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Suplee.Catalogo.Api.Controllers.ViewModels
+namespace Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels
 {
     /// <summary>
     /// Objeto de saída do Produto resumido

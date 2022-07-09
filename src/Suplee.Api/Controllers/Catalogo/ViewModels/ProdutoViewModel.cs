@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Suplee.Catalogo.Api.Controllers.InputModels
+namespace Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels
 {
     /// <summary>
-    /// Entrada do Produto
+    /// Objeto de saída do Produto
     /// </summary>
-    public class ProdutoInputModel
+    public class ProdutoViewModel
     {
+        /// <summary>
+        /// Identificador
+        /// </summary>
+        public Guid Id { get; set; }
+
         /// <summary>
         /// Nome
         /// </summary>
@@ -34,21 +39,6 @@ namespace Suplee.Catalogo.Api.Controllers.InputModels
         public decimal Preco { get; set; }
 
         /// <summary>
-        /// Medida de Profundidade da embalagem
-        /// </summary>
-        public decimal Profundidade { get; set; }
-
-        /// <summary>
-        /// Medida de Altura da embalagem
-        /// </summary>
-        public decimal Altura { get; set; }
-
-        /// <summary>
-        /// Medida de Largura da embalagem
-        /// </summary>
-        public decimal Largura { get; set; }
-
-        /// <summary>
         /// Id da Categoria
         /// </summary>
         public Guid CategoriaId { get; set; }
@@ -64,15 +54,15 @@ namespace Suplee.Catalogo.Api.Controllers.InputModels
         public List<Guid> Efeitos { get; set; }
 
         /// <summary>
-        /// Tabela com Informação Nutricional
+        /// Tabela de Informação Nutricional
         /// </summary>
-        public InformacaoNutricionalInputModel InformacaoNutricional { get; set; }
+        public InformacaoNutricionalViewModel InformacaoNutricional { get; set; }
     }
 
     /// <summary>
-    /// Entrada da Informacao nutricional
+    /// Objeto de saída da Informação Nutricional
     /// </summary>
-    public class InformacaoNutricionalInputModel
+    public class InformacaoNutricionalViewModel
     {
         /// <summary>
         /// Ex: Porção de 50g (1 unidade)
@@ -87,13 +77,13 @@ namespace Suplee.Catalogo.Api.Controllers.InputModels
         /// <summary>
         /// Linhas com Compostos Nutricionais. Ex: Carboidrato | 19g | 2
         /// </summary>
-        public List<CompostoNutricionalInputModel> CompostosNutricionais { get; set; }
+        public List<CompostoNutricionalViewModel> CompostosNutricionais { get; set; }
     }
 
     /// <summary>
-    /// Entrada do Composto nutricional
+    /// Objeto de saída do Composto Nutricional
     /// </summary>
-    public class CompostoNutricionalInputModel
+    public class CompostoNutricionalViewModel
     {
         /// <summary>
         /// Exemplo: Vitamina B12, Valor energético, Sódio
@@ -109,5 +99,10 @@ namespace Suplee.Catalogo.Api.Controllers.InputModels
         /// Exemplo: 9, 6, 2
         /// </summary>
         public string ValorDiario { get; set; }
+
+        /// <summary>
+        /// Informar a ordem na Tabela Nutricional
+        /// </summary>
+        public int Ordem { get; set; }
     }
 }

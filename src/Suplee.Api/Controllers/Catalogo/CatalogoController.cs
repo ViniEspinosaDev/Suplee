@@ -2,26 +2,28 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Suplee.Catalogo.Api.Controllers.InputModels;
-using Suplee.Catalogo.Api.Controllers.ViewModels;
+using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
+using Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels;
 using Suplee.Catalogo.Domain.Commands;
 using Suplee.Catalogo.Domain.Interfaces;
 using Suplee.Catalogo.Domain.Models;
 using Suplee.Catalogo.Domain.ValueObjects;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
+using Suplee.Identidade.Domain.Enums;
+using Suplee.Identidade.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Suplee.Catalogo.Api.Controllers
+namespace Suplee.Catalogo.Api.Controllers.Catalogo
 {
     /// <summary>
     /// Endpoints do Catalogo
     /// </summary>
-    [Route("api/[controller]")]
     [Authorize]
-    public class CatalogoController : ControllerBase
+    [Route("api/[controller]")]
+    public class CatalogoController : MainController
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly IMapper _mapper;
@@ -36,11 +38,13 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="mediatorHandler"></param>
         /// <param name="produtoRepository"></param>
         /// <param name="mapper"></param>
+        /// <param name="usuario"></param>
         public CatalogoController(
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler,
+            IUsuario usuario,
             IProdutoRepository produtoRepository,
-            IMapper mapper) : base(notifications, mediatorHandler)
+            IMapper mapper) : base(notifications, mediatorHandler, usuario)
         {
             _mediatorHandler = mediatorHandler;
             _produtoRepository = produtoRepository;
@@ -54,8 +58,8 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="pagina"></param>
         /// <param name="quantidade"></param>
         /// <returns></returns>
-        [HttpGet("produtos/nome")]
         [AllowAnonymous]
+        [HttpGet("produtos/nome")]
         public async Task<ActionResult> ObterProdutosPeloNome(
             [FromQuery] string nome,
             [FromQuery] int? pagina,
@@ -90,8 +94,8 @@ namespace Suplee.Catalogo.Api.Controllers
         /// </summary>
         /// <param name="produtoId"></param>
         /// <returns></returns>
-        [HttpGet("{produtoId}")]
         [AllowAnonymous]
+        [HttpGet("{produtoId}")]
         public async Task<ActionResult> ObterProduto(Guid produtoId)
         {
             if (produtoId == Guid.Empty)
@@ -115,8 +119,8 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="pagina"></param>
         /// <param name="quantidade"></param>
         /// <returns></returns>
-        [HttpGet("produtos/id-efeito")]
         [AllowAnonymous]
+        [HttpGet("produtos/id-efeito")]
         public async Task<ActionResult> ObterProdutoPorIdEfeito(
             [FromQuery] Guid efeitoId,
             [FromQuery] int? pagina,
@@ -150,8 +154,8 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="pagina"></param>
         /// <param name="quantidade"></param>
         /// <returns></returns>
-        [HttpGet("produtos/nome-efeito")]
         [AllowAnonymous]
+        [HttpGet("produtos/nome-efeito")]
         public async Task<ActionResult> ObterProdutoPorNomeEfeito(
             [FromQuery] string nomeEfeito,
             [FromQuery] int? pagina,
@@ -185,8 +189,8 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="pagina"></param>
         /// <param name="quantidade"></param>
         /// <returns></returns>
-        [HttpGet("produtos/id-categoria")]
         [AllowAnonymous]
+        [HttpGet("produtos/id-categoria")]
         public async Task<ActionResult> ObterProdutoPorIdCategoria(
             [FromQuery] Guid categoriaId,
             [FromQuery] int? pagina,
@@ -220,8 +224,8 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="pagina"></param>
         /// <param name="quantidade"></param>
         /// <returns></returns>
-        [HttpGet("produtos/nome-categoria")]
         [AllowAnonymous]
+        [HttpGet("produtos/nome-categoria")]
         public async Task<ActionResult> ObterProdutoPorNomeCategoria(
             [FromQuery] string nomeCategoria,
             [FromQuery] int? pagina,
@@ -252,8 +256,8 @@ namespace Suplee.Catalogo.Api.Controllers
         /// Obter todos os produtos sem filtro
         /// </summary>
         /// <returns></returns>
-        [HttpGet("produtos")]
         [AllowAnonymous]
+        [HttpGet("produtos")]
         public async Task<ActionResult> ObterProdutos(
             [FromQuery] int? pagina,
             [FromQuery] int? quantidade)
@@ -282,8 +286,8 @@ namespace Suplee.Catalogo.Api.Controllers
         /// Obter todos os efeitos
         /// </summary>
         /// <returns></returns>
-        [HttpGet("efeitos")]
         [AllowAnonymous]
+        [HttpGet("efeitos")]
         public async Task<ActionResult> ObterEfeitos()
         {
             var efeitos = await _produtoRepository.ObterEfeitos();
@@ -298,8 +302,8 @@ namespace Suplee.Catalogo.Api.Controllers
         /// Obter todas as categorias
         /// </summary>
         /// <returns></returns>
-        [HttpGet("categorias")]
         [AllowAnonymous]
+        [HttpGet("categorias")]
         public async Task<ActionResult> ObterCategorias()
         {
             var efeitos = await _produtoRepository.ObterCategorias();
@@ -315,10 +319,15 @@ namespace Suplee.Catalogo.Api.Controllers
         /// </summary>
         /// <param name="produtoInputModel"></param>
         /// <returns></returns>
-        [HttpPost("produto")]
         [AllowAnonymous]
+        [HttpPost("produto")]
         public async Task<ActionResult> CriarProduto(ProdutoInputModel produtoInputModel)
         {
+            bool usuarioNaoRoboOuAdm = _usuario.TipoUsuario != ETipoUsuario.Administrador && _usuario.TipoUsuario != ETipoUsuario.Robo;
+
+            if (usuarioNaoRoboOuAdm)
+                return Forbid();
+
             var informacaoNutricional = _mapper.Map<InformacaoNutricional>(produtoInputModel.InformacaoNutricional);
 
             informacaoNutricional.MapearCompostosNutricionais();

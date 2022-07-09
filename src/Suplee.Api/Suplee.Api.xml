@@ -24,12 +24,12 @@
             Construtor do mapeamento
             </summary>
         </member>
-        <member name="T:Suplee.Catalogo.Api.Controllers.CatalogoController">
+        <member name="T:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController">
             <summary>
             Endpoints do Catalogo
             </summary>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Catalogo.Domain.Interfaces.IProdutoRepository,AutoMapper.IMapper)">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuario,Suplee.Catalogo.Domain.Interfaces.IProdutoRepository,AutoMapper.IMapper)">
             <summary>
             Construtor do Catalogo
             </summary>
@@ -37,8 +37,9 @@
             <param name="mediatorHandler"></param>
             <param name="produtoRepository"></param>
             <param name="mapper"></param>
+            <param name="usuario"></param>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProdutosPeloNome(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterProdutosPeloNome(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
             Obter produtos por nome
             </summary>
@@ -47,14 +48,14 @@
             <param name="quantidade"></param>
             <returns></returns>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProduto(System.Guid)">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterProduto(System.Guid)">
             <summary>
             Obter todas as informações de um produto
             </summary>
             <param name="produtoId"></param>
             <returns></returns>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProdutoPorIdEfeito(System.Guid,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterProdutoPorIdEfeito(System.Guid,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
             Obter produtos por id do Efeito
             </summary>
@@ -63,7 +64,7 @@
             <param name="quantidade"></param>
             <returns></returns>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProdutoPorNomeEfeito(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterProdutoPorNomeEfeito(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
             Obter produtos por nome do Efeito
             </summary>
@@ -72,7 +73,7 @@
             <param name="quantidade"></param>
             <returns></returns>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProdutoPorIdCategoria(System.Guid,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterProdutoPorIdCategoria(System.Guid,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
             Obter produtos por id da Categoria
             </summary>
@@ -81,7 +82,7 @@
             <param name="quantidade"></param>
             <returns></returns>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProdutoPorNomeCategoria(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterProdutoPorNomeCategoria(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
             Obter produtos por nome da Categoria
             </summary>
@@ -90,305 +91,501 @@
             <param name="quantidade"></param>
             <returns></returns>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterProdutos(System.Nullable{System.Int32},System.Nullable{System.Int32})">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterProdutos(System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
             Obter todos os produtos sem filtro
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterEfeitos">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterEfeitos">
             <summary>
             Obter todos os efeitos
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.ObterCategorias">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterCategorias">
             <summary>
             Obter todas as categorias
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.CatalogoController.CriarProduto(Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel)">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.CriarProduto(Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel)">
             <summary>
             Criar produto
             </summary>
             <param name="produtoInputModel"></param>
             <returns></returns>
         </member>
-        <member name="T:Suplee.Catalogo.Api.Controllers.ControllerBase">
+        <member name="T:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel">
+            <summary>
+            Entrada do Produto
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.Nome">
+            <summary>
+            Nome
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.Descricao">
+            <summary>
+            Descrição
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.Composicao">
+            <summary>
+            Composição
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.QuantidadeDisponivel">
+            <summary>
+            Quantidade em estoque
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.Preco">
+            <summary>
+            Preço
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.Profundidade">
+            <summary>
+            Medida de Profundidade da embalagem
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.Altura">
+            <summary>
+            Medida de Altura da embalagem
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.Largura">
+            <summary>
+            Medida de Largura da embalagem
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.CategoriaId">
+            <summary>
+            Id da Categoria
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.Imagens">
+            <summary>
+            Imagens em Base64
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.Efeitos">
+            <summary>
+            Lista de Id dos Efeitos
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.InformacaoNutricional">
+            <summary>
+            Tabela com Informação Nutricional
+            </summary>
+        </member>
+        <member name="T:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.InformacaoNutricionalInputModel">
+            <summary>
+            Entrada da Informacao nutricional
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.InformacaoNutricionalInputModel.Cabecalho">
+            <summary>
+            Ex: Porção de 50g (1 unidade)
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.InformacaoNutricionalInputModel.Legenda">
+            <summary>
+            Exemplo: "% Valores Diários com base em uma dieta de 2000Kcal ou 8400KJ. Seus valores diários..."
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.InformacaoNutricionalInputModel.CompostosNutricionais">
+            <summary>
+            Linhas com Compostos Nutricionais. Ex: Carboidrato | 19g | 2
+            </summary>
+        </member>
+        <member name="T:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.CompostoNutricionalInputModel">
+            <summary>
+            Entrada do Composto nutricional
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.CompostoNutricionalInputModel.Composto">
+            <summary>
+            Exemplo: Vitamina B12, Valor energético, Sódio
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.CompostoNutricionalInputModel.Porcao">
+            <summary>
+            Exemplo: 200 Kcal= 900 KJ, 19g
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.CompostoNutricionalInputModel.ValorDiario">
+            <summary>
+            Exemplo: 9, 6, 2
+            </summary>
+        </member>
+        <member name="T:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoResumidoViewModel">
+            <summary>
+            Objeto de saída do Produto resumido
+            </summary>
+        </member>
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoResumidoViewModel.#ctor">
+            <summary>
+            Construtor
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoResumidoViewModel.Id">
+            <summary>
+            Identificador
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoResumidoViewModel.Nome">
+            <summary>
+            Nome
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoResumidoViewModel.Preco">
+            <summary>
+            Preço
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoResumidoViewModel.NomeCategoria">
+            <summary>
+            Nome da Categoria
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoResumidoViewModel.NomeEfeito">
+            <summary>
+            Lista de nomes dos Efeitos
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoResumidoViewModel.Imagem">
+            <summary>
+            URL da Imagem principal
+            </summary>
+        </member>
+        <member name="T:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoViewModel">
+            <summary>
+            Objeto de saída do Produto
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoViewModel.Id">
+            <summary>
+            Identificador
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoViewModel.Nome">
+            <summary>
+            Nome
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoViewModel.Descricao">
+            <summary>
+            Descrição
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoViewModel.Composicao">
+            <summary>
+            Composição
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoViewModel.QuantidadeDisponivel">
+            <summary>
+            Quantidade em estoque
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoViewModel.Preco">
+            <summary>
+            Preço
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoViewModel.CategoriaId">
+            <summary>
+            Id da Categoria
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoViewModel.Imagens">
+            <summary>
+            Imagens em Base64
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoViewModel.Efeitos">
+            <summary>
+            Lista de Id dos Efeitos
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoViewModel.InformacaoNutricional">
+            <summary>
+            Tabela de Informação Nutricional
+            </summary>
+        </member>
+        <member name="T:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.InformacaoNutricionalViewModel">
+            <summary>
+            Objeto de saída da Informação Nutricional
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.InformacaoNutricionalViewModel.Cabecalho">
+            <summary>
+            Ex: Porção de 50g (1 unidade)
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.InformacaoNutricionalViewModel.Legenda">
+            <summary>
+            Exemplo: "% Valores Diários com base em uma dieta de 2000Kcal ou 8400KJ. Seus valores diários..."
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.InformacaoNutricionalViewModel.CompostosNutricionais">
+            <summary>
+            Linhas com Compostos Nutricionais. Ex: Carboidrato | 19g | 2
+            </summary>
+        </member>
+        <member name="T:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.CompostoNutricionalViewModel">
+            <summary>
+            Objeto de saída do Composto Nutricional
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.CompostoNutricionalViewModel.Composto">
+            <summary>
+            Exemplo: Vitamina B12, Valor energético, Sódio
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.CompostoNutricionalViewModel.Porcao">
+            <summary>
+            Exemplo: 200 Kcal= 900 KJ, 19g
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.CompostoNutricionalViewModel.ValorDiario">
+            <summary>
+            Exemplo: 9, 6, 2
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.CompostoNutricionalViewModel.Ordem">
+            <summary>
+            Informar a ordem na Tabela Nutricional
+            </summary>
+        </member>
+        <member name="T:Suplee.Catalogo.Api.Controllers.MainController">
             <summary>
             Controler base
             </summary>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.ControllerBase.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler)">
+        <member name="F:Suplee.Catalogo.Api.Controllers.MainController._usuario">
+            <summary>
+            Informações do usuário logado
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.MainController.UsuarioId">
+            <summary>
+            Id do usuário logado
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.MainController.UsuarioAutenticado">
+            <summary>
+            Usuário está logado
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.MainController.AcessoAdministrador">
+            <summary>
+            Usuário logado possuí acesso adminitrador
+            </summary>
+        </member>
+        <member name="M:Suplee.Catalogo.Api.Controllers.MainController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuario)">
             <summary>
             Construtor
             </summary>
             <param name="notifications"></param>
             <param name="mediatorHandler"></param>
+            <param name="usuario"></param>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.ControllerBase.OperacaoValida">
+        <member name="M:Suplee.Catalogo.Api.Controllers.MainController.OperacaoValida">
             <summary>
             Método que retorna se operação foi invalidada
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.ControllerBase.ObterMensagensErro">
+        <member name="M:Suplee.Catalogo.Api.Controllers.MainController.ObterMensagensErro">
             <summary>
             Metodo que retorna mensagens de erro
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.ControllerBase.NotificarErro(System.String,System.String)">
+        <member name="M:Suplee.Catalogo.Api.Controllers.MainController.NotificarErro(System.String,System.String)">
             <summary>
             Metodo que notifica erro
             </summary>
             <param name="codigo"></param>
             <param name="mensagem"></param>
         </member>
-        <member name="T:Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel">
+        <member name="M:Suplee.Catalogo.Api.Controllers.MainController.CustomResponse(System.Object)">
             <summary>
-            Entrada do Produto
+            Retorna resposta genérica
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Suplee.Catalogo.Api.Program">
+            <summary>
+            Program class
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel.Nome">
+        <member name="M:Suplee.Catalogo.Api.Program.Main(System.String[])">
             <summary>
-            Nome
+            Main
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Suplee.Catalogo.Api.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Create host builder
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Suplee.Catalogo.Api.Startup">
+            <summary>
+            Startup class
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel.Descricao">
+        <member name="M:Suplee.Catalogo.Api.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
-            Descrição
+            Startup's constructor
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:Suplee.Catalogo.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            // This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:Suplee.Catalogo.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+        <member name="T:Suplee.Api.Configurations.ConfiguracaoNativeInjector">
+            <summary>
+            Injeta as dependencias das configurações
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel.Composicao">
+        <member name="M:Suplee.Api.Configurations.ConfiguracaoNativeInjector.ConfigurarDependencias(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Composição
+            Injeta as dependencias das configurações
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel.QuantidadeDisponivel">
+        <member name="T:Suplee.Api.Controllers.Identidade.IdentidadeController">
             <summary>
-            Quantidade em estoque
+            Endpoints de identidade
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel.Preco">
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuario,Microsoft.Extensions.Options.IOptions{Suplee.Identidade.Domain.Models.ConfiguracaoAplicacao})">
             <summary>
-            Preço
+            Construtor de identidade
+            </summary>
+            <param name="notifications"></param>
+            <param name="mediatorHandler"></param>
+            <param name="usuario"></param>
+            <param name="appSettings"></param>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.NovaConta(Suplee.Api.Controllers.Identidade.InputModel.NovaContaInputModel)">
+            <summary>
+            Criar nova conta
+            </summary>
+            <param name="novaConta"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Suplee.Api.Extensions.AspNetUser">
+            <summary>
+            Recupera informações do token
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel.Profundidade">
-            <summary>
-            Medida de Profundidade da embalagem
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel.Altura">
-            <summary>
-            Medida de Altura da embalagem
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel.Largura">
-            <summary>
-            Medida de Largura da embalagem
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel.CategoriaId">
-            <summary>
-            Id da Categoria
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel.Imagens">
-            <summary>
-            Imagens em Base64
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel.Efeitos">
-            <summary>
-            Lista de Id dos Efeitos
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.ProdutoInputModel.InformacaoNutricional">
-            <summary>
-            Tabela com Informação Nutricional
-            </summary>
-        </member>
-        <member name="T:Suplee.Catalogo.Api.Controllers.InputModels.InformacaoNutricionalInputModel">
-            <summary>
-            Entrada da Informacao nutricional
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.InformacaoNutricionalInputModel.Cabecalho">
-            <summary>
-            Ex: Porção de 50g (1 unidade)
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.InformacaoNutricionalInputModel.Legenda">
-            <summary>
-            Exemplo: "% Valores Diários com base em uma dieta de 2000Kcal ou 8400KJ. Seus valores diários..."
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.InformacaoNutricionalInputModel.CompostosNutricionais">
-            <summary>
-            Linhas com Compostos Nutricionais. Ex: Carboidrato | 19g | 2
-            </summary>
-        </member>
-        <member name="T:Suplee.Catalogo.Api.Controllers.InputModels.CompostoNutricionalInputModel">
-            <summary>
-            Entrada do Composto nutricional
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.CompostoNutricionalInputModel.Composto">
-            <summary>
-            Exemplo: Vitamina B12, Valor energético, Sódio
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.CompostoNutricionalInputModel.Porcao">
-            <summary>
-            Exemplo: 200 Kcal= 900 KJ, 19g
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.InputModels.CompostoNutricionalInputModel.ValorDiario">
-            <summary>
-            Exemplo: 9, 6, 2
-            </summary>
-        </member>
-        <member name="T:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoResumidoViewModel">
-            <summary>
-            Objeto de saída do Produto resumido
-            </summary>
-        </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoResumidoViewModel.#ctor">
+        <member name="M:Suplee.Api.Extensions.AspNetUser.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
             <summary>
             Construtor
             </summary>
+            <param name="accessor"></param>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoResumidoViewModel.Id">
+        <member name="P:Suplee.Api.Extensions.AspNetUser.UsuarioId">
             <summary>
-            Identificador
+            Id do usuário
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoResumidoViewModel.Nome">
+        <member name="P:Suplee.Api.Extensions.AspNetUser.Nome">
             <summary>
-            Nome
+            Nome do usuário
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoResumidoViewModel.Preco">
+        <member name="P:Suplee.Api.Extensions.AspNetUser.Email">
             <summary>
-            Preço
+            E-mail do usuário
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoResumidoViewModel.NomeCategoria">
+        <member name="P:Suplee.Api.Extensions.AspNetUser.TipoUsuario">
             <summary>
-            Nome da Categoria
+            Tipo do usuário (Normal, Adm, Robo)
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoResumidoViewModel.NomeEfeito">
+        <member name="M:Suplee.Api.Extensions.AspNetUser.EstaAutenticado">
             <summary>
-            Lista de nomes dos Efeitos
+            Verifica se usuário está logado
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Suplee.Api.Extensions.ClaimsPrincipalExtensions">
+            <summary>
+            Extensões para Claim
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoResumidoViewModel.Imagem">
+        <member name="M:Suplee.Api.Extensions.ClaimsPrincipalExtensions.RecuperarIdUsuario(System.Security.Claims.ClaimsPrincipal)">
             <summary>
-            URL da Imagem principal
+            Recupera id do usuário do token
+            </summary>
+            <param name="principal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Extensions.ClaimsPrincipalExtensions.RecuperarNomeUsuario(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Recupera nome do usuário do Token
+            </summary>
+            <param name="principal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Extensions.ClaimsPrincipalExtensions.RecuperarEmailUsuario(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Recupera e-mail do usuário do Token
+            </summary>
+            <param name="principal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Extensions.ClaimsPrincipalExtensions.RecuperarTipoUsuario(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Recupera tipo do usuário do Token
+            </summary>
+            <param name="principal"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Suplee.Api.Extensions.ClaimTypeExtension">
+            <summary>
+            Constantes para salvar no token
             </summary>
         </member>
-        <member name="T:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoViewModel">
+        <member name="F:Suplee.Api.Extensions.ClaimTypeExtension.UsuarioId">
             <summary>
-            Objeto de saída do Produto
+            Id do usuário
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoViewModel.Id">
+        <member name="F:Suplee.Api.Extensions.ClaimTypeExtension.Nome">
             <summary>
-            Identificador
+            Nome do usuário
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoViewModel.Nome">
+        <member name="F:Suplee.Api.Extensions.ClaimTypeExtension.Email">
             <summary>
-            Nome
+            E-mail do usuário
             </summary>
         </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoViewModel.Descricao">
+        <member name="F:Suplee.Api.Extensions.ClaimTypeExtension.TipoUsuario">
             <summary>
-            Descrição
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoViewModel.Composicao">
-            <summary>
-            Composição
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoViewModel.QuantidadeDisponivel">
-            <summary>
-            Quantidade em estoque
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoViewModel.Preco">
-            <summary>
-            Preço
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoViewModel.CategoriaId">
-            <summary>
-            Id da Categoria
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoViewModel.Imagens">
-            <summary>
-            Imagens em Base64
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoViewModel.Efeitos">
-            <summary>
-            Lista de Id dos Efeitos
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.ProdutoViewModel.InformacaoNutricional">
-            <summary>
-            Tabela de Informação Nutricional
-            </summary>
-        </member>
-        <member name="T:Suplee.Catalogo.Api.Controllers.ViewModels.InformacaoNutricionalViewModel">
-            <summary>
-            Objeto de saída da Informação Nutricional
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.InformacaoNutricionalViewModel.Cabecalho">
-            <summary>
-            Ex: Porção de 50g (1 unidade)
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.InformacaoNutricionalViewModel.Legenda">
-            <summary>
-            Exemplo: "% Valores Diários com base em uma dieta de 2000Kcal ou 8400KJ. Seus valores diários..."
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.InformacaoNutricionalViewModel.CompostosNutricionais">
-            <summary>
-            Linhas com Compostos Nutricionais. Ex: Carboidrato | 19g | 2
-            </summary>
-        </member>
-        <member name="T:Suplee.Catalogo.Api.Controllers.ViewModels.CompostoNutricionalViewModel">
-            <summary>
-            Objeto de saída do Composto Nutricional
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.CompostoNutricionalViewModel.Composto">
-            <summary>
-            Exemplo: Vitamina B12, Valor energético, Sódio
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.CompostoNutricionalViewModel.Porcao">
-            <summary>
-            Exemplo: 200 Kcal= 900 KJ, 19g
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.CompostoNutricionalViewModel.ValorDiario">
-            <summary>
-            Exemplo: 9, 6, 2
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.ViewModels.CompostoNutricionalViewModel.Ordem">
-            <summary>
-            Informar a ordem na Tabela Nutricional
+            Tipo do usuário
             </summary>
         </member>
     </members>

@@ -17,11 +17,13 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Suplee.Catalogo.CrossCuttingIoC\Suplee.Catalogo.CrossCuttingIoC.csproj" />
     <ProjectReference Include="..\Suplee.ExternalService.CrossCuttingIoC\Suplee.ExternalService.CrossCuttingIoC.csproj" />
+    <ProjectReference Include="..\Suplee.Identidade.Domain\Suplee.Identidade.Domain.csproj" />
   </ItemGroup>
 
 
