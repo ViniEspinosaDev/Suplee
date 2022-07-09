@@ -52,6 +52,7 @@ namespace Suplee.Identidade.CrossCuttingIoC
         private static void ConfigurarDependenciasBancoDados(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AutenticacaoDbContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConexaoSQL)));
+            //services.AddDbContext<AutenticacaoDbContext>(options => options.UseInMemoryDatabase("database"));
 
             services
                 .AddDefaultIdentity<IdentityUser>()

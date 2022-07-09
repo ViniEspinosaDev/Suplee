@@ -449,6 +449,11 @@
             </summary>
             <param name="configuration"></param>
         </member>
+        <member name="P:Suplee.Catalogo.Api.Startup.Configuration">
+            <summary>
+            Appsettings.json
+            </summary>
+        </member>
         <member name="M:Suplee.Catalogo.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             // This method gets called by the runtime. Use this method to add services to the container.

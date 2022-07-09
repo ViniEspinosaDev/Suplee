@@ -256,7 +256,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// Obter todos os produtos sem filtro
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
         [HttpGet("produtos")]
         public async Task<ActionResult> ObterProdutos(
             [FromQuery] int? pagina,

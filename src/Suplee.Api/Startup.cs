@@ -5,10 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Suplee.Api.Configurations;
 using Suplee.Catalogo.Api.Configurations.AutoMapper;
 using Suplee.Catalogo.CrossCuttingIoC;
 using Suplee.ExternalService.CrossCuttingIoC;
 using Suplee.ExternalService.Imgbb.DTO;
+using Suplee.Identidade.CrossCuttingIoC;
 using System;
 using System.IO;
 using System.Reflection;
@@ -29,6 +31,9 @@ namespace Suplee.Catalogo.Api
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Appsettings.json
+        /// </summary>
         public IConfiguration Configuration { get; }
 
         /// <summary>
@@ -44,8 +49,11 @@ namespace Suplee.Catalogo.Api
 
             services.Configure<ImgbbConfiguracao>(Configuration.GetSection("ExternalService:Imgbb"));
 
+            services.ConfigurarDependencias();
+
             NativeInjectionCatalogo.ConfigurarDependencias(services, Configuration);
             NativeInjectionExternalService.ConfigurarDependencias(services, Configuration);
+            IdentidadeNativeInjector.ConfigurarDependencias(services, Configuration);
 
             services.AddSwaggerGen(options =>
             {
@@ -93,6 +101,8 @@ namespace Suplee.Catalogo.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
