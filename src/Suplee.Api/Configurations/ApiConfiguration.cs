@@ -39,12 +39,15 @@ namespace Suplee.Api.Configurations
 
             services.AddCors(options =>
             {
-                options.AddPolicy("Development",
+                options.AddPolicy("AllowAll",
                     builder =>
+                    {
                         builder
                         .AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader());
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                    });
             });
 
             return services;
