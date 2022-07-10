@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Suplee.Identidade.CrossCuttingIoC
 {
-    public static class IdentidadeNativeInjector
+    public static class IdentidadeNativeInjection
     {
         const string ConexaoSQL = "SqlConnection";
 

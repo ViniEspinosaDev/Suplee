@@ -13,7 +13,7 @@ using Suplee.EventSourcing;
 
 namespace Suplee.Catalogo.CrossCuttingIoC
 {
-    public static class NativeInjectionCatalogo
+    public static class CatalogoNativeInjection
     {
         const string ConexaoSQL = "SqlConnection";
 

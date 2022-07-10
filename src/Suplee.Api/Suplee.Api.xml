@@ -4,6 +4,209 @@
         <name>Suplee.Api</name>
     </assembly>
     <members>
+        <member name="T:Suplee.Api.Configurations.ApiConfiguration">
+            <summary>
+            Configuração da API
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Configurations.ApiConfiguration.AddApiConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adiciona a configuração da API
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Configurations.ApiConfiguration.UseApiConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Usar a configuração da API
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Configurations.ConfiguracaoNativeInjector">
+            <summary>
+            Injeta as dependencias das configurações
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Configurations.ConfiguracaoNativeInjector.ConfigurarDependencias(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Injeta as dependencias das configurações
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Configurations.SwaggerConfiguration">
+            <summary>
+            Configuração do Swagger
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Configurations.SwaggerConfiguration.AddSwaggerConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adiciona a configuração do Swagger
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Configurations.SwaggerConfiguration.UseSwaggerConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Usa a configuração do Swagger
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Configurations.ConfigureSwaggerOptions">
+            <summary>
+            Configura link do swagger
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Configurations.ConfigureSwaggerOptions.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="provider"></param>
+        </member>
+        <member name="M:Suplee.Api.Configurations.ConfigureSwaggerOptions.Configure(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
+            <summary>
+            Configura
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="T:Suplee.Api.Configurations.SwaggerDefaultValues">
+            <summary>
+            Swagger valores padrões
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Configurations.SwaggerDefaultValues.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Aplica
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:Suplee.Api.Configurations.SwaggerAuthorizedMiddleware">
+            <summary>
+            Autorização swagger middleware
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Configurations.SwaggerAuthorizedMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="next"></param>
+        </member>
+        <member name="M:Suplee.Api.Configurations.SwaggerAuthorizedMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Configura autorização
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Identidade.IdentidadeController">
+            <summary>
+            Endpoints de identidade
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuario,Microsoft.Extensions.Options.IOptions{Suplee.Identidade.Domain.Models.ConfiguracaoAplicacao})">
+            <summary>
+            Construtor de identidade
+            </summary>
+            <param name="notifications"></param>
+            <param name="mediatorHandler"></param>
+            <param name="usuario"></param>
+            <param name="appSettings"></param>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.NovaConta(Suplee.Api.Controllers.Identidade.InputModel.NovaContaInputModel)">
+            <summary>
+            Criar nova conta
+            </summary>
+            <param name="novaConta"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Suplee.Api.Extensions.AspNetUser">
+            <summary>
+            Recupera informações do token
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Extensions.AspNetUser.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="accessor"></param>
+        </member>
+        <member name="P:Suplee.Api.Extensions.AspNetUser.UsuarioId">
+            <summary>
+            Id do usuário
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Extensions.AspNetUser.Nome">
+            <summary>
+            Nome do usuário
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Extensions.AspNetUser.Email">
+            <summary>
+            E-mail do usuário
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Extensions.AspNetUser.TipoUsuario">
+            <summary>
+            Tipo do usuário (Normal, Adm, Robo)
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Extensions.AspNetUser.EstaAutenticado">
+            <summary>
+            Verifica se usuário está logado
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Suplee.Api.Extensions.ClaimsPrincipalExtensions">
+            <summary>
+            Extensões para Claim
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Extensions.ClaimsPrincipalExtensions.RecuperarIdUsuario(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Recupera id do usuário do token
+            </summary>
+            <param name="principal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Extensions.ClaimsPrincipalExtensions.RecuperarNomeUsuario(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Recupera nome do usuário do Token
+            </summary>
+            <param name="principal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Extensions.ClaimsPrincipalExtensions.RecuperarEmailUsuario(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Recupera e-mail do usuário do Token
+            </summary>
+            <param name="principal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Extensions.ClaimsPrincipalExtensions.RecuperarTipoUsuario(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Recupera tipo do usuário do Token
+            </summary>
+            <param name="principal"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Suplee.Api.Extensions.ClaimTypeExtension">
+            <summary>
+            Constantes para salvar no token
+            </summary>
+        </member>
+        <member name="F:Suplee.Api.Extensions.ClaimTypeExtension.UsuarioId">
+            <summary>
+            Id do usuário
+            </summary>
+        </member>
+        <member name="F:Suplee.Api.Extensions.ClaimTypeExtension.Nome">
+            <summary>
+            Nome do usuário
+            </summary>
+        </member>
+        <member name="F:Suplee.Api.Extensions.ClaimTypeExtension.Email">
+            <summary>
+            E-mail do usuário
+            </summary>
+        </member>
+        <member name="F:Suplee.Api.Extensions.ClaimTypeExtension.TipoUsuario">
+            <summary>
+            Tipo do usuário
+            </summary>
+        </member>
         <member name="T:Suplee.Catalogo.Api.Configurations.AutoMapper.DomainToViewModelProfile">
             <summary>
             Mapeamento das entidades para View Model
@@ -460,138 +663,12 @@
             </summary>
             <param name="services"></param>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="M:Suplee.Catalogo.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
             <summary>
             This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             </summary>
             <param name="app"></param>
             <param name="env"></param>
-        </member>
-        <member name="T:Suplee.Api.Configurations.ConfiguracaoNativeInjector">
-            <summary>
-            Injeta as dependencias das configurações
-            </summary>
-        </member>
-        <member name="M:Suplee.Api.Configurations.ConfiguracaoNativeInjector.ConfigurarDependencias(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            Injeta as dependencias das configurações
-            </summary>
-        </member>
-        <member name="T:Suplee.Api.Controllers.Identidade.IdentidadeController">
-            <summary>
-            Endpoints de identidade
-            </summary>
-        </member>
-        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuario,Microsoft.Extensions.Options.IOptions{Suplee.Identidade.Domain.Models.ConfiguracaoAplicacao})">
-            <summary>
-            Construtor de identidade
-            </summary>
-            <param name="notifications"></param>
-            <param name="mediatorHandler"></param>
-            <param name="usuario"></param>
-            <param name="appSettings"></param>
-        </member>
-        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.NovaConta(Suplee.Api.Controllers.Identidade.InputModel.NovaContaInputModel)">
-            <summary>
-            Criar nova conta
-            </summary>
-            <param name="novaConta"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Suplee.Api.Extensions.AspNetUser">
-            <summary>
-            Recupera informações do token
-            </summary>
-        </member>
-        <member name="M:Suplee.Api.Extensions.AspNetUser.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
-            <summary>
-            Construtor
-            </summary>
-            <param name="accessor"></param>
-        </member>
-        <member name="P:Suplee.Api.Extensions.AspNetUser.UsuarioId">
-            <summary>
-            Id do usuário
-            </summary>
-        </member>
-        <member name="P:Suplee.Api.Extensions.AspNetUser.Nome">
-            <summary>
-            Nome do usuário
-            </summary>
-        </member>
-        <member name="P:Suplee.Api.Extensions.AspNetUser.Email">
-            <summary>
-            E-mail do usuário
-            </summary>
-        </member>
-        <member name="P:Suplee.Api.Extensions.AspNetUser.TipoUsuario">
-            <summary>
-            Tipo do usuário (Normal, Adm, Robo)
-            </summary>
-        </member>
-        <member name="M:Suplee.Api.Extensions.AspNetUser.EstaAutenticado">
-            <summary>
-            Verifica se usuário está logado
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:Suplee.Api.Extensions.ClaimsPrincipalExtensions">
-            <summary>
-            Extensões para Claim
-            </summary>
-        </member>
-        <member name="M:Suplee.Api.Extensions.ClaimsPrincipalExtensions.RecuperarIdUsuario(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-            Recupera id do usuário do token
-            </summary>
-            <param name="principal"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Suplee.Api.Extensions.ClaimsPrincipalExtensions.RecuperarNomeUsuario(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-            Recupera nome do usuário do Token
-            </summary>
-            <param name="principal"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Suplee.Api.Extensions.ClaimsPrincipalExtensions.RecuperarEmailUsuario(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-            Recupera e-mail do usuário do Token
-            </summary>
-            <param name="principal"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Suplee.Api.Extensions.ClaimsPrincipalExtensions.RecuperarTipoUsuario(System.Security.Claims.ClaimsPrincipal)">
-            <summary>
-            Recupera tipo do usuário do Token
-            </summary>
-            <param name="principal"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Suplee.Api.Extensions.ClaimTypeExtension">
-            <summary>
-            Constantes para salvar no token
-            </summary>
-        </member>
-        <member name="F:Suplee.Api.Extensions.ClaimTypeExtension.UsuarioId">
-            <summary>
-            Id do usuário
-            </summary>
-        </member>
-        <member name="F:Suplee.Api.Extensions.ClaimTypeExtension.Nome">
-            <summary>
-            Nome do usuário
-            </summary>
-        </member>
-        <member name="F:Suplee.Api.Extensions.ClaimTypeExtension.Email">
-            <summary>
-            E-mail do usuário
-            </summary>
-        </member>
-        <member name="F:Suplee.Api.Extensions.ClaimTypeExtension.TipoUsuario">
-            <summary>
-            Tipo do usuário
-            </summary>
         </member>
     </members>
 </doc>

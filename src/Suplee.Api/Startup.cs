@@ -1,19 +1,14 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using Suplee.Api.Configurations;
 using Suplee.Catalogo.Api.Configurations.AutoMapper;
 using Suplee.Catalogo.CrossCuttingIoC;
 using Suplee.ExternalService.CrossCuttingIoC;
-using Suplee.ExternalService.Imgbb.DTO;
 using Suplee.Identidade.CrossCuttingIoC;
-using System;
-using System.IO;
-using System.Reflection;
 
 namespace Suplee.Catalogo.Api
 {
@@ -42,42 +37,17 @@ namespace Suplee.Catalogo.Api
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddApiConfiguration();
+
+            services.AddSwaggerConfiguration();
 
             services.AddAutoMapper(typeof(DomainToViewModelProfile), typeof(InputModelToDomainProfile));
+
             services.AddMediatR(typeof(Startup));
 
-            services.Configure<ImgbbConfiguracao>(Configuration.GetSection("ExternalService:Imgbb"));
+            services.ConfigurarDependencias(Configuration);
 
-            services.ConfigurarDependencias();
-
-            NativeInjectionCatalogo.ConfigurarDependencias(services, Configuration);
-            NativeInjectionExternalService.ConfigurarDependencias(services, Configuration);
-            IdentidadeNativeInjector.ConfigurarDependencias(services, Configuration);
-
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo()
-                {
-                    Version = $"V1",
-                    Title = $"Suplee - API",
-                    Description = $"API interactive for the Suplee App",
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Suplee - Digital Team",
-                        Email = "suplee.app@gmail.com",
-                        Url = new Uri("https://suplee.vercel.app/")
-                    }
-                });
-
-                var assembly = Assembly.GetAssembly(typeof(Startup));
-
-                var xmlFile = $"{assembly.GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                options.IncludeXmlComments(xmlPath);
-            });
-
-            services.AddCors();
+            ConfigurarDependencias(services);
         }
 
         /// <summary>
@@ -85,38 +55,18 @@ namespace Suplee.Catalogo.Api
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseApiConfiguration(env);
 
-            app.UseCors(x => x
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .SetIsOriginAllowed(origin => true)
-                .AllowCredentials());
+            app.UseSwaggerConfiguration(provider);
+        }
 
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-            
-            app.UseAuthentication();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
-            app.UseSwagger();
-
-            app.UseSwaggerUI(opt =>
-            {
-                opt.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalogo");
-            });
+        private void ConfigurarDependencias(IServiceCollection services)
+        {
+            CatalogoNativeInjection.ConfigurarDependencias(services, Configuration);
+            ExternalServiceNativeInjection.ConfigurarDependencias(services, Configuration);
+            IdentidadeNativeInjection.ConfigurarDependencias(services, Configuration);
         }
     }
 }

@@ -5,7 +5,7 @@ using Suplee.ExternalService.Imgbb.Services;
 
 namespace Suplee.ExternalService.CrossCuttingIoC
 {
-    public static class NativeInjectionExternalService
+    public static class ExternalServiceNativeInjection
     {
         public static void ConfigurarDependencias(IServiceCollection services, IConfiguration config)
         {
