@@ -61,6 +61,18 @@
             </summary>
             <param name="options"></param>
         </member>
+        <member name="T:Suplee.Api.Configurations.SwaggerDefaultValues">
+            <summary>
+            Swagger valores padrões
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Configurations.SwaggerDefaultValues.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Aplica
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
         <member name="T:Suplee.Api.Controllers.Identidade.IdentidadeController">
             <summary>
             Endpoints de identidade
@@ -639,6 +651,7 @@
             </summary>
             <param name="app"></param>
             <param name="env"></param>
+            <param name="provider"></param>
         </member>
     </members>
 </doc>
