@@ -57,9 +57,8 @@ namespace Suplee.Catalogo.Api
         /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
-            app.UseApiConfiguration(env);
-
             app.UseSwaggerConfiguration(provider);
+            app.UseApiConfiguration(env);
         }
 
         private void ConfigurarDependencias(IServiceCollection services)

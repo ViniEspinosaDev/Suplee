@@ -61,36 +61,6 @@
             </summary>
             <param name="options"></param>
         </member>
-        <member name="T:Suplee.Api.Configurations.SwaggerDefaultValues">
-            <summary>
-            Swagger valores padrões
-            </summary>
-        </member>
-        <member name="M:Suplee.Api.Configurations.SwaggerDefaultValues.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
-            <summary>
-            Aplica
-            </summary>
-            <param name="operation"></param>
-            <param name="context"></param>
-        </member>
-        <member name="T:Suplee.Api.Configurations.SwaggerAuthorizedMiddleware">
-            <summary>
-            Autorização swagger middleware
-            </summary>
-        </member>
-        <member name="M:Suplee.Api.Configurations.SwaggerAuthorizedMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
-            <summary>
-            Construtor
-            </summary>
-            <param name="next"></param>
-        </member>
-        <member name="M:Suplee.Api.Configurations.SwaggerAuthorizedMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
-            <summary>
-            Configura autorização
-            </summary>
-            <param name="context"></param>
-            <returns></returns>
-        </member>
         <member name="T:Suplee.Api.Controllers.Identidade.IdentidadeController">
             <summary>
             Endpoints de identidade

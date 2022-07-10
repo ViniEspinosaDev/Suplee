@@ -27,7 +27,7 @@ namespace Suplee.Api.Configurations
         {
             services.AddSwaggerGen(c =>
             {
-                c.OperationFilter<SwaggerDefaultValues>();
+                //c.OperationFilter<SwaggerDefaultValues>();
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -133,84 +133,84 @@ namespace Suplee.Api.Configurations
         }
     }
 
-    /// <summary>
-    /// Swagger valores padrões
-    /// </summary>
-    public class SwaggerDefaultValues : IOperationFilter
-    {
-        /// <summary>
-        /// Aplica
-        /// </summary>
-        /// <param name="operation"></param>
-        /// <param name="context"></param>
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
-        {
-            if (operation.Parameters == null)
-            {
-                return;
-            }
+    ///// <summary>
+    ///// Swagger valores padrões
+    ///// </summary>
+    //public class SwaggerDefaultValues : IOperationFilter
+    //{
+    //    /// <summary>
+    //    /// Aplica
+    //    /// </summary>
+    //    /// <param name="operation"></param>
+    //    /// <param name="context"></param>
+    //    public void Apply(OpenApiOperation operation, OperationFilterContext context)
+    //    {
+    //        if (operation.Parameters == null)
+    //        {
+    //            return;
+    //        }
 
-            foreach (var parameter in operation.Parameters)
-            {
-                var description = context.ApiDescription
-                    .ParameterDescriptions
-                    .First(p => p.Name == parameter.Name);
+    //        foreach (var parameter in operation.Parameters)
+    //        {
+    //            var description = context.ApiDescription
+    //                .ParameterDescriptions
+    //                .First(p => p.Name == parameter.Name);
 
-                var routeInfo = description.RouteInfo;
+    //            var routeInfo = description.RouteInfo;
 
-                operation.Deprecated = OpenApiOperation.DeprecatedDefault;
+    //            operation.Deprecated = OpenApiOperation.DeprecatedDefault;
 
-                if (parameter.Description == null)
-                {
-                    parameter.Description = description.ModelMetadata?.Description;
-                }
+    //            if (parameter.Description == null)
+    //            {
+    //                parameter.Description = description.ModelMetadata?.Description;
+    //            }
 
-                if (routeInfo == null)
-                {
-                    continue;
-                }
+    //            if (routeInfo == null)
+    //            {
+    //                continue;
+    //            }
 
-                if (parameter.In != ParameterLocation.Path && parameter.Schema.Default == null)
-                {
-                    parameter.Schema.Default = new OpenApiString(routeInfo.DefaultValue.ToString());
-                }
+    //            if (parameter.In != ParameterLocation.Path && parameter.Schema.Default == null)
+    //            {
+    //                parameter.Schema.Default = new OpenApiString(routeInfo.DefaultValue.ToString());
+    //            }
 
-                parameter.Required |= !routeInfo.IsOptional;
-            }
-        }
-    }
+    //            parameter.Required |= !routeInfo.IsOptional;
+    //        }
+    //    }
+    //}
 
-    /// <summary>
-    /// Autorização swagger middleware
-    /// </summary>
-    public class SwaggerAuthorizedMiddleware
-    {
-        private readonly RequestDelegate _next;
+    ///// <summary>
+    ///// Autorização swagger middleware
+    ///// </summary>
+    //public class SwaggerAuthorizedMiddleware
+    //{
+    //    private readonly RequestDelegate _next;
 
-        /// <summary>
-        /// Construtor
-        /// </summary>
-        /// <param name="next"></param>
-        public SwaggerAuthorizedMiddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
+    //    /// <summary>
+    //    /// Construtor
+    //    /// </summary>
+    //    /// <param name="next"></param>
+    //    public SwaggerAuthorizedMiddleware(RequestDelegate next)
+    //    {
+    //        _next = next;
+    //    }
 
-        /// <summary>
-        /// Configura autorização
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public async Task Invoke(HttpContext context)
-        {
-            if (context.Request.Path.StartsWithSegments("/swagger")
-                && !context.User.Identity.IsAuthenticated)
-            {
-                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                return;
-            }
+    //    /// <summary>
+    //    /// Configura autorização
+    //    /// </summary>
+    //    /// <param name="context"></param>
+    //    /// <returns></returns>
+    //    public async Task Invoke(HttpContext context)
+    //    {
+    //        if (context.Request.Path.StartsWithSegments("/swagger")
+    //            && !context.User.Identity.IsAuthenticated)
+    //        {
+    //            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+    //            return;
+    //        }
 
-            await _next.Invoke(context);
-        }
-    }
+    //        await _next.Invoke(context);
+    //    }
+    //}
 }
