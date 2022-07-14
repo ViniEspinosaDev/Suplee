@@ -9,7 +9,7 @@ namespace Suplee.Api.Extensions
     /// <summary>
     /// Recupera informações do token
     /// </summary>
-    public class AspNetUser : IUsuario
+    public class AspNetUser : IUsuarioLogado
     {
         private readonly IHttpContextAccessor _accessor;
 

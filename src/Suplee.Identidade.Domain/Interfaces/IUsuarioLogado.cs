@@ -3,7 +3,7 @@ using System;
 
 namespace Suplee.Identidade.Domain.Interfaces
 {
-    public interface IUsuario
+    public interface IUsuarioLogado
     {
         Guid UsuarioId { get; }
         string Nome { get; }

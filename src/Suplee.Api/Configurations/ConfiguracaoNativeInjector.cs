@@ -19,7 +19,7 @@ namespace Suplee.Api.Configurations
         public static IServiceCollection ConfigurarDependencias(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IUsuario, AspNetUser>();
+            services.AddScoped<IUsuarioLogado, AspNetUser>();
 
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 

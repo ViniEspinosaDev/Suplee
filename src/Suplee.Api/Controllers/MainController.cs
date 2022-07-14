@@ -22,7 +22,7 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <summary>
         /// Informações do usuário logado
         /// </summary>
-        protected readonly IUsuario _usuario;
+        protected readonly IUsuarioLogado _usuario;
 
         /// <summary>
         /// Id do usuário logado
@@ -47,7 +47,7 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <param name="usuario"></param>
         protected MainController(INotificationHandler<DomainNotification> notifications,
                                  IMediatorHandler mediatorHandler,
-                                 IUsuario usuario)
+                                 IUsuarioLogado usuario)
         {
             _notifications = (DomainNotificationHandler)notifications;
             _mediatorHandler = mediatorHandler;
@@ -97,10 +97,19 @@ namespace Suplee.Catalogo.Api.Controllers
         /// <returns></returns>
         protected ActionResult CustomResponse(object result = null)
         {
-            return Ok(new
+            if (OperacaoValida())
             {
-                success = true,
-                data = result
+                return Ok(new
+                {
+                    success = true,
+                    data = result
+                });
+            }
+
+            return BadRequest(new
+            {
+                success = false,
+                data = ObterMensagensErro()
             });
         }
     }

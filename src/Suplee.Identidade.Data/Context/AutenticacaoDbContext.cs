@@ -7,7 +7,6 @@ namespace Suplee.Identidade.Data.Context
     {
         public AutenticacaoDbContext(DbContextOptions<AutenticacaoDbContext> options) : base(options)
         {
-
         }
     }
 }

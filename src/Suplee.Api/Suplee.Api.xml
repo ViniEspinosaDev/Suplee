@@ -78,7 +78,7 @@
             Endpoints de identidade
             </summary>
         </member>
-        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuario,Microsoft.Extensions.Options.IOptions{Suplee.Identidade.Domain.Models.ConfiguracaoAplicacao})">
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,Microsoft.Extensions.Options.IOptions{Suplee.Identidade.Domain.Models.ConfiguracaoAplicacao},AutoMapper.IMapper,Suplee.Identidade.Domain.Interfaces.IUsuarioRepository)">
             <summary>
             Construtor de identidade
             </summary>
@@ -86,13 +86,50 @@
             <param name="mediatorHandler"></param>
             <param name="usuario"></param>
             <param name="appSettings"></param>
+            <param name="mapper"></param>
+            <param name="usuarioRepository"></param>
         </member>
-        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.NovaConta(Suplee.Api.Controllers.Identidade.InputModel.NovaContaInputModel)">
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.NovaConta(Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel)">
             <summary>
             Criar nova conta
             </summary>
             <param name="novaConta"></param>
             <returns></returns>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel">
+            <summary>
+            Nova conta
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel.Nome">
+            <summary>
+            Nome
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel.Email">
+            <summary>
+            E-mail
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel.CPF">
+            <summary>
+            CPF
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel.Celular">
+            <summary>
+            Celular
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel.Senha">
+            <summary>
+            Senha
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel.ConfirmacaoSenha">
+            <summary>
+            Confirmação da senha
+            </summary>
         </member>
         <member name="T:Suplee.Api.Extensions.AspNetUser">
             <summary>
@@ -214,7 +251,7 @@
             Endpoints do Catalogo
             </summary>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuario,Suplee.Catalogo.Domain.Interfaces.IProdutoRepository,AutoMapper.IMapper)">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,Suplee.Catalogo.Domain.Interfaces.IProdutoRepository,AutoMapper.IMapper)">
             <summary>
             Construtor do Catalogo
             </summary>
@@ -571,7 +608,7 @@
             Usuário logado possuí acesso adminitrador
             </summary>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.MainController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuario)">
+        <member name="M:Suplee.Catalogo.Api.Controllers.MainController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado)">
             <summary>
             Construtor
             </summary>

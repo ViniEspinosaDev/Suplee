@@ -42,7 +42,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         public CatalogoController(
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler,
-            IUsuario usuario,
+            IUsuarioLogado usuario,
             IProdutoRepository produtoRepository,
             IMapper mapper) : base(notifications, mediatorHandler, usuario)
         {

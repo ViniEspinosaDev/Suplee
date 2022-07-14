@@ -60,6 +60,7 @@
     <Folder Include="Seed" />
     <Folder Include="Tables\Catalogo" />
     <Folder Include="Seed\Catalogo" />
+    <Folder Include="Tables\Identidade" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Catalogo\Categoria.sql" />
@@ -69,8 +70,12 @@
     <Build Include="Tables\Catalogo\InformacaoNutricional.sql" />
     <Build Include="Tables\Catalogo\Produto.sql" />
     <Build Include="Tables\Catalogo\ProdutoEfeito.sql" />
+    <Build Include="Tables\Identidade\Usuario.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Seed\Catalogo\CriarCatalogoSeed.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Suplee.Database.refactorlog" />
   </ItemGroup>
 </Project>

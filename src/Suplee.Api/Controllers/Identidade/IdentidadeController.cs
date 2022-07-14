@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -9,7 +10,7 @@ using Suplee.Api.Extensions;
 using Suplee.Catalogo.Api.Controllers;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
-using Suplee.Identidade.Domain.Enums;
+using Suplee.Identidade.Domain.Commands;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Identidade.Domain.Models;
 using System;
@@ -18,6 +19,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Suplee.Api.Controllers.Identidade
 {
@@ -28,6 +30,9 @@ namespace Suplee.Api.Controllers.Identidade
     [Route("api/[controller]")]
     public class IdentidadeController : MainController
     {
+        private readonly IMapper _mapper;
+        private readonly IMediatorHandler _mediatorHandler;
+        private readonly IUsuarioRepository _usuarioRepository;
         private readonly ConfiguracaoAplicacao _configuracaoAplicacao;
 
         /// <summary>
@@ -37,12 +42,19 @@ namespace Suplee.Api.Controllers.Identidade
         /// <param name="mediatorHandler"></param>
         /// <param name="usuario"></param>
         /// <param name="appSettings"></param>
+        /// <param name="mapper"></param>
+        /// <param name="usuarioRepository"></param>
         public IdentidadeController(
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler,
-            IUsuario usuario,
-            IOptions<ConfiguracaoAplicacao> appSettings) : base(notifications, mediatorHandler, usuario)
+            IUsuarioLogado usuario,
+            IOptions<ConfiguracaoAplicacao> appSettings,
+            IMapper mapper,
+            IUsuarioRepository usuarioRepository) : base(notifications, mediatorHandler, usuario)
         {
+            _mapper = mapper;
+            _mediatorHandler = mediatorHandler;
+            _usuarioRepository = usuarioRepository;
             _configuracaoAplicacao = appSettings.Value;
         }
 
@@ -51,18 +63,24 @@ namespace Suplee.Api.Controllers.Identidade
         /// </summary>
         /// <param name="novaConta"></param>
         /// <returns></returns>
-        [HttpPost("nova-conta")]
-        public ActionResult NovaConta(NovaContaInputModel novaConta)
+        [HttpPost("cadastrar-usuario")]
+        public async Task<ActionResult> NovaConta(CadastroUsuarioInputModel novaConta)
         {
-            if (novaConta.Senha != novaConta.ConfirmacaoSenha) return new BadRequestResult();
+            var comando = _mapper.Map<CadastrarUsuarioCommand>(novaConta);
 
-            // TODO: Fazer esse método certo com command e handler
+            var resultado = await _mediatorHandler.EnviarComando(comando);
+
+            if (!resultado)
+                return CustomResponse();
+
+            var usuario = _usuarioRepository.RecuperarPeloCPF(novaConta.CPF);
+
             var usuarioViewModel = new UsuarioViewModel()
             {
-                Id = Guid.NewGuid(),
-                Nome = novaConta.Nome,
-                Email = novaConta.Email,
-                TipoUsuario = ETipoUsuario.Administrador
+                Id = usuario.Id,
+                Nome = usuario.Nome,
+                Email = usuario.Email,
+                TipoUsuario = usuario.TipoUsuario
             };
 
             return CustomResponse(GerarJwt(usuarioViewModel));
