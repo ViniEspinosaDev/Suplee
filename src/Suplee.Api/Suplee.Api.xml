@@ -89,6 +89,13 @@
             <param name="mapper"></param>
             <param name="usuarioRepository"></param>
         </member>
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.FazerLogin(Suplee.Api.Controllers.Identidade.InputModels.LoginInputModel)">
+            <summary>
+            Login
+            </summary>
+            <param name="loginInputModel"></param>
+            <returns></returns>
+        </member>
         <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.NovaConta(Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel)">
             <summary>
             Criar nova conta
@@ -129,6 +136,46 @@
         <member name="P:Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel.ConfirmacaoSenha">
             <summary>
             Confirmação da senha
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Identidade.InputModels.LoginInputModel">
+            <summary>
+            Template Login
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.LoginInputModel.Email">
+            <summary>
+            E-mail
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.LoginInputModel.Senha">
+            <summary>
+            Senha
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Identidade.ViewModels.UsuarioViewModel">
+            <summary>
+            Retorna info do Usuário
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.ViewModels.UsuarioViewModel.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.ViewModels.UsuarioViewModel.Nome">
+            <summary>
+            Nome
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.ViewModels.UsuarioViewModel.Email">
+            <summary>
+            E-mail
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.ViewModels.UsuarioViewModel.TipoUsuario">
+            <summary>
+            Tipo do usuário
             </summary>
         </member>
         <member name="T:Suplee.Api.Extensions.AspNetUser">

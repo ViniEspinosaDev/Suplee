@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Suplee.Api.Controllers.Identidade.InputModel;
+using Suplee.Api.Controllers.Identidade.InputModels;
 using Suplee.Api.Controllers.Identidade.ViewModels;
 using Suplee.Api.Extensions;
 using Suplee.Catalogo.Api.Controllers;
@@ -56,6 +57,34 @@ namespace Suplee.Api.Controllers.Identidade
             _mediatorHandler = mediatorHandler;
             _usuarioRepository = usuarioRepository;
             _configuracaoAplicacao = appSettings.Value;
+        }
+
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="loginInputModel"></param>
+        /// <returns></returns>
+        [HttpPost("login")]
+        public async Task<ActionResult> FazerLogin(LoginInputModel loginInputModel)
+        {
+            var comando = _mapper.Map<RealizarLoginCommand>(loginInputModel);
+
+            var resultado = await _mediatorHandler.EnviarComando(comando);
+
+            if (!resultado)
+                return CustomResponse();
+
+            var usuario = _usuarioRepository.RecuperarPeloEmail(loginInputModel.Email);
+
+            var usuarioViewModel = new UsuarioViewModel()
+            {
+                Id = usuario.Id,
+                Nome = usuario.Nome,
+                Email = usuario.Email,
+                TipoUsuario = usuario.TipoUsuario
+            };
+
+            return CustomResponse(GerarJwt(usuarioViewModel));
         }
 
         /// <summary>

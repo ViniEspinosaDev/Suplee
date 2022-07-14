@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Suplee.Api.Controllers.Identidade.InputModel;
+using Suplee.Api.Controllers.Identidade.InputModels;
 using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
 using Suplee.Catalogo.Domain.Models;
 using Suplee.Identidade.Domain.Commands;
@@ -29,6 +30,10 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(f => f.Celular, opt => opt.MapFrom(m => m.Celular))
                 .ForMember(f => f.Senha, opt => opt.MapFrom(m => m.Senha))
                 .ForMember(f => f.ConfirmacaoSenha, opt => opt.MapFrom(m => m.ConfirmacaoSenha));
+
+            CreateMap<LoginInputModel, RealizarLoginCommand>()
+                .ForMember(f => f.Email, opt => opt.MapFrom(m => m.Email))
+                .ForMember(f => f.Senha, opt => opt.MapFrom(m => m.Senha));
         }
 
         private void MapeiaContextoCatalogo()

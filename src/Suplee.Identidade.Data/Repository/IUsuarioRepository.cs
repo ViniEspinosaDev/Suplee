@@ -36,6 +36,11 @@ namespace Suplee.Identidade.Data.Repository
             return _identidadeContext.Usuario.FirstOrDefault(x => x.CPF == cpf);
         }
 
+        public Usuario RecuperarPeloEmail(string email)
+        {
+            return _identidadeContext.Usuario.FirstOrDefault(x => x.Email == email);
+        }
+
         public void Dispose()
         {
             _identidadeContext?.Dispose();

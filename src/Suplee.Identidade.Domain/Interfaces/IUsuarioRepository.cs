@@ -9,6 +9,7 @@ namespace Suplee.Identidade.Domain.Interfaces
         bool ExisteUsuarioComEmail(string email);
 
         Usuario RecuperarPeloCPF(string cpf);
+        Usuario RecuperarPeloEmail(string email);
 
         void Adicionar(Usuario usuario);
     }

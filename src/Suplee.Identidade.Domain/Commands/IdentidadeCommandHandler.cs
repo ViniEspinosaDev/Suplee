@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 namespace Suplee.Identidade.Domain.Commands
 {
     public class IdentidadeCommandHandler :
-        IRequestHandler<CadastrarUsuarioCommand, bool>
+        IRequestHandler<CadastrarUsuarioCommand, bool>,
+        IRequestHandler<RealizarLoginCommand, bool>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IUsuarioRepository _usuarioRepository;
@@ -71,6 +72,30 @@ namespace Suplee.Identidade.Domain.Commands
 
             // TODO: Futuramente lançar evento de propagação para banco de dados de leitura
             //await _mediatorHandler.PublicarEvento(new UsuarioCadastradoEvent());
+
+            return sucesso;
+        }
+
+        public async Task<bool> Handle(RealizarLoginCommand request, CancellationToken cancellationToken)
+        {
+            if (!ValidarComando(request)) return false;
+
+            var usuario = _usuarioRepository.RecuperarPeloEmail(request.Email);
+
+            if (usuario is null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("", "Não existe nenhum usuário cadastrado com esse e-mail"));
+                return false;
+            }
+
+            // TODO: Descriptografar
+            var senhasDiferentes = usuario.Senha != request.Senha;
+
+            if (senhasDiferentes)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("", "E-mail e/ou senha inválidos"));
+                return false;
+            }
 
             return true;
         }
