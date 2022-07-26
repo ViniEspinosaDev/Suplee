@@ -86,7 +86,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 produtos = produtosViewModel
             };
 
-            return Ok(retorno);
+            return CustomResponse(retorno);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
 
             var produtoViewModel = _mapper.Map<ProdutoViewModel>(produto);
 
-            return Ok(produtoViewModel);
+            return CustomResponse(produtoViewModel);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 produtos = produtosViewModel
             };
 
-            return Ok(retorno);
+            return CustomResponse(retorno);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 produtos = produtosViewModel
             };
 
-            return Ok(retorno);
+            return CustomResponse(retorno);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 produtos = produtosViewModel
             };
 
-            return Ok(retorno);
+            return CustomResponse(retorno);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 produtos = produtosViewModel
             };
 
-            return Ok(retorno);
+            return CustomResponse(retorno);
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 produtos = produtosViewModel
             };
 
-            return Ok(retorno);
+            return CustomResponse(retorno);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             if (efeitos is null)
                 return BadRequest(new { Success = false, Errors = "Não foi possível obter os efeitos" });
 
-            return Ok(efeitos);
+            return CustomResponse(efeitos);
         }
 
         /// <summary>
@@ -311,7 +311,18 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             if (efeitos is null)
                 return BadRequest(new { Success = false, Errors = "Não foi possível obter as categorias" });
 
-            return Ok(efeitos);
+            return CustomResponse(efeitos);
+        }
+
+        /// <summary>
+        /// Obter valor do preço e prazo
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("preco-prazo/{produtoId}/{cep}")]
+        public async Task<ActionResult> ObterPrecoPrazo(Guid produtoId, string cep)
+        {
+            return CustomResponse(new { Preco = 23.40 });
         }
 
         /// <summary>
@@ -346,10 +357,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
 
             await _mediatorHandler.EnviarComando(comando);
 
-            if (!OperacaoValida())
-                return BadRequest(new { Success = false, Errors = ObterMensagensErro() });
-
-            return Ok();
+            return CustomResponse();
         }
     }
 }

@@ -63,6 +63,8 @@ namespace Suplee.Api.Configurations
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
