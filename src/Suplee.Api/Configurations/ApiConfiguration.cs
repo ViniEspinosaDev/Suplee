@@ -45,8 +45,7 @@ namespace Suplee.Api.Configurations
                         builder
                         .AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials();
+                        .AllowAnyHeader();
                     });
             });
 
@@ -63,7 +62,13 @@ namespace Suplee.Api.Configurations
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseCors();
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
 
             app.UseHttpsRedirection();
 

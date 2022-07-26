@@ -378,6 +378,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterPrecoPrazo(System.Guid,System.String)">
+            <summary>
+            Obter valor do preço e prazo
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.CriarProduto(Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel)">
             <summary>
             Criar produto
