@@ -279,7 +279,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 produtos = produtosViewModel
             };
 
-            return CustomResponse(retorno);
+            return Ok(retorno);
         }
 
         /// <summary>
