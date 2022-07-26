@@ -86,7 +86,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 produtos = produtosViewModel
             };
 
-            return CustomResponse(retorno);
+            return Ok(retorno);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
 
             var produtoViewModel = _mapper.Map<ProdutoViewModel>(produto);
 
-            return CustomResponse(produtoViewModel);
+            return Ok(produtoViewModel);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 produtos = produtosViewModel
             };
 
-            return CustomResponse(retorno);
+            return Ok(retorno);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 produtos = produtosViewModel
             };
 
-            return CustomResponse(retorno);
+            return Ok(retorno);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 produtos = produtosViewModel
             };
 
-            return CustomResponse(retorno);
+            return Ok(retorno);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 produtos = produtosViewModel
             };
 
-            return CustomResponse(retorno);
+            return Ok(retorno);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             if (efeitos is null)
                 return BadRequest(new { Success = false, Errors = "Não foi possível obter os efeitos" });
 
-            return CustomResponse(efeitos);
+            return Ok(efeitos);
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             if (efeitos is null)
                 return BadRequest(new { Success = false, Errors = "Não foi possível obter as categorias" });
 
-            return CustomResponse(efeitos);
+            return Ok(efeitos);
         }
 
         /// <summary>
