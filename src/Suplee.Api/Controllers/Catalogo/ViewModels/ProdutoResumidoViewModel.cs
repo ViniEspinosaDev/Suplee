@@ -37,6 +37,11 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels
         public string NomeCategoria { get; set; }
 
         /// <summary>
+        /// Quantidade disponível
+        /// </summary>
+        public int QuantidadeDisponivel { get; set; }
+
+        /// <summary>
         /// Lista de nomes dos Efeitos
         /// </summary>
         public List<string> NomeEfeito { get; set; }

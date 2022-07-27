@@ -526,6 +526,11 @@
             Nome da Categoria
             </summary>
         </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoResumidoViewModel.QuantidadeDisponivel">
+            <summary>
+            Quantidade disponível
+            </summary>
+        </member>
         <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels.ProdutoResumidoViewModel.NomeEfeito">
             <summary>
             Lista de nomes dos Efeitos

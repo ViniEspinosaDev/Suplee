@@ -50,7 +50,8 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.Preco, opt => opt.MapFrom(m => m.Preco))
                 .ForMember(i => i.NomeCategoria, opt => opt.MapFrom(m => m.Categoria.Nome))
                 .ForMember(i => i.NomeEfeito, opt => opt.MapFrom(m => m.Efeitos.Select(x => x.Efeito.Nome)))
-                .ForMember(i => i.Imagem, opt => opt.MapFrom(m => m.Imagens.FirstOrDefault().Url));
+                .ForMember(i => i.Imagem, opt => opt.MapFrom(m => m.Imagens.FirstOrDefault().Url))
+                .ForMember(i => i.QuantidadeDisponivel, opt => opt.MapFrom(m => m.QuantidadeDisponivel));
         }
     }
 }
