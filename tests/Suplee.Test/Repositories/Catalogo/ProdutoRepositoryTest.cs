@@ -126,7 +126,7 @@ namespace Suplee.Test.Repositories.Catalogo
 
             var efeito = new EfeitoBuilder().PadraoValido().Build();
 
-            var efeitos = new List<ProdutoEfeito>() { new ProdutoEfeitoBuilder().PadraoValido(produtoId, categoria.Id).Build() };
+            var efeitos = new List<ProdutoEfeito>() { new ProdutoEfeitoBuilder().PadraoValido(produtoId, efeito.Id).ComEfeito(efeito).Build() };
             var imagens = new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().ComProdutoId(produtoId).Build() };
 
             var produto = new ProdutoBuilder()

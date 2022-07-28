@@ -1,4 +1,5 @@
 ﻿using Suplee.Catalogo.Domain.Models;
+using System;
 
 namespace Suplee.Test.Builder.Models
 {

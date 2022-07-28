@@ -13,6 +13,14 @@ namespace Suplee.Test.Builder.Models
             return this;
         }
 
+        public ProdutoEfeitoBuilder ComEfeito(Efeito efeito)
+        {
+            EfeitoId = efeito.Id;
+            Efeito = efeito;
+
+            return this;
+        }
+
         public ProdutoEfeito Build() => this;
     }
 }
