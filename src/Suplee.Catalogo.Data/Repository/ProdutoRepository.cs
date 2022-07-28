@@ -48,6 +48,7 @@ namespace Suplee.Catalogo.Data.Repository
                     .ThenInclude(i => i.CompostosNutricionais)
                 .Include(p => p.Imagens)
                 .Include(p => p.Efeitos)
+                    .ThenInclude(p => p.Efeito)
                 .FirstOrDefaultAsync(p => p.Id == produtoId);
         }
 

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels;
+using Suplee.Api.Controllers.Catalogo.ViewModels;
 using Suplee.Catalogo.Domain.Models;
 using System.Linq;
 
@@ -39,9 +39,9 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.Composicao, opt => opt.MapFrom(m => m.Composicao))
                 .ForMember(i => i.QuantidadeDisponivel, opt => opt.MapFrom(m => m.QuantidadeDisponivel))
                 .ForMember(i => i.Preco, opt => opt.MapFrom(m => m.Preco))
-                .ForMember(i => i.CategoriaId, opt => opt.MapFrom(m => m.CategoriaId))
+                .ForMember(i => i.Categoria, opt => opt.MapFrom(m => m.Categoria))
                 .ForMember(i => i.Imagens, opt => opt.MapFrom(m => m.Imagens.ToList().Select(x => x.Url)))
-                .ForMember(i => i.Efeitos, opt => opt.MapFrom(m => m.Efeitos.ToList().Select(x => x.EfeitoId.ToString())))
+                .ForMember(i => i.Efeitos, opt => opt.MapFrom(m => m.Efeitos.ToList().Select(x => x.Efeito)))
                 .ForMember(i => i.InformacaoNutricional, opt => opt.MapFrom(m => m.InformacaoNutricional));
 
             CreateMap<Produto, ProdutoResumidoViewModel>()
@@ -52,6 +52,15 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.NomeEfeito, opt => opt.MapFrom(m => m.Efeitos.Select(x => x.Efeito.Nome)))
                 .ForMember(i => i.Imagem, opt => opt.MapFrom(m => m.Imagens.FirstOrDefault().Url))
                 .ForMember(i => i.QuantidadeDisponivel, opt => opt.MapFrom(m => m.QuantidadeDisponivel));
+
+            CreateMap<Efeito, EfeitoViewModel>()
+                .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
+                .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome));
+
+            CreateMap<Categoria, CategoriaViewModel>()
+                .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
+                .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome));
+
         }
     }
 }

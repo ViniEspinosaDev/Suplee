@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels
+namespace Suplee.Api.Controllers.Catalogo.ViewModels
 {
     /// <summary>
     /// Objeto de saída do Produto
@@ -41,7 +41,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels
         /// <summary>
         /// Id da Categoria
         /// </summary>
-        public Guid CategoriaId { get; set; }
+        public CategoriaViewModel Categoria { get; set; }
 
         /// <summary>
         /// Imagens em Base64
@@ -51,7 +51,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels
         /// <summary>
         /// Lista de Id dos Efeitos
         /// </summary>
-        public List<Guid> Efeitos { get; set; }
+        public List<EfeitoViewModel> Efeitos { get; set; }
 
         /// <summary>
         /// Tabela de Informação Nutricional

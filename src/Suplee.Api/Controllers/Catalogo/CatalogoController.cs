@@ -2,8 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Suplee.Api.Controllers.Catalogo.ViewModels;
 using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
-using Suplee.Catalogo.Api.Controllers.Catalogo.ViewModels;
 using Suplee.Catalogo.Domain.Commands;
 using Suplee.Catalogo.Domain.Interfaces;
 using Suplee.Catalogo.Domain.Models;
