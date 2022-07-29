@@ -11,12 +11,18 @@ namespace Suplee.Catalogo.Domain.Services
             Random aleatorio = new Random();
 
             int dias = aleatorio.Next(7, 31);
-            int dezenas = aleatorio.Next(16, 72);
+            int dezenas = aleatorio.Next(6, 45);
             int centavos = aleatorio.Next(10, 99);
 
             string valorTexto = $"{dezenas},{centavos}";
 
             decimal.TryParse(valorTexto, out decimal valor);
+
+            if (valor > 46)
+            {
+                valorTexto = valorTexto.Replace(',', '.');
+                decimal.TryParse(valorTexto, out valor);
+            }
 
             return new FreteDTO()
             {
