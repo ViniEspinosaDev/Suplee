@@ -6,6 +6,7 @@ using Suplee.Core.Messages;
 using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.ExternalService.Imgbb.DTO;
 using Suplee.ExternalService.Imgbb.Interfaces;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,6 +63,12 @@ namespace Suplee.Catalogo.Domain.Commands
             _produtoRepository.Adicionar(produto);
 
             return await _produtoRepository.UnitOfWork.Commit();
+        }
+
+        private string ConverterBytesEmBase64(byte[] bytes)
+        {
+            string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
+            return "data:image/webp;base64," + base64String;
         }
 
         public Task<bool> Handle(AtualizarProdutoCommand request, CancellationToken cancellationToken)

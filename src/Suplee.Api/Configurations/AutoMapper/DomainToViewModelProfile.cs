@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Suplee.Api.Controllers.Catalogo.ViewModels;
+using Suplee.Catalogo.Domain.DTO;
 using Suplee.Catalogo.Domain.Models;
 using System.Linq;
 
@@ -61,6 +62,10 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
                 .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome));
 
+            CreateMap<FreteDTO, FreteViewModel>()
+                .ForMember(i => i.Preco, opt => opt.MapFrom(m => m.Preco))
+                .ForMember(i => i.PrazoDias, opt => opt.MapFrom(m => m.PrazoDias))
+                .ForMember(i => i.DataEstimada, opt => opt.MapFrom(m => m.DataEstimada));
         }
     }
 }

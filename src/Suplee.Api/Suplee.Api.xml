@@ -29,6 +29,16 @@
             Injeta as dependencias das configurações
             </summary>
         </member>
+        <member name="T:Suplee.Api.Configurations.CoreNativeInjector">
+            <summary>
+            Injeta dependências do Core
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Configurations.CoreNativeInjector.ConfigurarDependencias(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Injeta dependências do Core
+            </summary>
+        </member>
         <member name="T:Suplee.Api.Configurations.SwaggerConfiguration">
             <summary>
             Configuração do Swagger
@@ -101,6 +111,26 @@
         <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.EfeitoViewModel.Nome">
             <summary>
             Nome do efeito
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Catalogo.ViewModels.FreteViewModel">
+            <summary>
+            Frete
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.FreteViewModel.Preco">
+            <summary>
+            Preço
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.FreteViewModel.PrazoDias">
+            <summary>
+            Numero de dias
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.FreteViewModel.DataEstimada">
+            <summary>
+            Data estimada
             </summary>
         </member>
         <member name="T:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoResumidoViewModel">
@@ -473,7 +503,7 @@
             Endpoints do Catalogo
             </summary>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,Suplee.Catalogo.Domain.Interfaces.IProdutoRepository,AutoMapper.IMapper)">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,Suplee.Catalogo.Domain.Interfaces.IProdutoRepository,AutoMapper.IMapper,Suplee.Catalogo.Domain.Interfaces.Services.ICorreiosService)">
             <summary>
             Construtor do Catalogo
             </summary>
@@ -482,6 +512,7 @@
             <param name="produtoRepository"></param>
             <param name="mapper"></param>
             <param name="usuario"></param>
+            <param name="correiosService"></param>
         </member>
         <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterProdutosPeloNome(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
@@ -557,6 +588,8 @@
             <summary>
             Obter valor do preço e prazo
             </summary>
+            <param name="produtoId"></param>
+            <param name="cep"></param>
             <returns></returns>
         </member>
         <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.CriarProduto(Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel)">

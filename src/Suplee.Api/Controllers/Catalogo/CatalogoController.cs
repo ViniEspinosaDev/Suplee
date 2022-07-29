@@ -6,6 +6,7 @@ using Suplee.Api.Controllers.Catalogo.ViewModels;
 using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
 using Suplee.Catalogo.Domain.Commands;
 using Suplee.Catalogo.Domain.Interfaces;
+using Suplee.Catalogo.Domain.Interfaces.Services;
 using Suplee.Catalogo.Domain.Models;
 using Suplee.Catalogo.Domain.ValueObjects;
 using Suplee.Core.Communication.Mediator;
@@ -28,6 +29,8 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         private readonly IProdutoRepository _produtoRepository;
         private readonly IMapper _mapper;
         private readonly IMediatorHandler _mediatorHandler;
+        private readonly ICorreiosService _correiosService;
+
         private const int QuantidadePorPagina = 12;
 
 
@@ -39,16 +42,19 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// <param name="produtoRepository"></param>
         /// <param name="mapper"></param>
         /// <param name="usuario"></param>
+        /// <param name="correiosService"></param>
         public CatalogoController(
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler,
             IUsuarioLogado usuario,
             IProdutoRepository produtoRepository,
-            IMapper mapper) : base(notifications, mediatorHandler, usuario)
+            IMapper mapper,
+            ICorreiosService correiosService) : base(notifications, mediatorHandler, usuario)
         {
             _mediatorHandler = mediatorHandler;
             _produtoRepository = produtoRepository;
             _mapper = mapper;
+            _correiosService = correiosService;
         }
 
         /// <summary>
@@ -317,12 +323,16 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// <summary>
         /// Obter valor do preço e prazo
         /// </summary>
+        /// <param name="produtoId"></param>
+        /// <param name="cep"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("preco-prazo/{produtoId}/{cep}")]
-        public async Task<ActionResult> ObterPrecoPrazo(Guid produtoId, string cep)
+        public ActionResult ObterPrecoPrazo(Guid produtoId, string cep)
         {
-            return CustomResponse(new { Preco = 23.40 });
+            var frete = _mapper.Map<FreteViewModel>(_correiosService.CalcularFrete(produtoId, cep));
+
+            return CustomResponse(frete);
         }
 
         /// <summary>

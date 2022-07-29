@@ -65,6 +65,7 @@ namespace Suplee.Catalogo.Api
 
         private void ConfigurarDependencias(IServiceCollection services)
         {
+            CoreNativeInjector.ConfigurarDependencias(services, Configuration);
             CatalogoNativeInjection.ConfigurarDependencias(services, Configuration);
             ExternalServiceNativeInjection.ConfigurarDependencias(services, Configuration);
             IdentidadeNativeInjection.ConfigurarDependencias(services, Configuration);

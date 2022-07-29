@@ -11,7 +11,7 @@
         /// <summary>
         /// Base 64
         /// </summary>
-        public string image { get; set; } // TODO: Adicionar rótulo nessa óprra
+        public string image { get; set; }
         public string name { get; set; }
     }
 }

@@ -6,6 +6,8 @@ using Suplee.Catalogo.Data;
 using Suplee.Catalogo.Data.Repository;
 using Suplee.Catalogo.Domain.Commands;
 using Suplee.Catalogo.Domain.Interfaces;
+using Suplee.Catalogo.Domain.Interfaces.Services;
+using Suplee.Catalogo.Domain.Services;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Data.EventSourcing;
 using Suplee.Core.Messages.CommonMessages.Notifications;
@@ -23,7 +25,13 @@ namespace Suplee.Catalogo.CrossCuttingIoC
 
             ConfigurarDependenciasDatabase(services, config);
             ConfigurarDependenciasRepository(services);
+            ConfigurarDependenciasService(services);
             ConfigurarDependenciasCommand(services);
+        }
+
+        private static void ConfigurarDependenciasService(IServiceCollection services)
+        {
+            services.AddScoped<ICorreiosService, CorreiosService>();
         }
 
         private static void ConfigurarDependenciasPadrao(IServiceCollection services)
