@@ -2,9 +2,9 @@
 {
     public interface IImageHelper
     {
-        byte[] GenerateThumb(byte[] img);
-        byte[] CropImageHeight(byte[] img, int height);
-        byte[] CropImageWidth(byte[] img, int width);
-        byte[] ResizeImage(byte[] img, int width, int height);
+        byte[] GenerateThumb(byte[] img, EImageType imageType);
+        byte[] CropImageHeight(byte[] img, int height, EImageType imageType);
+        byte[] CropImageWidth(byte[] img, int width, EImageType imageType);
+        byte[] ResizeImage(byte[] img, int width, int height, EImageType imageType);
     }
 }

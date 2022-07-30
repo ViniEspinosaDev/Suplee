@@ -45,19 +45,13 @@ namespace Suplee.Teste.Domain.Commands
             var nomeImagem = request.Imagem.FileName;
             var extensao = Path.GetExtension(nomeImagem);
 
-            if (extensao.Contains("webp"))
-            {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification("", "Poxa amigão, infelizmente não estamos aceitando .webp ainda, sinto muito :("));
-                return false;
-            }
-
             var bytesImagem = request.Imagem.GetBytes();
 
             var nomeSemExtensao = nomeImagem.Replace(extensao, string.Empty);
             var extensaoCompleta = request.Imagem.ContentType;
 
-            var imagemReduzida = _imageHelper.ResizeImage(bytesImagem, 155, 235);
-            var imagemMaximizada = _imageHelper.ResizeImage(bytesImagem, 279, 423);
+            var imagemReduzida = _imageHelper.ResizeImage(bytesImagem, 155, 235, RecuperarTipoImagem(extensao));
+            var imagemMaximizada = _imageHelper.ResizeImage(bytesImagem, 279, 423, RecuperarTipoImagem(extensao));
 
             var nomeReduzida = $"{nomeSemExtensao}_reduzida";
             var nomeMaximizada = $"{nomeSemExtensao}_inteira";
@@ -75,6 +69,24 @@ namespace Suplee.Teste.Domain.Commands
             _testeRepository.AdicionarTesteImagem(imagem);
 
             return await _testeRepository.UnitOfWork.Commit();
+        }
+
+        private EImageType RecuperarTipoImagem(string extensao)
+        {
+            extensao = extensao.Replace(".", string.Empty);
+
+            switch (extensao)
+            {
+                case "jpeg":
+                case "jpg":
+                    return EImageType.JPEG;
+                case "png":
+                    return EImageType.PNG;
+                case "webp":
+                    return EImageType.WEBP;
+                default:
+                    return EImageType.JPG;
+            }
         }
 
         private bool ValidarSeImagem(IFormFile imagem)
