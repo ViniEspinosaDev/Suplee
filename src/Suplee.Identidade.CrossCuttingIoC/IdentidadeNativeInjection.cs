@@ -37,6 +37,7 @@ namespace Suplee.Identidade.CrossCuttingIoC
         {
             services.AddScoped<IRequestHandler<CadastrarUsuarioCommand, Usuario>, IdentidadeCommandHandler>();
             services.AddScoped<IRequestHandler<RealizarLoginEmailCommand, Usuario>, IdentidadeCommandHandler>();
+            services.AddScoped<IRequestHandler<RealizarLoginCPFCommand, Usuario>, IdentidadeCommandHandler>();
         }
 
         private static void ConfigurarDependenciasJwtToken(IServiceCollection services, IConfiguration configuration)

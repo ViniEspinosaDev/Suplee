@@ -3,12 +3,12 @@
     /// <summary>
     /// Template Login
     /// </summary>
-    public class LoginInputModel
+    public class LoginCPFInputModel
     {
         /// <summary>
         /// E-mail
         /// </summary>
-        public string Email { get; set; }
+        public string CPF { get; set; }
         /// <summary>
         /// Senha
         /// </summary>

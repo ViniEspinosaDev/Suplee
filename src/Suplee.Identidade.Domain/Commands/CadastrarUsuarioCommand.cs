@@ -39,8 +39,8 @@ namespace Suplee.Identidade.Domain.Commands
                 .WithMessage("O nome do usuário não foi informado");
 
             RuleFor(c => c.Email)
-                .NotEmpty()
-                .WithMessage("O E-mail do usuário não foi informado");
+                .NotEmpty().WithMessage("O E-mail do usuário não foi informado")
+                .EmailAddress().WithMessage("O E-mail não é válido");
 
             RuleFor(c => c.CPF)
                 .NotEmpty()

@@ -64,10 +64,28 @@ namespace Suplee.Api.Controllers.Identidade
         /// </summary>
         /// <param name="loginInputModel"></param>
         /// <returns></returns>
-        [HttpPost("login")]
-        public async Task<ActionResult> FazerLogin(LoginInputModel loginInputModel)
+        [HttpPost("login-email")]
+        public async Task<ActionResult> FazerLoginEmail(LoginEmailInputModel loginInputModel)
         {
             var comando = _mapper.Map<RealizarLoginEmailCommand>(loginInputModel);
+
+            var usuario = await _mediatorHandler.EnviarComando(comando);
+
+            if (usuario is null)
+                return CustomResponse();
+
+            return CustomResponse(GerarJwt(usuario));
+        }
+
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="loginInputModel"></param>
+        /// <returns></returns>
+        [HttpPost("login-cpf")]
+        public async Task<ActionResult> FazerLoginCPF(LoginCPFInputModel loginInputModel)
+        {
+            var comando = _mapper.Map<RealizarLoginCPFCommand>(loginInputModel);
 
             var usuario = await _mediatorHandler.EnviarComando(comando);
 
@@ -129,9 +147,11 @@ namespace Suplee.Api.Controllers.Identidade
                 ExpiresIn = TimeSpan.FromHours(_configuracaoAplicacao.ExpiracaoHoras).TotalSeconds,
                 UserToken = new UserTokenViewModel
                 {
-                    Id = usuario.Id.ToString(),
+                    UsuarioId = usuario.Id.ToString(),
+                    Nome = usuario.Nome,
                     Email = usuario.Email,
-                    Claims = claims.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
+                    TipoUsuario = usuario.TipoUsuario.ToString()
+                    //Claims = claims.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
                 }
             };
 

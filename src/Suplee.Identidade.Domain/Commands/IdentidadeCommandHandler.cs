@@ -13,7 +13,8 @@ namespace Suplee.Identidade.Domain.Commands
     public class IdentidadeCommandHandler :
         CommandHandler,
         IRequestHandler<CadastrarUsuarioCommand, Usuario>,
-        IRequestHandler<RealizarLoginEmailCommand, Usuario>
+        IRequestHandler<RealizarLoginEmailCommand, Usuario>,
+        IRequestHandler<RealizarLoginCPFCommand, Usuario>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IUsuarioRepository _usuarioRepository;
@@ -32,6 +33,16 @@ namespace Suplee.Identidade.Domain.Commands
                 return default(Usuario);
             }
 
+            string cpf = new string(request.CPF.Where(x => x >= '0' && x <= '9').ToArray());
+
+            bool cpfInvalido = string.IsNullOrEmpty(cpf) || cpf.Length != 11;
+
+            if (cpfInvalido)
+            {
+                await NotificarErro(request, "O CPF é inválido");
+                return default(Usuario);
+            }
+
             var senhasDiferentes = request.Senha != request.ConfirmacaoSenha;
 
             if (senhasDiferentes)
@@ -40,7 +51,7 @@ namespace Suplee.Identidade.Domain.Commands
                 return default(Usuario);
             }
 
-            var existeUsuarioComCPF = _usuarioRepository.ExisteUsuarioComCPF(request.CPF);
+            var existeUsuarioComCPF = _usuarioRepository.ExisteUsuarioComCPF(cpf);
 
             if (existeUsuarioComCPF)
             {
@@ -60,7 +71,7 @@ namespace Suplee.Identidade.Domain.Commands
                  request.Nome,
                  request.Email,
                  request.Senha,
-                 new string(request.CPF.Where(x => x >= '0' && x <= '9').ToArray()),
+                 cpf,
                  request.Celular,
                  ETipoUsuario.Normal);
 
@@ -88,11 +99,19 @@ namespace Suplee.Identidade.Domain.Commands
                 return default(Usuario);
             }
 
+            var existeUsuario = _usuarioRepository.ExisteUsuarioComEmail(request.Email);
+
+            if (!existeUsuario)
+            {
+                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse e-mail");
+                return default(Usuario);
+            }
+
             var usuario = _usuarioRepository.RealizarLoginEmail(request.Email, request.Senha);
 
             if (usuario is null)
             {
-                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse e-mail");
+                await NotificarErro(request, "E-mail e/ou senha inválidos");
                 return default(Usuario);
             }
 
@@ -110,11 +129,19 @@ namespace Suplee.Identidade.Domain.Commands
                 return default(Usuario);
             }
 
+            var existeUsuario = _usuarioRepository.ExisteUsuarioComCPF(request.CPF);
+
+            if (!existeUsuario)
+            {
+                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse cpf");
+                return default(Usuario);
+            }
+
             var usuario = _usuarioRepository.RealizarLoginCPF(request.CPF, request.Senha);
 
             if (usuario is null)
             {
-                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse cpf");
+                await NotificarErro(request, "CPF e/ou senha inválidos");
                 return default(Usuario);
             }
 
