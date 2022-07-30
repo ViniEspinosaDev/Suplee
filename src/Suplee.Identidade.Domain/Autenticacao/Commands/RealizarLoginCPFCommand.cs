@@ -2,7 +2,7 @@
 using Suplee.Core.Messages;
 using Suplee.Identidade.Domain.Models;
 
-namespace Suplee.Identidade.Domain.Commands
+namespace Suplee.Identidade.Domain.Autenticacao.Commands
 {
     public class RealizarLoginCPFCommand : Command<Usuario>
     {

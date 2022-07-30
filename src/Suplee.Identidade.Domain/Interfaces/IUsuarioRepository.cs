@@ -1,5 +1,6 @@
 ﻿using Suplee.Core.Data;
 using Suplee.Identidade.Domain.Models;
+using System;
 
 namespace Suplee.Identidade.Domain.Interfaces
 {
@@ -8,9 +9,13 @@ namespace Suplee.Identidade.Domain.Interfaces
         bool ExisteUsuarioComCPF(string cpf);
         bool ExisteUsuarioComEmail(string email);
 
+        ConfirmacaoUsuario ObterConfirmacaoUsuario(Guid usuarioId, string codigoConfirmacao);
+
+        Usuario ObterPeloId(Guid usuarioId);
         Usuario RealizarLoginEmail(string email, string senha);
         Usuario RealizarLoginCPF(string cpf, string senha);
 
         void Adicionar(Usuario usuario);
+        void AdicionarConfirmacaoUsuario(ConfirmacaoUsuario confirmacaoUsuario);
     }
 }

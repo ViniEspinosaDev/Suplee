@@ -9,7 +9,9 @@ using Suplee.Identidade.CrossCuttingIoC.Extensions;
 using Suplee.Identidade.Data;
 using Suplee.Identidade.Data.Context;
 using Suplee.Identidade.Data.Repository;
-using Suplee.Identidade.Domain.Commands;
+using Suplee.Identidade.Domain.Autenticacao.Commands;
+using Suplee.Identidade.Domain.Identidade.Commands;
+using Suplee.Identidade.Domain.Identidade.Events;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Identidade.Domain.Models;
 using System.Text;
@@ -26,6 +28,12 @@ namespace Suplee.Identidade.CrossCuttingIoC
             ConfigurarDependenciasJwtToken(services, configuration);
             ConfigurarDependenciasCommand(services);
             ConfigurarDependenciasRepository(services);
+            ConfigurarDependenciasEvent(services);
+        }
+
+        private static void ConfigurarDependenciasEvent(IServiceCollection services)
+        {
+            services.AddScoped<INotificationHandler<UsuarioCadastradoEvent>, IdentidadeEventHandler>();
         }
 
         private static void ConfigurarDependenciasRepository(IServiceCollection services)
@@ -36,8 +44,9 @@ namespace Suplee.Identidade.CrossCuttingIoC
         private static void ConfigurarDependenciasCommand(IServiceCollection services)
         {
             services.AddScoped<IRequestHandler<CadastrarUsuarioCommand, Usuario>, IdentidadeCommandHandler>();
-            services.AddScoped<IRequestHandler<RealizarLoginEmailCommand, Usuario>, IdentidadeCommandHandler>();
-            services.AddScoped<IRequestHandler<RealizarLoginCPFCommand, Usuario>, IdentidadeCommandHandler>();
+            services.AddScoped<IRequestHandler<RealizarLoginEmailCommand, Usuario>, AutenticacaoCommandHandler>();
+            services.AddScoped<IRequestHandler<RealizarLoginCPFCommand, Usuario>, AutenticacaoCommandHandler>();
+            services.AddScoped<IRequestHandler<ConfirmarCadastroCommand, bool>, AutenticacaoCommandHandler>();
         }
 
         private static void ConfigurarDependenciasJwtToken(IServiceCollection services, IConfiguration configuration)

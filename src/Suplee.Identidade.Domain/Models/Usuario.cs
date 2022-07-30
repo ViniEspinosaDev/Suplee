@@ -1,19 +1,22 @@
 ﻿using Suplee.Core.DomainObjects;
 using Suplee.Identidade.Domain.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Suplee.Identidade.Domain.Models
 {
     public class Usuario : Entity, IAggregateRoot
     {
-        public Usuario(string nome, string email, string senha, string cPF, string celular, ETipoUsuario tipoUsuario)
+        public Usuario(string nome, string email, string senha, string cPF, string celular, ETipoUsuario tipo, EStatusUsuario status)
         {
             Nome = nome;
             Email = email;
             Senha = senha;
             CPF = cPF;
             Celular = celular;
-            TipoUsuario = tipoUsuario;
+            Tipo = tipo;
+            Status = status;
+            DataCadastro = DateTime.Now;
         }
 
         public string Nome { get; protected set; }
@@ -21,7 +24,9 @@ namespace Suplee.Identidade.Domain.Models
         public string Senha { get; protected set; }
         public string CPF { get; protected set; }
         public string Celular { get; protected set; }
-        public ETipoUsuario TipoUsuario { get; protected set; }
+        public ETipoUsuario Tipo { get; protected set; }
+        public EStatusUsuario Status { get; protected set; }
+        public DateTime DataCadastro { get; protected set; }
 
         public ICollection<Endereco> Enderecos { get; protected set; }
 
@@ -32,5 +37,7 @@ namespace Suplee.Identidade.Domain.Models
 
             Enderecos.Add(endereco);
         }
+
+        public void Ativar() => Status = EStatusUsuario.Ativo;
     }
 }

@@ -14,4 +14,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="NomeMaximizada" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="fc42dd1c-ed5a-4b72-ae0f-686e59382e8f" ChangeDateTime="07/30/2022 13:35:00">
+    <Property Name="ElementName" Value="[dbo].[Usuario].[TipoUsuario]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Usuario]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Tipo" />
+  </Operation>
 </Operations>

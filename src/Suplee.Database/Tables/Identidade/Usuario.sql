@@ -6,5 +6,7 @@
     [CPF] NVARCHAR(14) NOT NULL, 
     [Celular] NVARCHAR(14) NOT NULL, 
     [Senha] VARCHAR(500) NOT NULL, 
-    [TipoUsuario] INT NOT NULL
+    [Tipo] INT NOT NULL, 
+    [DataCadastro] DATETIME NOT NULL, 
+    [Status] INT NOT NULL
 )

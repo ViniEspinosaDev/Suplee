@@ -308,11 +308,19 @@
             <param name="loginInputModel"></param>
             <returns></returns>
         </member>
-        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.NovaConta(Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel)">
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.CadastrarConta(Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel)">
             <summary>
             Criar nova conta
             </summary>
             <param name="novaConta"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.ConfirmarCadastro(System.Guid,System.String)">
+            <summary>
+            Confirmar cadastro de conta de usuário
+            </summary>
+            <param name="usuarioId"></param>
+            <param name="codigoConfirmacao"></param>
             <returns></returns>
         </member>
         <member name="T:Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel">
@@ -480,7 +488,7 @@
             Controler para fazer testes
             </summary>
         </member>
-        <member name="M:Suplee.Api.Controllers.Testes.TesteController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,Suplee.Teste.Domain.Interfaces.ITesteRepository)">
+        <member name="M:Suplee.Api.Controllers.Testes.TesteController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,Suplee.Teste.Domain.Interfaces.ITesteRepository,Suplee.Core.Messages.Mail.IMailService)">
             <summary>
             Construtor controller de testes
             </summary>
@@ -488,6 +496,7 @@
             <param name="mediatorHandler"></param>
             <param name="usuario"></param>
             <param name="testeRepository"></param>
+            <param name="mailService"></param>
         </member>
         <member name="M:Suplee.Api.Controllers.Testes.TesteController.CadastrarImagem(Suplee.Api.Controllers.Testes.InputModels.CadastrarImagemInputModel)">
             <summary>
@@ -501,6 +510,11 @@
             Recuperar todas imagens cadastradas
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Testes.TesteController.EnviarEmail(System.String)">
+            <summary>
+            Enviar e-mail
+            </summary>
         </member>
         <member name="T:Suplee.Api.Extensions.AspNetUser">
             <summary>

@@ -2,6 +2,7 @@
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages;
 using Suplee.Identidade.Domain.Enums;
+using Suplee.Identidade.Domain.Identidade.Events;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Identidade.Domain.Models;
 using Suplee.Identidade.Domain.Tools;
@@ -9,13 +10,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Suplee.Identidade.Domain.Commands
+namespace Suplee.Identidade.Domain.Identidade.Commands
 {
     public class IdentidadeCommandHandler :
         CommandHandler,
-        IRequestHandler<CadastrarUsuarioCommand, Usuario>,
-        IRequestHandler<RealizarLoginEmailCommand, Usuario>,
-        IRequestHandler<RealizarLoginCPFCommand, Usuario>
+        IRequestHandler<CadastrarUsuarioCommand, Usuario>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IUsuarioRepository _usuarioRepository;
@@ -74,7 +73,8 @@ namespace Suplee.Identidade.Domain.Commands
                  HashPassword.GenerateSHA512String(request.Senha),
                  cpf,
                  request.Celular,
-                 ETipoUsuario.Normal);
+                 ETipoUsuario.Normal,
+                 EStatusUsuario.AguardandoConfirmacao);
 
             _usuarioRepository.Adicionar(usuario);
 
@@ -86,68 +86,7 @@ namespace Suplee.Identidade.Domain.Commands
                 return default(Usuario);
             }
 
-            // TODO: Futuramente lançar evento de propagação para banco de dados de leitura
-            //await _mediatorHandler.PublicarEvento(new UsuarioCadastradoEvent());
-
-            return usuario;
-        }
-
-        public async Task<Usuario> Handle(RealizarLoginEmailCommand request, CancellationToken cancellationToken)
-        {
-            if (!request.IsValid())
-            {
-                NotificarErrosValidacao(request);
-                return default(Usuario);
-            }
-
-            var existeUsuario = _usuarioRepository.ExisteUsuarioComEmail(request.Email);
-
-            if (!existeUsuario)
-            {
-                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse e-mail");
-                return default(Usuario);
-            }
-
-            var usuario = _usuarioRepository.RealizarLoginEmail(request.Email, HashPassword.GenerateSHA512String(request.Senha));
-
-            if (usuario is null)
-            {
-                await NotificarErro(request, "E-mail e/ou senha inválidos");
-                return default(Usuario);
-            }
-
-            // TODO: Futuramente lançar evento de propagação para banco de dados de leitura
-            //await _mediatorHandler.PublicarEvento(new UsuarioCadastradoEvent());
-
-            return usuario;
-        }
-
-        public async Task<Usuario> Handle(RealizarLoginCPFCommand request, CancellationToken cancellationToken)
-        {
-            if (!request.IsValid())
-            {
-                NotificarErrosValidacao(request);
-                return default(Usuario);
-            }
-
-            var existeUsuario = _usuarioRepository.ExisteUsuarioComCPF(request.CPF);
-
-            if (!existeUsuario)
-            {
-                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse cpf");
-                return default(Usuario);
-            }
-
-            var usuario = _usuarioRepository.RealizarLoginCPF(request.CPF, HashPassword.GenerateSHA512String(request.Senha));
-
-            if (usuario is null)
-            {
-                await NotificarErro(request, "CPF e/ou senha inválidos");
-                return default(Usuario);
-            }
-
-            // TODO: Futuramente lançar evento de propagação para banco de dados de leitura
-            //await _mediatorHandler.PublicarEvento(new UsuarioCadastradoEvent());
+            await _mediatorHandler.PublicarDomainEvent(new UsuarioCadastradoEvent(usuario));
 
             return usuario;
         }

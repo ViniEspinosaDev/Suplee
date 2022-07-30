@@ -2,7 +2,7 @@
 using Suplee.Core.Messages;
 using Suplee.Identidade.Domain.Models;
 
-namespace Suplee.Identidade.Domain.Commands
+namespace Suplee.Identidade.Domain.Identidade.Commands
 {
     public class CadastrarUsuarioCommand : Command<Usuario>
     {
@@ -49,12 +49,12 @@ namespace Suplee.Identidade.Domain.Commands
             RuleFor(c => c.Senha)
                 .NotEmpty()
                 .WithMessage("A Senha do usuário não foi informado")
-                .MinimumLength(6).WithMessage("A senha deve ter ao mínimo 6 caracteres"); ;
+                .MinimumLength(6).WithMessage("A senha deve ter ao mínimo 6 caracteres");
 
             RuleFor(c => c.ConfirmacaoSenha)
                 .NotEmpty()
                 .WithMessage("A Confirmação de senha do usuário não foi informado")
-                .MinimumLength(6).WithMessage("A Confirmação de senha deve ter ao mínimo 6 caracteres"); ;
+                .MinimumLength(6).WithMessage("A Confirmação de senha deve ter ao mínimo 6 caracteres");
         }
     }
 }

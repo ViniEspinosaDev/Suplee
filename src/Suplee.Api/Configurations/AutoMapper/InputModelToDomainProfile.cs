@@ -3,7 +3,8 @@ using Suplee.Api.Controllers.Identidade.InputModel;
 using Suplee.Api.Controllers.Identidade.InputModels;
 using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
 using Suplee.Catalogo.Domain.Models;
-using Suplee.Identidade.Domain.Commands;
+using Suplee.Identidade.Domain.Autenticacao.Commands;
+using Suplee.Identidade.Domain.Identidade.Commands;
 
 namespace Suplee.Catalogo.Api.Configurations.AutoMapper
 {

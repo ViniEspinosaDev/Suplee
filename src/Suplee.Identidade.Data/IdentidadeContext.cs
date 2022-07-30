@@ -13,6 +13,7 @@ namespace Suplee.Identidade.Data
 
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Endereco> Endereco { get; set; }
+        public DbSet<ConfirmacaoUsuario> ConfirmacaoUsuario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
