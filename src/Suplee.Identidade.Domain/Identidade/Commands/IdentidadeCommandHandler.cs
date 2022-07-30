@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages;
+using Suplee.Core.Messages.Mail;
 using Suplee.Identidade.Domain.Enums;
 using Suplee.Identidade.Domain.Identidade.Events;
 using Suplee.Identidade.Domain.Interfaces;
@@ -14,15 +15,21 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
 {
     public class IdentidadeCommandHandler :
         CommandHandler,
-        IRequestHandler<CadastrarUsuarioCommand, Usuario>
+        IRequestHandler<CadastrarUsuarioCommand, Usuario>,
+        IRequestHandler<ReenviarEmailConfirmarCadastroCommand, string>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IMailService _mailService;
 
-        public IdentidadeCommandHandler(IMediatorHandler mediatorHandler, IUsuarioRepository usuarioRepository) : base(mediatorHandler)
+        public IdentidadeCommandHandler(
+            IMediatorHandler mediatorHandler,
+            IUsuarioRepository usuarioRepository,
+            IMailService mailService) : base(mediatorHandler)
         {
             _mediatorHandler = mediatorHandler;
             _usuarioRepository = usuarioRepository;
+            _mailService = mailService;
         }
 
         public async Task<Usuario> Handle(CadastrarUsuarioCommand request, CancellationToken cancellationToken)
@@ -89,6 +96,47 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
             await _mediatorHandler.PublicarDomainEvent(new UsuarioCadastradoEvent(usuario));
 
             return usuario;
+        }
+
+        public async Task<string> Handle(ReenviarEmailConfirmarCadastroCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return string.Empty;
+            }
+
+            string cpf = new string(request.CPF.Where(x => x >= '0' && x <= '9').ToArray());
+
+            var usuario = _usuarioRepository.ObterPeloCPF(cpf);
+
+            if (usuario is null)
+            {
+                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse CPF");
+                return string.Empty;
+            }
+
+            string emailDestino = usuario.Email;
+
+            var confirmacaoUsuario = _usuarioRepository.ObterConfirmacaoUsuario(usuario.Id);
+
+            if (confirmacaoUsuario is null)
+            {
+                await NotificarErro(request, "Não existe nenhuma confirmação pendente para o usuário com esse CPF");
+                return string.Empty;
+            }
+
+            var email = new Mail(
+                mailAddress: emailDestino,
+                bodyText: $@"<p>Para confirmar sua conta, clique no link abaixo: 
+                                <a href=""https://suplee.vercel.app/confirmar-cadastro?usuarioId={usuario.Id}&codigoConfirmacao={confirmacaoUsuario.CodigoConfirmacao}"">
+                                <br>UsuarioId: {usuario.Id}
+                                <br>CodigoConfirmacao: {confirmacaoUsuario.CodigoConfirmacao}</a></p>",
+                subject: "Confirmação de criação de conta na Suplee");
+
+            await _mailService.SendMailAsync(email);
+
+            return emailDestino;
         }
     }
 }

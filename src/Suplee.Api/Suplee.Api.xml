@@ -323,6 +323,13 @@
             <param name="codigoConfirmacao"></param>
             <returns></returns>
         </member>
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.ReenviarEmailConfirmarCadastro(System.String)">
+            <summary>
+            Reenviar e-mail de confirmação de conta para o usuário pelo CPF
+            </summary>
+            <param name="cpf"></param>
+            <returns></returns>
+        </member>
         <member name="T:Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel">
             <summary>
             Nova conta

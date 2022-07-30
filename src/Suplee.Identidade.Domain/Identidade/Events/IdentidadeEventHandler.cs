@@ -40,10 +40,12 @@ namespace Suplee.Identidade.Domain.Identidade.Events
                 return;
             }
 
-            // TODO: Criar email com link certinho ?usuarioId=idusuario&codigoConfirmacao=XXXXXXXXXX (Lembrar 10 caracteres)
             var email = new Mail(
                 mailAddress: notification.Usuario.Email,
-                bodyText: $"<p>Para confirmar sua conta, clique no link abaixo: <a>/confirmar-cadastro/{notification.Usuario.Id}/{codigoConfirmacao}</a></p>",
+                bodyText: $@"<p>Para confirmar sua conta, clique no link abaixo: 
+                                <a href=""https://suplee.vercel.app/confirmar-cadastro?usuarioId={notification.Usuario.Id}&codigoConfirmacao={codigoConfirmacao}"">
+                                <br>UsuarioId: {notification.Usuario.Id}
+                                <br>CodigoConfirmacao: {codigoConfirmacao}</a></p>",
                 subject: "Confirmação de criação de conta na Suplee");
 
             await _mailService.SendMailAsync(email);

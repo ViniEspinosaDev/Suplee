@@ -108,7 +108,7 @@ namespace Suplee.Api.Controllers.Identidade
             if (usuario is null)
                 return CustomResponse();
 
-            return CustomResponse(GerarJwt(usuario));
+            return CustomResponse($"Um e-mail de confirmação de cadastro foi enviado para seu e-mail: {novaConta.Email}");
         }
 
         /// <summary>
@@ -124,7 +124,22 @@ namespace Suplee.Api.Controllers.Identidade
 
             await _mediatorHandler.EnviarComando(comando);
 
-            return CustomResponse("Sua conta foi confirmada com sucesso");
+            return CustomResponse("Sua conta foi criada com sucesso. Faça o login na Suplee");
+        }
+
+        /// <summary>
+        /// Reenviar e-mail de confirmação de conta para o usuário pelo CPF
+        /// </summary>
+        /// <param name="cpf"></param>
+        /// <returns></returns>
+        [HttpPost("reenviar-email-confirmar-cadastro/{cpf}")]
+        public async Task<ActionResult> ReenviarEmailConfirmarCadastro(string cpf)
+        {
+            var comando = new ReenviarEmailConfirmarCadastroCommand(cpf);
+
+            string email = await _mediatorHandler.EnviarComando(comando);
+
+            return CustomResponse($@"Um e-mail de confirmação foi enviado para ""{email}""");
         }
 
         private LoginViewModel GerarJwt(Usuario usuario)

@@ -49,6 +49,12 @@ namespace Suplee.Identidade.Domain.Autenticacao.Commands
                 return default(Usuario);
             }
 
+            if (usuario.Status == EStatusUsuario.AguardandoConfirmacao)
+            {
+                await NotificarErro(request, $@"Confirme a criação de sua conta pelo e-mail ""{usuario.Email}"" antes de fazer o login");
+                return default(Usuario);
+            }
+
             // TODO: Futuramente lançar evento de propagação para banco de dados de leitura
             //await _mediatorHandler.PublicarEvento(new UsuarioLogadoEvent());
 
@@ -76,6 +82,12 @@ namespace Suplee.Identidade.Domain.Autenticacao.Commands
             if (usuario is null)
             {
                 await NotificarErro(request, "CPF e/ou senha inválidos");
+                return default(Usuario);
+            }
+
+            if (usuario.Status == EStatusUsuario.AguardandoConfirmacao)
+            {
+                await NotificarErro(request, $@"Confirme a criação de sua conta pelo e-mail ""{usuario.Email}"" antes de fazer o login");
                 return default(Usuario);
             }
 

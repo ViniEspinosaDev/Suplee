@@ -32,8 +32,8 @@ namespace Suplee.Core.Messages.Mail
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var destino = destiny.MailAddress;
 
-            if (_mailConfiguration.SandBox)
-                destino = "viniespinosa.developer@gmail.com";
+            //if (_mailConfiguration.SandBox)
+            //    destino = "viniespinosa.developer@gmail.com";
 
             MailMessage mail = new MailMessage(_mailConfiguration.Address, destino)
             {

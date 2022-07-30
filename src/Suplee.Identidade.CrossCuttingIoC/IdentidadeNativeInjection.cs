@@ -44,6 +44,8 @@ namespace Suplee.Identidade.CrossCuttingIoC
         private static void ConfigurarDependenciasCommand(IServiceCollection services)
         {
             services.AddScoped<IRequestHandler<CadastrarUsuarioCommand, Usuario>, IdentidadeCommandHandler>();
+            services.AddScoped<IRequestHandler<ReenviarEmailConfirmarCadastroCommand, string>, IdentidadeCommandHandler>();
+
             services.AddScoped<IRequestHandler<RealizarLoginEmailCommand, Usuario>, AutenticacaoCommandHandler>();
             services.AddScoped<IRequestHandler<RealizarLoginCPFCommand, Usuario>, AutenticacaoCommandHandler>();
             services.AddScoped<IRequestHandler<ConfirmarCadastroCommand, bool>, AutenticacaoCommandHandler>();
