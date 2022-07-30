@@ -9,6 +9,7 @@ using Suplee.Catalogo.Api.Configurations.AutoMapper;
 using Suplee.Catalogo.CrossCuttingIoC;
 using Suplee.ExternalService.CrossCuttingIoC;
 using Suplee.Identidade.CrossCuttingIoC;
+using Suplee.Teste.CrossCuttingIoC;
 
 namespace Suplee.Catalogo.Api
 {
@@ -69,6 +70,7 @@ namespace Suplee.Catalogo.Api
             CatalogoNativeInjection.ConfigurarDependencias(services, Configuration);
             ExternalServiceNativeInjection.ConfigurarDependencias(services, Configuration);
             IdentidadeNativeInjection.ConfigurarDependencias(services, Configuration);
+            TesteNativeInjection.ConfigurarDependencias(services, Configuration);
         }
     }
 }

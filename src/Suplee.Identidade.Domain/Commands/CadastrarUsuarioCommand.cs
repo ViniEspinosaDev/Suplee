@@ -24,8 +24,8 @@ namespace Suplee.Identidade.Domain.Commands
 
         public override bool IsValid()
         {
-            var validation = new CadastrarUsuarioCommandValidation().Validate(this);
-            return validation.IsValid;
+            ValidationResult = new CadastrarUsuarioCommandValidation().Validate(this);
+            return ValidationResult.IsValid;
         }
     }
 

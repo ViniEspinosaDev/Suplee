@@ -78,7 +78,10 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 .ObterProdutosPaginadoPorNomeProduto(nome, pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             if (produtos is null)
-                return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
+            {
+                NotificarErro("", "Não foi possível obter os produtos");
+                return CustomResponse();
+            }
 
             int quantidadeProdutos = _produtoRepository.QuantidadeTotalProdutos();
             int quantidadeProdutosPeloNome = _produtoRepository.QuantidadeProdutosPeloNome(nome);
@@ -105,13 +108,19 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         public async Task<ActionResult> ObterProduto(Guid produtoId)
         {
             if (produtoId == Guid.Empty)
-                return BadRequest(new { Success = false, Errors = "Necessário informar o Id do produto" });
+            {
+                NotificarErro("", "Necessário informar o Id do produto");
+                return CustomResponse();
+            }
 
             var produto = await _produtoRepository
                 .ObterProduto(produtoId);
 
             if (produto is null)
-                return BadRequest(new { Success = false, Errors = "Não foi possível obter o produto" });
+            {
+                NotificarErro("", "Não foi possível obter o produto");
+                return CustomResponse();
+            }
 
             var produtoViewModel = _mapper.Map<ProdutoViewModel>(produto);
 

@@ -16,8 +16,8 @@ namespace Suplee.Identidade.Domain.Commands
 
         public override bool IsValid()
         {
-            var validacao = new RealizarLoginCommandValidation().Validate(this);
-            return validacao.IsValid;
+            ValidationResult = new RealizarLoginCommandValidation().Validate(this);
+            return ValidationResult.IsValid;
         }
     }
 

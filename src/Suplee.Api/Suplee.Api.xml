@@ -383,6 +383,43 @@
             Tipo do usuário
             </summary>
         </member>
+        <member name="T:Suplee.Api.Controllers.Testes.InputModels.CadastrarImagemInputModel">
+            <summary>
+            Cadastrar imagem
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Testes.InputModels.CadastrarImagemInputModel.Imagem">
+            <summary>
+            Imagem
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Testes.TesteController">
+            <summary>
+            Controler para fazer testes
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Testes.TesteController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,Suplee.Teste.Domain.Interfaces.ITesteRepository)">
+            <summary>
+            Construtor controller de testes
+            </summary>
+            <param name="notifications"></param>
+            <param name="mediatorHandler"></param>
+            <param name="usuario"></param>
+            <param name="testeRepository"></param>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Testes.TesteController.CadastrarImagem(Suplee.Api.Controllers.Testes.InputModels.CadastrarImagemInputModel)">
+            <summary>
+            Cadastrar imagem enviando File 
+            </summary>
+            <param name="cadastrarImagem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Testes.TesteController.RecuperarImagens">
+            <summary>
+            Recuperar todas imagens cadastradas
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Suplee.Api.Extensions.AspNetUser">
             <summary>
             Recupera informações do token

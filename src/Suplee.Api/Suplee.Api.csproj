@@ -30,6 +30,12 @@
     <ProjectReference Include="..\Suplee.Identidade.CrossCuttingIoC\Suplee.Identidade.CrossCuttingIoC.csproj" />
     <ProjectReference Include="..\Suplee.Identidade.Data\Suplee.Identidade.Data.csproj" />
     <ProjectReference Include="..\Suplee.Identidade.Domain\Suplee.Identidade.Domain.csproj" />
+    <ProjectReference Include="..\Suplee.Teste.CrossCuttingIoC\Suplee.Teste.CrossCuttingIoC.csproj" />
+    <ProjectReference Include="..\Suplee.Teste.Domain\Suplee.Teste.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\Testes\ViewModels\" />
   </ItemGroup>
 
 

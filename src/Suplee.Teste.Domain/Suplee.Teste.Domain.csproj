@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="8.4.0" />
-    <PackageReference Include="MediatR" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Suplee.Core\Suplee.Core.csproj" />
+    <ProjectReference Include="..\Suplee.ExternalService\Suplee.ExternalService.csproj" />
   </ItemGroup>
 
 </Project>
