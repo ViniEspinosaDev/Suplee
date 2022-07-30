@@ -5,6 +5,6 @@
     [Email] NVARCHAR(100) NOT NULL, 
     [CPF] NVARCHAR(14) NOT NULL, 
     [Celular] NVARCHAR(14) NOT NULL, 
-    [Senha] NVARCHAR(50) NOT NULL, 
+    [Senha] VARCHAR(500) NOT NULL, 
     [TipoUsuario] INT NOT NULL
 )

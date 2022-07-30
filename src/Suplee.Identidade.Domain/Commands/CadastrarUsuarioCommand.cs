@@ -35,8 +35,8 @@ namespace Suplee.Identidade.Domain.Commands
         public CadastrarUsuarioCommandValidation()
         {
             RuleFor(c => c.Nome)
-                .NotEmpty()
-                .WithMessage("O nome do usuário não foi informado");
+                .NotEmpty().WithMessage("O nome do usuário não foi informado")
+                .MinimumLength(3).WithMessage("O nome do usuário deve ter ao mínimo 3 caracteres");
 
             RuleFor(c => c.Email)
                 .NotEmpty().WithMessage("O E-mail do usuário não foi informado")
@@ -48,11 +48,13 @@ namespace Suplee.Identidade.Domain.Commands
 
             RuleFor(c => c.Senha)
                 .NotEmpty()
-                .WithMessage("A Senha do usuário não foi informado");
+                .WithMessage("A Senha do usuário não foi informado")
+                .MinimumLength(6).WithMessage("A senha deve ter ao mínimo 6 caracteres"); ;
 
             RuleFor(c => c.ConfirmacaoSenha)
                 .NotEmpty()
-                .WithMessage("A Confirmação do usuário não foi informado");
+                .WithMessage("A Confirmação de senha do usuário não foi informado")
+                .MinimumLength(6).WithMessage("A Confirmação de senha deve ter ao mínimo 6 caracteres"); ;
         }
     }
 }

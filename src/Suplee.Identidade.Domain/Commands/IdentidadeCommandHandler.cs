@@ -4,6 +4,7 @@ using Suplee.Core.Messages;
 using Suplee.Identidade.Domain.Enums;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Identidade.Domain.Models;
+using Suplee.Identidade.Domain.Tools;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -70,7 +71,7 @@ namespace Suplee.Identidade.Domain.Commands
             var usuario = new Usuario(
                  request.Nome,
                  request.Email,
-                 request.Senha,
+                 HashPassword.GenerateSHA512String(request.Senha),
                  cpf,
                  request.Celular,
                  ETipoUsuario.Normal);
@@ -107,7 +108,7 @@ namespace Suplee.Identidade.Domain.Commands
                 return default(Usuario);
             }
 
-            var usuario = _usuarioRepository.RealizarLoginEmail(request.Email, request.Senha);
+            var usuario = _usuarioRepository.RealizarLoginEmail(request.Email, HashPassword.GenerateSHA512String(request.Senha));
 
             if (usuario is null)
             {
@@ -137,7 +138,7 @@ namespace Suplee.Identidade.Domain.Commands
                 return default(Usuario);
             }
 
-            var usuario = _usuarioRepository.RealizarLoginCPF(request.CPF, request.Senha);
+            var usuario = _usuarioRepository.RealizarLoginCPF(request.CPF, HashPassword.GenerateSHA512String(request.Senha));
 
             if (usuario is null)
             {
