@@ -1,11 +1,12 @@
 ﻿using FluentValidation;
 using Suplee.Core.Messages;
+using Suplee.Identidade.Domain.Models;
 
 namespace Suplee.Identidade.Domain.Commands
 {
-    public class RealizarLoginCommand : Command
+    public class RealizarLoginEmailCommand : Command<Usuario>
     {
-        public RealizarLoginCommand(string email, string senha)
+        public RealizarLoginEmailCommand(string email, string senha)
         {
             Email = email;
             Senha = senha;
@@ -16,14 +17,14 @@ namespace Suplee.Identidade.Domain.Commands
 
         public override bool IsValid()
         {
-            ValidationResult = new RealizarLoginCommandValidation().Validate(this);
+            ValidationResult = new RealizarLoginEmailCommandValidation().Validate(this);
             return ValidationResult.IsValid;
         }
     }
 
-    public class RealizarLoginCommandValidation : AbstractValidator<RealizarLoginCommand>
+    public class RealizarLoginEmailCommandValidation : AbstractValidator<RealizarLoginEmailCommand>
     {
-        public RealizarLoginCommandValidation()
+        public RealizarLoginEmailCommandValidation()
         {
             Validar();
         }

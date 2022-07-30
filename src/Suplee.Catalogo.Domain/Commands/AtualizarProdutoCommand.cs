@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Suplee.Catalogo.Domain.Commands
 {
-    public class AtualizarProdutoCommand : Command
+    public class AtualizarProdutoCommand : Command<bool>
     {
         public AtualizarProdutoCommand(
             Guid produtoId,

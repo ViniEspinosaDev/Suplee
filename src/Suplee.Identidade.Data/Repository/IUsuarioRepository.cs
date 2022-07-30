@@ -31,14 +31,14 @@ namespace Suplee.Identidade.Data.Repository
             return _identidadeContext.Usuario.Any(x => x.Email == email);
         }
 
-        public Usuario RecuperarPeloCPF(string cpf)
+        public Usuario RealizarLoginEmail(string email, string senha)
         {
-            return _identidadeContext.Usuario.FirstOrDefault(x => x.CPF == cpf);
+            return _identidadeContext.Usuario.FirstOrDefault(x => x.Email == email && x.Senha == senha);
         }
 
-        public Usuario RecuperarPeloEmail(string email)
+        public Usuario RealizarLoginCPF(string cpf, string senha)
         {
-            return _identidadeContext.Usuario.FirstOrDefault(x => x.Email == email);
+            return _identidadeContext.Usuario.FirstOrDefault(x => x.CPF == cpf && x.Senha == senha);
         }
 
         public void Dispose()

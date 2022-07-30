@@ -3,10 +3,8 @@ using Suplee.Catalogo.Domain.Interfaces;
 using Suplee.Catalogo.Domain.Models;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages;
-using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.ExternalService.Imgbb.DTO;
 using Suplee.ExternalService.Imgbb.Interfaces;
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +12,7 @@ using System.Threading.Tasks;
 namespace Suplee.Catalogo.Domain.Commands
 {
     public class CatalogoCommandHandler :
+        CommandHandler,
         IRequestHandler<AdicionarProdutoCommand, bool>,
         IRequestHandler<AtualizarProdutoCommand, bool>
     {
@@ -24,7 +23,7 @@ namespace Suplee.Catalogo.Domain.Commands
         public CatalogoCommandHandler(
             IProdutoRepository produtoRepository,
             IMediatorHandler mediatorHandler,
-            IImgbbService imgbbService)
+            IImgbbService imgbbService) : base(mediatorHandler)
         {
             _produtoRepository = produtoRepository;
             _mediatorHandler = mediatorHandler;
@@ -33,7 +32,11 @@ namespace Suplee.Catalogo.Domain.Commands
 
         public async Task<bool> Handle(AdicionarProdutoCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarComando(request)) return false;
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return false;
+            }
 
             var produto = new Produto(
                 informacaoNutricionalId: request.InformacaoNutricional.Id,
@@ -65,27 +68,9 @@ namespace Suplee.Catalogo.Domain.Commands
             return await _produtoRepository.UnitOfWork.Commit();
         }
 
-        private string ConverterBytesEmBase64(byte[] bytes)
-        {
-            string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
-            return "data:image/webp;base64," + base64String;
-        }
-
         public Task<bool> Handle(AtualizarProdutoCommand request, CancellationToken cancellationToken)
         {
             throw new System.NotImplementedException();
-        }
-
-        private bool ValidarComando(Command message)
-        {
-            if (message.IsValid()) return true;
-
-            foreach (var error in message.ValidationResult.Errors)
-            {
-                _mediatorHandler.PublicarNotificacao(new DomainNotification(message.MessageType, error.ErrorMessage));
-            }
-
-            return false;
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
 using Suplee.Core.Messages;
+using Suplee.Identidade.Domain.Models;
 
 namespace Suplee.Identidade.Domain.Commands
 {
-    public class CadastrarUsuarioCommand : Command
+    public class CadastrarUsuarioCommand : Command<Usuario>
     {
         public CadastrarUsuarioCommand(string nome, string email, string cpf, string senha, string confirmacaoSenha, string celular)
         {

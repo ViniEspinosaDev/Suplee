@@ -67,24 +67,14 @@ namespace Suplee.Api.Controllers.Identidade
         [HttpPost("login")]
         public async Task<ActionResult> FazerLogin(LoginInputModel loginInputModel)
         {
-            var comando = _mapper.Map<RealizarLoginCommand>(loginInputModel);
+            var comando = _mapper.Map<RealizarLoginEmailCommand>(loginInputModel);
 
-            var resultado = await _mediatorHandler.EnviarComando(comando);
+            var usuario = await _mediatorHandler.EnviarComando(comando);
 
-            if (!resultado)
+            if (usuario is null)
                 return CustomResponse();
 
-            var usuario = _usuarioRepository.RecuperarPeloEmail(loginInputModel.Email);
-
-            var usuarioViewModel = new UsuarioViewModel()
-            {
-                Id = usuario.Id,
-                Nome = usuario.Nome,
-                Email = usuario.Email,
-                TipoUsuario = usuario.TipoUsuario
-            };
-
-            return CustomResponse(GerarJwt(usuarioViewModel));
+            return CustomResponse(GerarJwt(usuario));
         }
 
         /// <summary>
@@ -97,25 +87,15 @@ namespace Suplee.Api.Controllers.Identidade
         {
             var comando = _mapper.Map<CadastrarUsuarioCommand>(novaConta);
 
-            var resultado = await _mediatorHandler.EnviarComando(comando);
+            var usuario = await _mediatorHandler.EnviarComando(comando);
 
-            if (!resultado)
+            if (usuario is null)
                 return CustomResponse();
 
-            var usuario = _usuarioRepository.RecuperarPeloCPF(novaConta.CPF);
-
-            var usuarioViewModel = new UsuarioViewModel()
-            {
-                Id = usuario.Id,
-                Nome = usuario.Nome,
-                Email = usuario.Email,
-                TipoUsuario = usuario.TipoUsuario
-            };
-
-            return CustomResponse(GerarJwt(usuarioViewModel));
+            return CustomResponse(GerarJwt(usuario));
         }
 
-        private LoginViewModel GerarJwt(UsuarioViewModel usuario)
+        private LoginViewModel GerarJwt(Usuario usuario)
         {
             var claims = new List<Claim>();
 

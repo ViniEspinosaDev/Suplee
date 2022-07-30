@@ -4,7 +4,7 @@ using System;
 
 namespace Suplee.Core.Messages
 {
-    public abstract class Command : Message, IRequest<bool>
+    public abstract class Command<R> : Message, IRequest<R>
     {
         protected Command()
         {

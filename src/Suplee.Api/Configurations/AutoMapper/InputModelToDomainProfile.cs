@@ -31,7 +31,7 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(f => f.Senha, opt => opt.MapFrom(m => m.Senha))
                 .ForMember(f => f.ConfirmacaoSenha, opt => opt.MapFrom(m => m.ConfirmacaoSenha));
 
-            CreateMap<LoginInputModel, RealizarLoginCommand>()
+            CreateMap<LoginInputModel, RealizarLoginEmailCommand>()
                 .ForMember(f => f.Email, opt => opt.MapFrom(m => m.Email))
                 .ForMember(f => f.Senha, opt => opt.MapFrom(m => m.Senha));
         }

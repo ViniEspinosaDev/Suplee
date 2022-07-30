@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Suplee.Teste.Domain.Commands
 {
-    public class TesteCommandHandler : IRequestHandler<CadastrarImagemCommand, bool>
+    public class TesteCommandHandler : CommandHandler, IRequestHandler<CadastrarImagemCommand, bool>
     {
         private readonly ITesteRepository _testeRepository;
         private readonly IMediatorHandler _mediatorHandler;
@@ -28,7 +28,7 @@ namespace Suplee.Teste.Domain.Commands
             ITesteRepository testeRepository,
             IMediatorHandler mediatorHandler,
             IImgbbService imgbbService,
-            IImageHelper imageHelper)
+            IImageHelper imageHelper) : base(mediatorHandler)
         {
             _testeRepository = testeRepository;
             _mediatorHandler = mediatorHandler;
@@ -38,7 +38,11 @@ namespace Suplee.Teste.Domain.Commands
 
         public async Task<bool> Handle(CadastrarImagemCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarComando(request)) return false;
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return false;
+            }
 
             if (!ValidarSeImagem(request.Imagem)) return false;
 
@@ -114,17 +118,5 @@ namespace Suplee.Teste.Domain.Commands
 
         private string ConverterBytesEmBase64(byte[] bytes, string extensaoImagem) =>
             Convert.ToBase64String(bytes, 0, bytes.Length);
-
-        private bool ValidarComando(Command message)
-        {
-            if (message.IsValid()) return true;
-
-            foreach (var error in message.ValidationResult.Errors)
-            {
-                _mediatorHandler.PublicarNotificacao(new DomainNotification(message.MessageType, error.ErrorMessage));
-            }
-
-            return false;
-        }
     }
 }

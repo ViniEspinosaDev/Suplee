@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Suplee.Catalogo.Domain.Commands
 {
-    public class AdicionarProdutoCommand : Command
+    public class AdicionarProdutoCommand : Command<bool>
     {
         public AdicionarProdutoCommand(
             Guid categoriaId,

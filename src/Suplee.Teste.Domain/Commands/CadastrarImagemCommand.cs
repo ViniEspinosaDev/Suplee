@@ -4,7 +4,7 @@ using Suplee.Core.Messages;
 
 namespace Suplee.Teste.Domain.Commands
 {
-    public class CadastrarImagemCommand : Command
+    public class CadastrarImagemCommand : Command<bool>
     {
         public CadastrarImagemCommand(IFormFile imagem)
         {

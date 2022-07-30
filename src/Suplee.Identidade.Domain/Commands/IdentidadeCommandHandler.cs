@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages;
-using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Identidade.Domain.Enums;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Identidade.Domain.Models;
@@ -12,44 +11,49 @@ using System.Threading.Tasks;
 namespace Suplee.Identidade.Domain.Commands
 {
     public class IdentidadeCommandHandler :
-        IRequestHandler<CadastrarUsuarioCommand, bool>,
-        IRequestHandler<RealizarLoginCommand, bool>
+        CommandHandler,
+        IRequestHandler<CadastrarUsuarioCommand, Usuario>,
+        IRequestHandler<RealizarLoginEmailCommand, Usuario>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IUsuarioRepository _usuarioRepository;
 
-        public IdentidadeCommandHandler(IMediatorHandler mediatorHandler, IUsuarioRepository usuarioRepository)
+        public IdentidadeCommandHandler(IMediatorHandler mediatorHandler, IUsuarioRepository usuarioRepository) : base(mediatorHandler)
         {
             _mediatorHandler = mediatorHandler;
             _usuarioRepository = usuarioRepository;
         }
 
-        public async Task<bool> Handle(CadastrarUsuarioCommand request, CancellationToken cancellationToken)
+        public async Task<Usuario> Handle(CadastrarUsuarioCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarComando(request)) return false;
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return default(Usuario);
+            }
 
             var senhasDiferentes = request.Senha != request.ConfirmacaoSenha;
 
             if (senhasDiferentes)
             {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification("", "As senhas não são iguais"));
-                return false;
+                await NotificarErro(request, "As senhas não são iguais");
+                return default(Usuario);
             }
 
             var existeUsuarioComCPF = _usuarioRepository.ExisteUsuarioComCPF(request.CPF);
 
             if (existeUsuarioComCPF)
             {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification("", "Este CPF já está sendo usado por outro usuário"));
-                return false;
+                await NotificarErro(request, "Este CPF já está sendo usado por outro usuário");
+                return default(Usuario);
             }
 
             var existeUsuarioComEmail = _usuarioRepository.ExisteUsuarioComEmail(request.Email);
 
             if (existeUsuarioComEmail)
             {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification("", "Este E-mail já está sendo usado por outro usuário"));
-                return false;
+                await NotificarErro(request, "Este E-mail já está sendo usado por outro usuário");
+                return default(Usuario);
             }
 
             var usuario = new Usuario(
@@ -66,50 +70,58 @@ namespace Suplee.Identidade.Domain.Commands
 
             if (!sucesso)
             {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification("", "Não foi possível cadastrar usuário"));
-                return false;
+                await NotificarErro(request, "Não foi possível cadastrar usuário");
+                return default(Usuario);
             }
 
             // TODO: Futuramente lançar evento de propagação para banco de dados de leitura
             //await _mediatorHandler.PublicarEvento(new UsuarioCadastradoEvent());
 
-            return sucesso;
+            return usuario;
         }
 
-        public async Task<bool> Handle(RealizarLoginCommand request, CancellationToken cancellationToken)
+        public async Task<Usuario> Handle(RealizarLoginEmailCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarComando(request)) return false;
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return default(Usuario);
+            }
 
-            var usuario = _usuarioRepository.RecuperarPeloEmail(request.Email);
+            var usuario = _usuarioRepository.RealizarLoginEmail(request.Email, request.Senha);
 
             if (usuario is null)
             {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification("", "Não existe nenhum usuário cadastrado com esse e-mail"));
-                return false;
+                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse e-mail");
+                return default(Usuario);
             }
 
-            // TODO: Descriptografar
-            var senhasDiferentes = usuario.Senha != request.Senha;
+            // TODO: Futuramente lançar evento de propagação para banco de dados de leitura
+            //await _mediatorHandler.PublicarEvento(new UsuarioCadastradoEvent());
 
-            if (senhasDiferentes)
-            {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification("", "E-mail e/ou senha inválidos"));
-                return false;
-            }
-
-            return true;
+            return usuario;
         }
 
-        private bool ValidarComando(Command message)
+        public async Task<Usuario> Handle(RealizarLoginCPFCommand request, CancellationToken cancellationToken)
         {
-            if (message.IsValid()) return true;
-
-            foreach (var error in message.ValidationResult.Errors)
+            if (!request.IsValid())
             {
-                _mediatorHandler.PublicarNotificacao(new DomainNotification(message.MessageType, error.ErrorMessage));
+                NotificarErrosValidacao(request);
+                return default(Usuario);
             }
 
-            return false;
+            var usuario = _usuarioRepository.RealizarLoginCPF(request.CPF, request.Senha);
+
+            if (usuario is null)
+            {
+                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse cpf");
+                return default(Usuario);
+            }
+
+            // TODO: Futuramente lançar evento de propagação para banco de dados de leitura
+            //await _mediatorHandler.PublicarEvento(new UsuarioCadastradoEvent());
+
+            return usuario;
         }
     }
 }
