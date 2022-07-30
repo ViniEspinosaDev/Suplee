@@ -330,6 +330,75 @@
             <param name="cpf"></param>
             <returns></returns>
         </member>
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.RecuperarSenha(System.String)">
+            <summary>
+            Recuperar senha pelo e-mail
+            </summary>
+            <param name="cpf"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.AlterarSenha(Suplee.Api.Controllers.Identidade.InputModels.AlterarSenhaInputModel)">
+            <summary>
+            Alterar senha do usuário
+            </summary>
+            <param name="alterarSenha"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Identidade.InputModels.AlterarSenhaInputModel">
+            <summary>
+            Informações para alterar senha
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.AlterarSenhaInputModel.UsuarioId">
+            <summary>
+            Id do usuário
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.AlterarSenhaInputModel.CodigoConfirmacao">
+            <summary>
+            Codigo de confirmação
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.AlterarSenhaInputModel.Senha">
+            <summary>
+            Senha
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.AlterarSenhaInputModel.ConfirmacaoSenha">
+            <summary>
+            Confirmação senha
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Identidade.InputModels.LoginCPFInputModel">
+            <summary>
+            Template Login
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.LoginCPFInputModel.CPF">
+            <summary>
+            E-mail
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.LoginCPFInputModel.Senha">
+            <summary>
+            Senha
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Identidade.InputModels.LoginEmailInputModel">
+            <summary>
+            Template Login
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.LoginEmailInputModel.Email">
+            <summary>
+            E-mail
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.LoginEmailInputModel.Senha">
+            <summary>
+            Senha
+            </summary>
+        </member>
         <member name="T:Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel">
             <summary>
             Nova conta
@@ -363,36 +432,6 @@
         <member name="P:Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel.ConfirmacaoSenha">
             <summary>
             Confirmação da senha
-            </summary>
-        </member>
-        <member name="T:Suplee.Api.Controllers.Identidade.InputModels.LoginCPFInputModel">
-            <summary>
-            Template Login
-            </summary>
-        </member>
-        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.LoginCPFInputModel.CPF">
-            <summary>
-            E-mail
-            </summary>
-        </member>
-        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.LoginCPFInputModel.Senha">
-            <summary>
-            Senha
-            </summary>
-        </member>
-        <member name="T:Suplee.Api.Controllers.Identidade.InputModels.LoginEmailInputModel">
-            <summary>
-            Template Login
-            </summary>
-        </member>
-        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.LoginEmailInputModel.Email">
-            <summary>
-            E-mail
-            </summary>
-        </member>
-        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.LoginEmailInputModel.Senha">
-            <summary>
-            Senha
             </summary>
         </member>
         <member name="T:Suplee.Api.Controllers.Identidade.ViewModels.LoginViewModel">

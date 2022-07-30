@@ -4,7 +4,7 @@ using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Core.Messages.Mail;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Identidade.Domain.Models;
-using System;
+using Suplee.Identidade.Domain.Tools;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +26,7 @@ namespace Suplee.Identidade.Domain.Identidade.Events
 
         public async Task Handle(UsuarioCadastradoEvent notification, CancellationToken cancellationToken)
         {
-            string codigoConfirmacao = GerarCodigoConfirmacao();
+            string codigoConfirmacao = HashPassword.GerarCodigoConfirmacao();
 
             var confirmacaoUsuario = new ConfirmacaoUsuario(notification.Usuario.Id, codigoConfirmacao);
 
@@ -49,20 +49,6 @@ namespace Suplee.Identidade.Domain.Identidade.Events
                 subject: "Confirmação de criação de conta na Suplee");
 
             await _mailService.SendMailAsync(email);
-        }
-
-        private string GerarCodigoConfirmacao()
-        {
-            var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            var codigoConfirmacao = new char[10];
-            var aleatorio = new Random();
-
-            for (int i = 0; i < codigoConfirmacao.Length; i++)
-            {
-                codigoConfirmacao[i] = caracteres[aleatorio.Next(caracteres.Length)];
-            }
-
-            return new String(codigoConfirmacao);
         }
     }
 }

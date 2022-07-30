@@ -34,7 +34,7 @@ namespace Suplee.Identidade.Data.Repository
         public ConfirmacaoUsuario ObterConfirmacaoUsuario(Guid usuarioId, string codigoConfirmacao) =>
             _identidadeContext.ConfirmacaoUsuario.FirstOrDefault(x => x.UsuarioId == usuarioId && x.CodigoConfirmacao == codigoConfirmacao);
 
-        public ConfirmacaoUsuario ObterConfirmacaoUsuario(Guid usuarioId) =>
+        public ConfirmacaoUsuario ObterConfirmacaoUsuarioAindaNaoConfirmada(Guid usuarioId) =>
             _identidadeContext.ConfirmacaoUsuario.FirstOrDefault(x => x.UsuarioId == usuarioId && x.DataConfirmacao == null);
 
         public Usuario ObterPeloCPF(string CPF) => _identidadeContext.Usuario.FirstOrDefault(x => x.CPF == CPF);

@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Suplee.Identidade.Domain.Tools
@@ -23,5 +24,18 @@ namespace Suplee.Identidade.Domain.Tools
             return result.ToString();
         }
 
+        public static string GerarCodigoConfirmacao()
+        {
+            var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var codigoConfirmacao = new char[10];
+            var aleatorio = new Random();
+
+            for (int i = 0; i < codigoConfirmacao.Length; i++)
+            {
+                codigoConfirmacao[i] = caracteres[aleatorio.Next(caracteres.Length)];
+            }
+
+            return new String(codigoConfirmacao);
+        }
     }
 }

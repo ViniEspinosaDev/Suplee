@@ -48,12 +48,12 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
 
             RuleFor(c => c.Senha)
                 .NotEmpty()
-                .WithMessage("A Senha do usuário não foi informado")
+                .WithMessage("A Senha do usuário não foi informada")
                 .MinimumLength(6).WithMessage("A senha deve ter ao mínimo 6 caracteres");
 
             RuleFor(c => c.ConfirmacaoSenha)
                 .NotEmpty()
-                .WithMessage("A Confirmação de senha do usuário não foi informado")
+                .WithMessage("A Confirmação de senha do usuário não foi informada")
                 .MinimumLength(6).WithMessage("A Confirmação de senha deve ter ao mínimo 6 caracteres");
         }
     }

@@ -108,7 +108,7 @@ namespace Suplee.Api.Controllers.Identidade
             if (usuario is null)
                 return CustomResponse();
 
-            return CustomResponse($"Um e-mail de confirmação de cadastro foi enviado para seu e-mail: {novaConta.Email}");
+            return CustomResponse($@"Confirme seu cadastro no e-mail ""{novaConta.Email}""");
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Suplee.Api.Controllers.Identidade
 
             await _mediatorHandler.EnviarComando(comando);
 
-            return CustomResponse("Sua conta foi criada com sucesso. Faça o login na Suplee");
+            return CustomResponse("Sua conta foi criada com sucesso");
         }
 
         /// <summary>
@@ -139,7 +139,37 @@ namespace Suplee.Api.Controllers.Identidade
 
             string email = await _mediatorHandler.EnviarComando(comando);
 
-            return CustomResponse($@"Um e-mail de confirmação foi enviado para ""{email}""");
+            return CustomResponse($@"Confirme seu cadastro no e-mail ""{email}""");
+        }
+
+        /// <summary>
+        /// Recuperar senha pelo e-mail
+        /// </summary>
+        /// <param name="cpf"></param>
+        /// <returns></returns>
+        [HttpPost("recuperar-senha/{cpf}")]
+        public async Task<ActionResult> RecuperarSenha(string cpf)
+        {
+            var comando = new RecuperarSenhaCommand(cpf);
+
+            string email = await _mediatorHandler.EnviarComando(comando);
+
+            return CustomResponse($@"Um e-mail de recuperação de senha foi enviado para ""{email}""");
+        }
+
+        /// <summary>
+        /// Alterar senha do usuário
+        /// </summary>
+        /// <param name="alterarSenha"></param>
+        /// <returns></returns>
+        [HttpPost("alterar-senha")]
+        public async Task<ActionResult> AlterarSenha(AlterarSenhaInputModel alterarSenha)
+        {
+            var comando = _mapper.Map<AlterarSenhaCommand>(alterarSenha);
+
+            await _mediatorHandler.EnviarComando(comando);
+
+            return CustomResponse("Senha alterada com sucesso");
         }
 
         private LoginViewModel GerarJwt(Usuario usuario)

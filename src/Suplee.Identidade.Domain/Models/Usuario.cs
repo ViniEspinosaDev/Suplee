@@ -39,5 +39,7 @@ namespace Suplee.Identidade.Domain.Models
         }
 
         public void Ativar() => Status = EStatusUsuario.Ativo;
+
+        public void AlterarSenha(string senha) => Senha = senha;
     }
 }

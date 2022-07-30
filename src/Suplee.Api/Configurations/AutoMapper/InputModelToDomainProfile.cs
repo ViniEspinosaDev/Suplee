@@ -39,6 +39,12 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
             CreateMap<LoginCPFInputModel, RealizarLoginCPFCommand>()
                 .ForMember(f => f.CPF, opt => opt.MapFrom(m => m.CPF))
                 .ForMember(f => f.Senha, opt => opt.MapFrom(m => m.Senha));
+
+            CreateMap<AlterarSenhaInputModel, AlterarSenhaCommand>()
+                .ForMember(f => f.UsuarioId, opt => opt.MapFrom(m => m.UsuarioId))
+                .ForMember(f => f.CodigoConfirmacao, opt => opt.MapFrom(m => m.CodigoConfirmacao))
+                .ForMember(f => f.Senha, opt => opt.MapFrom(m => m.Senha))
+                .ForMember(f => f.ConfirmacaoSenha, opt => opt.MapFrom(m => m.ConfirmacaoSenha));
         }
 
         private void MapeiaContextoCatalogo()

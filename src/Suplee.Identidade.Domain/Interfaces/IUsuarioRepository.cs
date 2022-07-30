@@ -10,7 +10,7 @@ namespace Suplee.Identidade.Domain.Interfaces
         bool ExisteUsuarioComEmail(string email);
 
         ConfirmacaoUsuario ObterConfirmacaoUsuario(Guid usuarioId, string codigoConfirmacao);
-        ConfirmacaoUsuario ObterConfirmacaoUsuario(Guid usuarioId);
+        ConfirmacaoUsuario ObterConfirmacaoUsuarioAindaNaoConfirmada(Guid usuarioId);
 
         Usuario ObterPeloId(Guid usuarioId);
         Usuario ObterPeloCPF(string CPF);

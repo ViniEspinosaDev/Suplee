@@ -119,21 +119,21 @@ namespace Suplee.Identidade.Domain.Autenticacao.Commands
                 return false;
             }
 
-            var confirmarUsuario = _usuarioRepository.ObterConfirmacaoUsuario(request.UsuarioId, request.CodigoConfirmacao);
+            var confirmacaoUsuario = _usuarioRepository.ObterConfirmacaoUsuario(request.UsuarioId, request.CodigoConfirmacao);
 
-            if (confirmarUsuario is null)
+            if (confirmacaoUsuario is null)
             {
                 await NotificarErro(request, "Usuário e/ou código de confirmação inválidos");
                 return false;
             }
 
-            if (confirmarUsuario.Confirmado())
+            if (confirmacaoUsuario.Confirmado())
             {
                 await NotificarErro(request, "Este código de confirmação já foi confirmado");
                 return false;
             }
 
-            confirmarUsuario.Confirmar();
+            confirmacaoUsuario.Confirmar();
             usuario.Ativar();
 
             return await _usuarioRepository.UnitOfWork.Commit();
