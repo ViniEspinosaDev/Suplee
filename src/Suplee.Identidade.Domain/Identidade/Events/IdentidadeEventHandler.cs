@@ -2,9 +2,9 @@
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Core.Messages.Mail;
+using Suplee.Core.Tools;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Identidade.Domain.Models;
-using Suplee.Identidade.Domain.Tools;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +26,7 @@ namespace Suplee.Identidade.Domain.Identidade.Events
 
         public async Task Handle(UsuarioCadastradoEvent notification, CancellationToken cancellationToken)
         {
-            string codigoConfirmacao = HashPassword.GerarCodigoConfirmacao();
+            string codigoConfirmacao = HashPassword.GenerateRandomCode(10);
 
             var confirmacaoUsuario = new ConfirmacaoUsuario(notification.Usuario.Id, codigoConfirmacao);
 

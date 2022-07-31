@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Suplee.Identidade.Domain.Tools
+namespace Suplee.Core.Tools
 {
     public static class HashPassword
     {
@@ -24,18 +24,18 @@ namespace Suplee.Identidade.Domain.Tools
             return result.ToString();
         }
 
-        public static string GerarCodigoConfirmacao()
+        public static string GenerateRandomCode(int caractersNumber)
         {
-            var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            var codigoConfirmacao = new char[10];
-            var aleatorio = new Random();
+            var characteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var code = new char[caractersNumber];
+            var random = new Random();
 
-            for (int i = 0; i < codigoConfirmacao.Length; i++)
+            for (int i = 0; i < code.Length; i++)
             {
-                codigoConfirmacao[i] = caracteres[aleatorio.Next(caracteres.Length)];
+                code[i] = characteres[random.Next(characteres.Length)];
             }
 
-            return new String(codigoConfirmacao);
+            return new String(code);
         }
     }
 }

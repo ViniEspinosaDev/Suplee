@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages;
+using Suplee.Core.Tools;
 using Suplee.Identidade.Domain.Enums;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Identidade.Domain.Models;
-using Suplee.Identidade.Domain.Tools;
 using System.Threading;
 using System.Threading.Tasks;
 

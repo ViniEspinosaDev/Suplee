@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Suplee.Core.Messages;
+using Suplee.Core.Tools;
 using Suplee.Identidade.Domain.Models;
 
 namespace Suplee.Identidade.Domain.Identidade.Commands
@@ -10,7 +11,7 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
         {
             Nome = nome;
             Email = email;
-            CPF = cpf;
+            CPF = cpf.FormatarCPFApenasNumeros();
             Senha = senha;
             ConfirmacaoSenha = confirmacaoSenha;
             Celular = celular;
@@ -43,8 +44,9 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
                 .EmailAddress().WithMessage("O E-mail não é válido");
 
             RuleFor(c => c.CPF)
-                .NotEmpty()
-                .WithMessage("O CPF do usuário não foi informado");
+                .NotEmpty().WithMessage("O CPF do usuário não foi informado")
+                .MinimumLength(11).WithMessage("O CPF é inválido")
+                .MaximumLength(11).WithMessage("O CPF é inválido");
 
             RuleFor(c => c.Senha)
                 .NotEmpty()

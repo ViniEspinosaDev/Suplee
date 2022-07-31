@@ -2,12 +2,11 @@
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages;
 using Suplee.Core.Messages.Mail;
+using Suplee.Core.Tools;
 using Suplee.Identidade.Domain.Enums;
 using Suplee.Identidade.Domain.Identidade.Events;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Identidade.Domain.Models;
-using Suplee.Identidade.Domain.Tools;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -42,16 +41,6 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
                 return default(Usuario);
             }
 
-            string cpf = new string(request.CPF.Where(x => x >= '0' && x <= '9').ToArray());
-
-            bool cpfInvalido = string.IsNullOrEmpty(cpf) || cpf.Length != 11;
-
-            if (cpfInvalido)
-            {
-                await NotificarErro(request, "O CPF é inválido");
-                return default(Usuario);
-            }
-
             var senhasDiferentes = request.Senha != request.ConfirmacaoSenha;
 
             if (senhasDiferentes)
@@ -60,7 +49,7 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
                 return default(Usuario);
             }
 
-            var existeUsuarioComCPF = _usuarioRepository.ExisteUsuarioComCPF(cpf);
+            var existeUsuarioComCPF = _usuarioRepository.ExisteUsuarioComCPF(request.CPF);
 
             if (existeUsuarioComCPF)
             {
@@ -80,7 +69,7 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
                  request.Nome,
                  request.Email,
                  HashPassword.GenerateSHA512String(request.Senha),
-                 cpf,
+                 request.CPF,
                  request.Celular,
                  ETipoUsuario.Normal,
                  EStatusUsuario.AguardandoConfirmacao);
@@ -108,9 +97,7 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
                 return string.Empty;
             }
 
-            string cpf = new string(request.CPF.Where(x => x >= '0' && x <= '9').ToArray());
-
-            var usuario = _usuarioRepository.ObterPeloCPF(cpf);
+            var usuario = _usuarioRepository.ObterPeloCPF(request.CPF);
 
             if (usuario is null)
             {
@@ -149,9 +136,7 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
                 return string.Empty;
             }
 
-            string cpf = new string(request.CPF.Where(x => x >= '0' && x <= '9').ToArray());
-
-            var usuario = _usuarioRepository.ObterPeloCPF(cpf);
+            var usuario = _usuarioRepository.ObterPeloCPF(request.CPF);
 
             if (usuario is null)
             {
@@ -169,7 +154,7 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
 
             if (confirmacaoUsuario is null)
             {
-                confirmacaoUsuario = new ConfirmacaoUsuario(usuario.Id, HashPassword.GerarCodigoConfirmacao());
+                confirmacaoUsuario = new ConfirmacaoUsuario(usuario.Id, HashPassword.GenerateRandomCode(10));
                 _usuarioRepository.AdicionarConfirmacaoUsuario(confirmacaoUsuario);
                 await _usuarioRepository.UnitOfWork.Commit();
             }

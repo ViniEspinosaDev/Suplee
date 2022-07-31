@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Suplee.Core.Messages;
+using Suplee.Core.Tools;
 
 namespace Suplee.Identidade.Domain.Identidade.Commands
 {
@@ -7,7 +8,7 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
     {
         public RecuperarSenhaCommand(string cpf)
         {
-            CPF = cpf;
+            CPF = cpf.FormatarCPFApenasNumeros();
         }
 
         public string CPF { get; protected set; }
@@ -23,8 +24,9 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
         public RecuperarSenhaCommandValidation()
         {
             RuleFor(c => c.CPF)
-                .NotEmpty()
-                .WithMessage("O CPF do usuário não foi informado");
+               .NotEmpty().WithMessage("O CPF do usuário não foi informado")
+               .MinimumLength(11).WithMessage("O CPF é inválido")
+               .MaximumLength(11).WithMessage("O CPF é inválido");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Suplee.Core.DomainObjects;
+using Suplee.Core.Tools;
 using Suplee.Identidade.Domain.Enums;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Suplee.Identidade.Domain.Models
             Nome = nome;
             Email = email;
             Senha = senha;
-            CPF = cPF;
+            CPF = cPF.FormatarCPFApenasNumeros();
             Celular = celular;
             Tipo = tipo;
             Status = status;

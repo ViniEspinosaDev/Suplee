@@ -23,6 +23,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Suplee.Catalogo.Data\Suplee.Catalogo.Data.csproj" />
+    <ProjectReference Include="..\..\src\Suplee.Identidade.Data\Suplee.Identidade.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Builder\Commands\" />
+    <Folder Include="Builder\Events\" />
+    <Folder Include="Commands\Identidade\" />
   </ItemGroup>
 
 </Project>

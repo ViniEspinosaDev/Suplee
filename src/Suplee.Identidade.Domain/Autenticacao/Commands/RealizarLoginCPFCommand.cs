@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Suplee.Core.Messages;
+using Suplee.Core.Tools;
 using Suplee.Identidade.Domain.Models;
 
 namespace Suplee.Identidade.Domain.Autenticacao.Commands
@@ -8,7 +9,7 @@ namespace Suplee.Identidade.Domain.Autenticacao.Commands
     {
         public RealizarLoginCPFCommand(string cpf, string senha)
         {
-            CPF = cpf;
+            CPF = cpf.FormatarCPFApenasNumeros();
             Senha = senha;
         }
 
