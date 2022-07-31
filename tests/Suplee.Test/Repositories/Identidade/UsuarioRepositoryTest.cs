@@ -85,6 +85,8 @@ namespace Suplee.Test.Repositories.Identidade
             var usuarioAdicionado = _usuarioRepository.ObterPeloId(usuario.Id);
 
             Assert.NotNull(usuarioAdicionado);
+            Assert.NotNull(usuarioAdicionado.Enderecos);
+            Assert.Single(usuarioAdicionado.Enderecos);
         }
 
         [Fact]

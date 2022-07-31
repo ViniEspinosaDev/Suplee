@@ -44,13 +44,14 @@ namespace Suplee.Identidade.CrossCuttingIoC
         private static void ConfigurarDependenciasCommand(IServiceCollection services)
         {
             services.AddScoped<IRequestHandler<CadastrarUsuarioCommand, Usuario>, IdentidadeCommandHandler>();
+            services.AddScoped<IRequestHandler<EditarUsuarioCommand, bool>, IdentidadeCommandHandler>();
+            services.AddScoped<IRequestHandler<ConfirmarCadastroCommand, bool>, AutenticacaoCommandHandler>();
             services.AddScoped<IRequestHandler<ReenviarEmailConfirmarCadastroCommand, string>, IdentidadeCommandHandler>();
             services.AddScoped<IRequestHandler<RecuperarSenhaCommand, string>, IdentidadeCommandHandler>();
             services.AddScoped<IRequestHandler<AlterarSenhaCommand, bool>, IdentidadeCommandHandler>();
 
             services.AddScoped<IRequestHandler<RealizarLoginEmailCommand, Usuario>, AutenticacaoCommandHandler>();
             services.AddScoped<IRequestHandler<RealizarLoginCPFCommand, Usuario>, AutenticacaoCommandHandler>();
-            services.AddScoped<IRequestHandler<ConfirmarCadastroCommand, bool>, AutenticacaoCommandHandler>();
         }
 
         private static void ConfigurarDependenciasJwtToken(IServiceCollection services, IConfiguration configuration)

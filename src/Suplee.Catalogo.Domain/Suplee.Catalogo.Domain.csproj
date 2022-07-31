@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="8.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Suplee.Core\Suplee.Core.csproj" />
     <ProjectReference Include="..\Suplee.ExternalService\Suplee.ExternalService.csproj" />
   </ItemGroup>

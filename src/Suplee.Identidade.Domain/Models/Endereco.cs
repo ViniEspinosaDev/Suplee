@@ -7,7 +7,6 @@ namespace Suplee.Identidade.Domain.Models
     public class Endereco : Entity
     {
         public Endereco() { }
-
         public Endereco(
             Guid usuarioId,
             string nomeDestinatario,

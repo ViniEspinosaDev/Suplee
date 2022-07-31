@@ -3,6 +3,7 @@ using Suplee.Core.Tools;
 using Suplee.Identidade.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Suplee.Identidade.Domain.Models
 {
@@ -29,7 +30,7 @@ namespace Suplee.Identidade.Domain.Models
         public EStatusUsuario Status { get; protected set; }
         public DateTime DataCadastro { get; protected set; }
 
-        public ICollection<Endereco> Enderecos { get; protected set; }
+        public List<Endereco> Enderecos { get; protected set; }
 
         public void AdicionarEndereco(Endereco endereco)
         {
@@ -42,5 +43,12 @@ namespace Suplee.Identidade.Domain.Models
         public void Ativar() => Status = EStatusUsuario.Ativo;
 
         public void AlterarSenha(string senha) => Senha = senha;
+
+        public void Atualizar(string nome, string celular, List<Endereco> enderecos)
+        {
+            Nome = nome;
+            Celular = celular;
+            Enderecos = enderecos;
+        }
     }
 }

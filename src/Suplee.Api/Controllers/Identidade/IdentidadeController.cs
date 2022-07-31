@@ -20,7 +20,7 @@ namespace Suplee.Api.Controllers.Identidade
     /// <summary>
     /// Endpoints de identidade
     /// </summary>
-    [AllowAnonymous]
+    [Authorize]
     [Route("api/[controller]")]
     public class IdentidadeController : MainController
     {
@@ -51,6 +51,7 @@ namespace Suplee.Api.Controllers.Identidade
         /// </summary>
         /// <param name="novaConta"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost("cadastrar-usuario")]
         public async Task<ActionResult> CadastrarConta(CadastroUsuarioInputModel novaConta)
         {
@@ -65,11 +66,29 @@ namespace Suplee.Api.Controllers.Identidade
         }
 
         /// <summary>
+        /// Editar informações do usuário
+        /// </summary>
+        /// <param name="editarUsuario"></param>
+        /// <returns></returns>
+        [HttpPut("editar-usuario")]
+        public async Task<ActionResult> EditarConta(EditarUsuarioInputModel editarUsuario)
+        {
+            editarUsuario.AdicionarUsuarioIdNosEnderecos();
+
+            var comando = _mapper.Map<EditarUsuarioCommand>(editarUsuario);
+
+            await _mediatorHandler.EnviarComando(comando);
+
+            return CustomResponse("Usuário atualizado com sucesso");
+        }
+
+        /// <summary>
         /// Confirmar cadastro de conta de usuário
         /// </summary>
         /// <param name="usuarioId"></param>
         /// <param name="codigoConfirmacao"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost("confirmar-cadastro/{usuarioId}/{codigoConfirmacao}")]
         public async Task<ActionResult> ConfirmarCadastro(Guid usuarioId, string codigoConfirmacao)
         {
@@ -85,6 +104,7 @@ namespace Suplee.Api.Controllers.Identidade
         /// </summary>
         /// <param name="cpf"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost("reenviar-email-confirmar-cadastro/{cpf}")]
         public async Task<ActionResult> ReenviarEmailConfirmarCadastro(string cpf)
         {
@@ -100,6 +120,7 @@ namespace Suplee.Api.Controllers.Identidade
         /// </summary>
         /// <param name="cpf"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost("recuperar-senha/{cpf}")]
         public async Task<ActionResult> RecuperarSenha(string cpf)
         {
@@ -115,6 +136,7 @@ namespace Suplee.Api.Controllers.Identidade
         /// </summary>
         /// <param name="alterarSenha"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost("alterar-senha")]
         public async Task<ActionResult> AlterarSenha(AlterarSenhaInputModel alterarSenha)
         {

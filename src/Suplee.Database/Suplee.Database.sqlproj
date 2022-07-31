@@ -74,6 +74,7 @@
     <Build Include="Tables\Identidade\Usuario.sql" />
     <Build Include="Tables\Teste\TesteImagem.sql" />
     <Build Include="Tables\Identidade\ConfirmacaoUsuario.sql" />
+    <Build Include="Tables\Identidade\Endereco.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Seed\Catalogo\CriarCatalogoSeed.sql" />

@@ -17,7 +17,8 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
         IRequestHandler<CadastrarUsuarioCommand, Usuario>,
         IRequestHandler<ReenviarEmailConfirmarCadastroCommand, string>,
         IRequestHandler<RecuperarSenhaCommand, string>,
-        IRequestHandler<AlterarSenhaCommand, bool>
+        IRequestHandler<AlterarSenhaCommand, bool>,
+        IRequestHandler<EditarUsuarioCommand, bool>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IUsuarioRepository _usuarioRepository;
@@ -226,6 +227,27 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
 
             confirmacaoUsuario.Confirmar();
             usuario.AlterarSenha(HashPassword.GenerateSHA512String(request.Senha));
+
+            return await _usuarioRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(EditarUsuarioCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return false;
+            }
+
+            var usuario = _usuarioRepository.ObterPeloId(request.UsuarioId);
+
+            if (usuario is null)
+            {
+                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse Id");
+                return false;
+            }
+
+            usuario.Atualizar(request.Nome, request.Celular, request.Enderecos);
 
             return await _usuarioRepository.UnitOfWork.Commit();
         }

@@ -329,6 +329,13 @@
             <param name="novaConta"></param>
             <returns></returns>
         </member>
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.EditarConta(Suplee.Api.Controllers.Identidade.InputModels.EditarUsuarioInputModel)">
+            <summary>
+            Editar informações do usuário
+            </summary>
+            <param name="editarUsuario"></param>
+            <returns></returns>
+        </member>
         <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.ConfirmarCadastro(System.Guid,System.String)">
             <summary>
             Confirmar cadastro de conta de usuário
@@ -381,6 +388,106 @@
         <member name="P:Suplee.Api.Controllers.Identidade.InputModels.AlterarSenhaInputModel.ConfirmacaoSenha">
             <summary>
             Confirmação senha
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Identidade.InputModels.EditarUsuarioInputModel">
+            <summary>
+            Editar usuário
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EditarUsuarioInputModel.UsuarioId">
+            <summary>
+            Id usuário
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EditarUsuarioInputModel.Nome">
+            <summary>
+            Nome
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EditarUsuarioInputModel.Celular">
+            <summary>
+            Celular
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EditarUsuarioInputModel.Enderecos">
+            <summary>
+            Endereços
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Identidade.InputModels.EditarUsuarioInputModel.AdicionarUsuarioIdNosEnderecos">
+            <summary>
+            Método para mapear usuário id nos endereços
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel">
+            <summary>
+            Endereço
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel.UsuarioId">
+            <summary>
+            Id do usuário
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel.NomeDestinatario">
+            <summary>
+            Nome de quem vai receber
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel.CEP">
+            <summary>
+            CEP
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel.Estado">
+            <summary>
+            Estado
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel.Cidade">
+            <summary>
+            Cidade
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel.Bairro">
+            <summary>
+            Bairro
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel.Rua">
+            <summary>
+            Rua
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel.Numero">
+            <summary>
+            Número da casa
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel.Complemento">
+            <summary>
+            Complemento
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel.TipoLocal">
+            <summary>
+            Tipo (Casa = 0, Trabalho = 1)
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel.Telefone">
+            <summary>
+            Telefone
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Identidade.InputModels.EnderecoInputModel.InformacaoAdicional">
+            <summary>
+            Informação adicional
             </summary>
         </member>
         <member name="T:Suplee.Api.Controllers.Identidade.InputModels.LoginCPFInputModel">

@@ -1,6 +1,7 @@
 ﻿using Suplee.Core.Tools;
 using Suplee.Identidade.Domain.Enums;
 using Suplee.Identidade.Domain.Models;
+using System.Collections.Generic;
 
 namespace Suplee.Test.Builder.Models
 {
@@ -26,13 +27,7 @@ namespace Suplee.Test.Builder.Models
             Celular = "15997826699";
             Tipo = ETipoUsuario.Normal;
             Status = EStatusUsuario.AguardandoConfirmacao;
-
-            return this;
-        }
-
-        public UsuarioBuilder ComStatus(EStatusUsuario status)
-        {
-            Status = status;
+            Enderecos = new List<Endereco>() { new EnderecoBuilder().PadraoValido().ComUsuario(this).Build() };
 
             return this;
         }

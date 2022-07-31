@@ -1,4 +1,5 @@
-﻿using Suplee.Core.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Suplee.Core.Data;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Identidade.Domain.Models;
 using System;
@@ -23,7 +24,10 @@ namespace Suplee.Identidade.Data.Repository
 
         public bool ExisteUsuarioComEmail(string email) => _identidadeContext.Usuario.Any(x => x.Email == email);
 
-        public Usuario ObterPeloId(Guid usuarioId) => _identidadeContext.Usuario.FirstOrDefault(x => x.Id == usuarioId);
+        public Usuario ObterPeloId(Guid usuarioId) =>
+            _identidadeContext.Usuario
+                .Include(x => x.Enderecos)
+                .FirstOrDefault(x => x.Id == usuarioId);
 
         public Usuario RealizarLoginEmail(string email, string senha) =>
             _identidadeContext.Usuario.FirstOrDefault(x => x.Email == email && x.Senha == senha);
