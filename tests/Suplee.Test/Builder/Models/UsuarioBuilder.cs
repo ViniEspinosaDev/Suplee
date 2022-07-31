@@ -30,23 +30,9 @@ namespace Suplee.Test.Builder.Models
             return this;
         }
 
-        public UsuarioBuilder ComSenha(string senha)
+        public UsuarioBuilder ComStatus(EStatusUsuario status)
         {
-            Senha = senha;
-
-            return this;
-        }
-
-        public UsuarioBuilder ComCPF(string cpf)
-        {
-            CPF = cpf;
-
-            return this;
-        }
-
-        public UsuarioBuilder ComEmail(string email)
-        {
-            Email = email;
+            Status = status;
 
             return this;
         }

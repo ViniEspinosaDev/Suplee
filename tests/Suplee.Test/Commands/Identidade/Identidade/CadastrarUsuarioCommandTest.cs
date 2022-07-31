@@ -1,38 +1,14 @@
 ﻿using Moq;
-using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
-using Suplee.Core.Messages.Mail;
-using Suplee.Identidade.Domain.Identidade.Commands;
 using Suplee.Identidade.Domain.Identidade.Events;
-using Suplee.Identidade.Domain.Interfaces;
-using Suplee.Test.Builder.Commands.Identidade;
-using System.Threading;
+using Suplee.Test.Builder.Commands.Identidade.Identidade;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Suplee.Test.Commands.Identidade
+namespace Suplee.Test.Commands.Identidade.Identidade
 {
-    public class CadastrarUsuarioCommandTest
+    public class CadastrarUsuarioCommandTest : IdentidadeCommandTestBase
     {
-        private readonly IdentidadeCommandHandler _handler;
-        private readonly CancellationToken _cancellationToken;
-        private readonly Mock<IMediatorHandler> _mediatorHandler;
-        private readonly Mock<IUsuarioRepository> _usuarioRepository;
-        private readonly Mock<IMailService> _mailService;
-
-        public CadastrarUsuarioCommandTest()
-        {
-            _cancellationToken = new CancellationToken();
-            _mediatorHandler = new Mock<IMediatorHandler>();
-            _usuarioRepository = new Mock<IUsuarioRepository>();
-            _mailService = new Mock<IMailService>();
-
-            _mediatorHandler.Setup(x => x.PublicarNotificacao(It.IsAny<DomainNotification>()));
-            _mailService.Setup(x => x.SendMailAsync(It.IsAny<Mail>()));
-
-            _handler = new IdentidadeCommandHandler(_mediatorHandler.Object, _usuarioRepository.Object, _mailService.Object);
-        }
-
         #region Validações comando
         [Fact]
         public void Deve_Validar_Comando_Valido()

@@ -30,21 +30,24 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
         public AlterarSenhaCommandValidation()
         {
             RuleFor(c => c.UsuarioId)
-                .NotEqual(Guid.Empty).WithMessage("O Id do usuário não foi informado");
+                .NotEqual(Guid.Empty).WithMessage("O Id do usuário não foi informado")
+                .OverridePropertyName("ValidacaoUsuarioId");
 
             RuleFor(c => c.CodigoConfirmacao)
-                .NotEmpty()
-                .WithMessage("O Código de confirmação não foi informado");
+                .NotEmpty().WithMessage("O Código de confirmação não foi informado")
+                .MinimumLength(10).WithMessage("O código de confirmação deve ter 10 caracteres")
+                .MaximumLength(10).WithMessage("O código de confirmação deve ter 10 caracteres")
+                .OverridePropertyName("ValidacaoCodigoConfirmacao");
 
             RuleFor(c => c.Senha)
-                .NotEmpty()
-                .WithMessage("A Senha do usuário não foi informada")
-                .MinimumLength(6).WithMessage("A senha deve ter ao mínimo 6 caracteres");
+                .NotEmpty().WithMessage("A Senha do usuário não foi informada")
+                .MinimumLength(6).WithMessage("A senha deve ter ao mínimo 6 caracteres")
+                .OverridePropertyName("ValidacaoSenha");
 
             RuleFor(c => c.ConfirmacaoSenha)
-                .NotEmpty()
-                .WithMessage("A Confirmação de senha do usuário não foi informada")
-                .MinimumLength(6).WithMessage("A Confirmação de senha deve ter ao mínimo 6 caracteres");
+                .NotEmpty().WithMessage("A Confirmação de senha do usuário não foi informada")
+                .MinimumLength(6).WithMessage("A Confirmação de senha deve ter ao mínimo 6 caracteres")
+                .OverridePropertyName("ValidacaoConfirmacaoSenha");
         }
     }
 }

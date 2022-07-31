@@ -1,7 +1,7 @@
 ﻿using Suplee.Core.Tools;
 using Suplee.Identidade.Domain.Identidade.Commands;
 
-namespace Suplee.Test.Builder.Commands.Identidade
+namespace Suplee.Test.Builder.Commands.Identidade.Identidade
 {
     public class CadastrarUsuarioCommandBuilder : CadastrarUsuarioCommand
     {
