@@ -27,9 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Builder\Commands\" />
     <Folder Include="Builder\Events\" />
-    <Folder Include="Commands\Identidade\" />
   </ItemGroup>
 
 </Project>
