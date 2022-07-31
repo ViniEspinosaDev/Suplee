@@ -17,7 +17,7 @@ namespace Suplee.Identidade.Domain.Identidade.Events
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IMailService _mailService;
 
-        public IdentidadeEventHandler(IUsuarioRepository usuarioRepository, IMediatorHandler mediatorHandler, IMailService mailService)
+        public IdentidadeEventHandler(IMediatorHandler mediatorHandler, IUsuarioRepository usuarioRepository, IMailService mailService)
         {
             _usuarioRepository = usuarioRepository;
             _mediatorHandler = mediatorHandler;

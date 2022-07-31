@@ -1,5 +1,6 @@
 ﻿using Moq;
 using Suplee.Core.Messages.CommonMessages.Notifications;
+using Suplee.Core.Messages.Mail;
 using Suplee.Identidade.Domain.Models;
 using Suplee.Test.Builder.Commands.Identidade.Identidade;
 using Suplee.Test.Builder.Models;
@@ -96,6 +97,8 @@ namespace Suplee.Test.Commands.Identidade.Identidade
             _usuarioRepository.Setup(x => x.UnitOfWork.Commit()).Returns(Task.FromResult(true));
 
             var resultado = await _handler.Handle(comando, _cancellationToken);
+
+            _mailService.Verify(x => x.SendMailAsync(It.IsAny<Mail>()), Times.Once);
 
             Assert.NotEmpty(resultado);
             Assert.Equal(usuario.Email, resultado);
