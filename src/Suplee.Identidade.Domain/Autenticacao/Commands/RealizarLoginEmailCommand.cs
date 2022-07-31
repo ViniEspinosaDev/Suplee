@@ -32,10 +32,12 @@ namespace Suplee.Identidade.Domain.Autenticacao.Commands
         private void Validar()
         {
             RuleFor(r => r.Email)
-                .NotEmpty().WithMessage("O E-mail não foi informado");
+                .NotEmpty().WithMessage("O E-mail não foi informado")
+                .OverridePropertyName("ValidacaoEmail");
 
             RuleFor(r => r.Senha)
-                .NotEmpty().WithMessage("A Senha não foi informada");
+                .NotEmpty().WithMessage("A Senha não foi informada")
+                .OverridePropertyName("ValidacaoSenha");
         }
     }
 }

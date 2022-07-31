@@ -16,12 +16,10 @@ namespace Suplee.Identidade.Domain.Autenticacao.Commands
         IRequestHandler<RealizarLoginCPFCommand, Usuario>,
         IRequestHandler<ConfirmarCadastroCommand, bool>
     {
-        private readonly IMediatorHandler _mediatorHandler;
         private readonly IUsuarioRepository _usuarioRepository;
 
         public AutenticacaoCommandHandler(IMediatorHandler mediatorHandler, IUsuarioRepository usuarioRepository) : base(mediatorHandler)
         {
-            _mediatorHandler = mediatorHandler;
             _usuarioRepository = usuarioRepository;
         }
 
@@ -73,7 +71,7 @@ namespace Suplee.Identidade.Domain.Autenticacao.Commands
 
             if (!existeUsuario)
             {
-                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse cpf");
+                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse CPF");
                 return default(Usuario);
             }
 

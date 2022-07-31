@@ -33,10 +33,12 @@ namespace Suplee.Identidade.Domain.Autenticacao.Commands
         private void Validar()
         {
             RuleFor(r => r.CPF)
-                .NotEmpty().WithMessage("O CPF não foi informado");
+                .NotEmpty().WithMessage("O CPF não foi informado")
+                .OverridePropertyName("ValidacaoCPF");
 
             RuleFor(r => r.Senha)
-                .NotEmpty().WithMessage("A Senha não foi informada");
+                .NotEmpty().WithMessage("A Senha não foi informada")
+                .OverridePropertyName("ValidacaoSenha");
         }
     }
 }
