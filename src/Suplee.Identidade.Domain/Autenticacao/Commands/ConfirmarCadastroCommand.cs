@@ -27,12 +27,14 @@ namespace Suplee.Identidade.Domain.Autenticacao.Commands
         public ConfirmarCadastroCommandValidation()
         {
             RuleFor(c => c.UsuarioId)
-                .NotEqual(Guid.Empty).WithMessage("O Id do usuário não foi informado");
+                .NotEqual(Guid.Empty).WithMessage("O Id do usuário não foi informado")
+                .OverridePropertyName("ValidacaoUsuarioId");
 
             RuleFor(c => c.CodigoConfirmacao)
                 .NotEmpty().WithMessage("O código de confirmação não foi informado")
                 .MinimumLength(10).WithMessage("O código de confirmação deve ter 10 caracteres")
-                .MaximumLength(10).WithMessage("O código de confirmação deve ter 10 caracteres");
+                .MaximumLength(10).WithMessage("O código de confirmação deve ter 10 caracteres")
+                .OverridePropertyName("ValidacaoCodigoConfirmacao");
         }
     }
 }
