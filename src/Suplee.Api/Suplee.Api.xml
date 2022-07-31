@@ -278,12 +278,41 @@
             Informar a ordem na Tabela Nutricional
             </summary>
         </member>
+        <member name="T:Suplee.Api.Controllers.Identidade.AutenticacaoController">
+            <summary>
+            Endpoints de identidade
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Identidade.AutenticacaoController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,Microsoft.Extensions.Options.IOptions{Suplee.Identidade.Domain.Models.ConfiguracaoAplicacao},AutoMapper.IMapper)">
+            <summary>
+            Construtor de Autenticação
+            </summary>
+            <param name="notifications"></param>
+            <param name="mediatorHandler"></param>
+            <param name="usuario"></param>
+            <param name="appSettings"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Identidade.AutenticacaoController.FazerLoginEmail(Suplee.Api.Controllers.Identidade.InputModels.LoginEmailInputModel)">
+            <summary>
+            Login
+            </summary>
+            <param name="loginInputModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Identidade.AutenticacaoController.FazerLoginCPF(Suplee.Api.Controllers.Identidade.InputModels.LoginCPFInputModel)">
+            <summary>
+            Login
+            </summary>
+            <param name="loginInputModel"></param>
+            <returns></returns>
+        </member>
         <member name="T:Suplee.Api.Controllers.Identidade.IdentidadeController">
             <summary>
             Endpoints de identidade
             </summary>
         </member>
-        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,Microsoft.Extensions.Options.IOptions{Suplee.Identidade.Domain.Models.ConfiguracaoAplicacao},AutoMapper.IMapper,Suplee.Identidade.Domain.Interfaces.IUsuarioRepository)">
+        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,Microsoft.Extensions.Options.IOptions{Suplee.Identidade.Domain.Models.ConfiguracaoAplicacao},AutoMapper.IMapper)">
             <summary>
             Construtor de identidade
             </summary>
@@ -292,21 +321,6 @@
             <param name="usuario"></param>
             <param name="appSettings"></param>
             <param name="mapper"></param>
-            <param name="usuarioRepository"></param>
-        </member>
-        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.FazerLoginEmail(Suplee.Api.Controllers.Identidade.InputModels.LoginEmailInputModel)">
-            <summary>
-            Login
-            </summary>
-            <param name="loginInputModel"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.FazerLoginCPF(Suplee.Api.Controllers.Identidade.InputModels.LoginCPFInputModel)">
-            <summary>
-            Login
-            </summary>
-            <param name="loginInputModel"></param>
-            <returns></returns>
         </member>
         <member name="M:Suplee.Api.Controllers.Identidade.IdentidadeController.CadastrarConta(Suplee.Api.Controllers.Identidade.InputModel.CadastroUsuarioInputModel)">
             <summary>
