@@ -11,7 +11,7 @@ namespace Suplee.Test.Builder.Commands.Identidade.Identidade
 
         public RecuperarSenhaCommandBuilder ComandoValido()
         {
-            CPF = "999.999.999.-99".FormatarCPFApenasNumeros();
+            CPF = "999.999.999-99".FormatarCPFApenasNumeros();
 
             return this;
         }

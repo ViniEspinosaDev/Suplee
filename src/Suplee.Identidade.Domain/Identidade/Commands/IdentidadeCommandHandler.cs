@@ -105,7 +105,11 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
                 return string.Empty;
             }
 
-            string emailDestino = usuario.Email;
+            if (usuario.Status == EStatusUsuario.Ativo)
+            {
+                await NotificarErro(request, "Esse usuário já está ativo. Tente realizar o login");
+                return string.Empty;
+            }
 
             var confirmacaoUsuario = _usuarioRepository.ObterConfirmacaoUsuarioAindaNaoConfirmada(usuario.Id);
 
@@ -114,6 +118,8 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
                 await NotificarErro(request, "Não existe nenhuma confirmação pendente para o usuário com esse CPF");
                 return string.Empty;
             }
+
+            string emailDestino = usuario.Email;
 
             var email = new Mail(
                 mailAddress: emailDestino,

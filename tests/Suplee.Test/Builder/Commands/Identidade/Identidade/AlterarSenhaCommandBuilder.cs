@@ -43,22 +43,5 @@ namespace Suplee.Test.Builder.Commands.Identidade.Identidade
         }
 
         public AlterarSenhaCommand Build() => this;
-
-        //RuleFor(c => c.UsuarioId)
-        //        .NotEqual(Guid.Empty).WithMessage("O Id do usuário não foi informado");
-
-        //RuleFor(c => c.CodigoConfirmacao)
-        //        .NotEmpty()
-        //        .WithMessage("O Código de confirmação não foi informado");
-
-        //RuleFor(c => c.Senha)
-        //        .NotEmpty()
-        //        .WithMessage("A Senha do usuário não foi informada")
-        //        .MinimumLength(6).WithMessage("A senha deve ter ao mínimo 6 caracteres");
-
-        //RuleFor(c => c.ConfirmacaoSenha)
-        //        .NotEmpty()
-        //        .WithMessage("A Confirmação de senha do usuário não foi informada")
-        //        .MinimumLength(6).WithMessage("A Confirmação de senha deve ter ao mínimo 6 caracteres");
     }
 }

@@ -27,7 +27,8 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
             RuleFor(c => c.CPF)
                .NotEmpty().WithMessage("O CPF do usuário não foi informado")
                .MinimumLength(11).WithMessage("O CPF é inválido")
-               .MaximumLength(11).WithMessage("O CPF é inválido");
+               .MaximumLength(11).WithMessage("O CPF é inválido")
+               .OverridePropertyName("ValidacaoCPF");
         }
     }
 }

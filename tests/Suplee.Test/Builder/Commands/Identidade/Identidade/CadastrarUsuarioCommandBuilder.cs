@@ -19,7 +19,7 @@ namespace Suplee.Test.Builder.Commands.Identidade.Identidade
         {
             Nome = "Cadastrar Usuario";
             Email = "cadastrar.usuario@email.com";
-            CPF = "999.999.999-84".FormatarCPFApenasNumeros();
+            CPF = "999.999.999-99".FormatarCPFApenasNumeros();
             Senha = "@Senha8080";
             ConfirmacaoSenha = "@Senha8080";
             Celular = "15997826699";
