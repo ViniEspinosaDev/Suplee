@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Suplee.Catalogo.Domain.Models;
 using Suplee.Catalogo.Domain.ValueObjects;
 using Suplee.Core.Messages;
@@ -17,7 +18,7 @@ namespace Suplee.Catalogo.Domain.Commands
             int quantidadeDisponivel,
             decimal preco,
             Dimensoes dimensoes,
-            List<string> imagens,
+            List<IFormFile> imagens,
             List<Guid> efeitos,
             InformacaoNutricional informacaoNutricional)
         {
@@ -40,7 +41,7 @@ namespace Suplee.Catalogo.Domain.Commands
         public int QuantidadeDisponivel { get; protected set; }
         public decimal Preco { get; protected set; }
         public Dimensoes Dimensoes { get; protected set; }
-        public List<string> Imagens { get; protected set; }
+        public List<IFormFile> Imagens { get; protected set; }
         public List<Guid> Efeitos { get; protected set; }
         public InformacaoNutricional InformacaoNutricional { get; protected set; }
 

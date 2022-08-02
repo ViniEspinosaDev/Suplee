@@ -32,6 +32,7 @@ namespace Suplee.Catalogo.CrossCuttingIoC
         private static void ConfigurarDependenciasService(IServiceCollection services)
         {
             services.AddScoped<ICorreiosService, CorreiosService>();
+            services.AddScoped<IImagemService, ImagemService>();
         }
 
         private static void ConfigurarDependenciasPadrao(IServiceCollection services)

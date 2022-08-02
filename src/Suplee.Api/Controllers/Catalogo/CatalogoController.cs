@@ -15,6 +15,7 @@ using Suplee.Identidade.Domain.Enums;
 using Suplee.Identidade.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Suplee.Catalogo.Api.Controllers.Catalogo
@@ -351,7 +352,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("produto")]
-        public async Task<ActionResult> CriarProduto(ProdutoInputModel produtoInputModel)
+        public async Task<ActionResult> CriarProduto([FromForm] ProdutoInputModel produtoInputModel)
         {
             bool usuarioNaoRoboOuAdm = _usuario.TipoUsuario != ETipoUsuario.Administrador && _usuario.TipoUsuario != ETipoUsuario.Robo;
 
@@ -370,7 +371,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 quantidadeDisponivel: produtoInputModel.QuantidadeDisponivel,
                 preco: produtoInputModel.Preco,
                 dimensoes: new Dimensoes(produtoInputModel.Profundidade, produtoInputModel.Altura, produtoInputModel.Largura),
-                imagens: produtoInputModel.Imagens,
+                imagens: produtoInputModel.Imagens.Select(x => x.Imagem).ToList(),
                 efeitos: produtoInputModel.Efeitos,
                 informacaoNutricional: informacaoNutricional);
 

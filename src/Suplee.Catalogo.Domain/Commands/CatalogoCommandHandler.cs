@@ -1,11 +1,9 @@
 ﻿using MediatR;
 using Suplee.Catalogo.Domain.Interfaces;
+using Suplee.Catalogo.Domain.Interfaces.Services;
 using Suplee.Catalogo.Domain.Models;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages;
-using Suplee.ExternalService.Imgbb.DTO;
-using Suplee.ExternalService.Imgbb.Interfaces;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,16 +16,16 @@ namespace Suplee.Catalogo.Domain.Commands
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly IMediatorHandler _mediatorHandler;
-        private readonly IImgbbService _imgbbService;
+        private readonly IImagemService _imagemService;
 
         public CatalogoCommandHandler(
             IProdutoRepository produtoRepository,
             IMediatorHandler mediatorHandler,
-            IImgbbService imgbbService) : base(mediatorHandler)
+            IImagemService imagemService) : base(mediatorHandler)
         {
             _produtoRepository = produtoRepository;
             _mediatorHandler = mediatorHandler;
-            _imgbbService = imgbbService;
+            _imagemService = imagemService;
         }
 
         public async Task<bool> Handle(AdicionarProdutoCommand request, CancellationToken cancellationToken)
@@ -52,20 +50,22 @@ namespace Suplee.Catalogo.Domain.Commands
 
             request.Efeitos.ForEach(x => produto.AdicionarProdutoEfeito(new ProdutoEfeito(produto.Id, x)));
 
-            int contador = 1;
-
             foreach (var imagem in request.Imagens)
             {
-                string nomeImagem = $"{produto.Nome.Split(' ').First()}_{contador++}";
+                var produtoImagem = await _imagemService.UploadImagem(imagem);
 
-                var retorno = await _imgbbService.UploadImage(new ImgbbUploadInputModel(imagem, nomeImagem));
+                if (produtoImagem is null) return false;
 
-                produto.AdicionarProdutoImagem(new ProdutoImagem(produto.Id, nomeImagem, retorno.Data.data.Url));
+                produto.AdicionarProdutoImagem(produtoImagem);
             }
 
             _produtoRepository.Adicionar(produto);
 
-            return await _produtoRepository.UnitOfWork.Commit();
+            var sucesso = await _produtoRepository.UnitOfWork.Commit();
+
+            // TODO: Futuramente lançar evento de ProdutoAdicionadoEvent
+
+            return sucesso;
         }
 
         public Task<bool> Handle(AtualizarProdutoCommand request, CancellationToken cancellationToken)

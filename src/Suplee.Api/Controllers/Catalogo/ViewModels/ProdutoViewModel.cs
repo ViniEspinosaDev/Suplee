@@ -46,7 +46,7 @@ namespace Suplee.Api.Controllers.Catalogo.ViewModels
         /// <summary>
         /// Imagens em Base64
         /// </summary>
-        public List<string> Imagens { get; set; }
+        public List<ProdutoImagemViewModel> Imagens { get; set; }
 
         /// <summary>
         /// Lista de Id dos Efeitos
@@ -57,6 +57,38 @@ namespace Suplee.Api.Controllers.Catalogo.ViewModels
         /// Tabela de Informação Nutricional
         /// </summary>
         public InformacaoNutricionalViewModel InformacaoNutricional { get; set; }
+    }
+
+    /// <summary>
+    /// Objeto de saída da Imagem do produto
+    /// </summary>
+    public class ProdutoImagemViewModel
+    {
+        /// <summary>
+        /// Id do Produto Imagem
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// Id do produto
+        /// </summary>
+        public Guid ProdutoId { get; set; }
+        /// <summary>
+        /// Nome da imagem
+        /// </summary>
+        public string NomeImagem { get; set; }
+        /// <summary>
+        /// Url da imagem original
+        /// </summary>
+        public string UrlImagemOriginal { get; set; }
+        /// <summary>
+        /// Url da imagem reduzida
+        /// </summary>
+        public string UrlImagemReduzida { get; set; }
+        /// <summary>
+        /// Url da imagem maior
+        /// </summary>
+        public string UrlImagemMaior { get; set; }
+
     }
 
     /// <summary>

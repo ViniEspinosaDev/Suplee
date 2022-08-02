@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Suplee.Api.Controllers.Testes.InputModels;
 using Suplee.Catalogo.Api.Controllers;
@@ -8,6 +9,7 @@ using Suplee.Core.Messages.Mail;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Teste.Domain.Commands;
 using Suplee.Teste.Domain.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Suplee.Api.Controllers.Testes
@@ -55,6 +57,17 @@ namespace Suplee.Api.Controllers.Testes
             return CustomResponse("Imagem cadastrada com sucesso");
         }
 
+        /// <summary>
+        /// Cadastrar imagens enviando File 
+        /// </summary>
+        /// <param name="cadastrarImagem"></param>
+        /// <returns></returns>
+        [HttpPost("cadastrar-imagens")]
+        //public ActionResult CadastrarImagens([FromForm] CadastrarImagensInputModel cadastrarImagem)
+        public ActionResult CadastrarImagens([FromForm] ICollection<IFormFile> cadastrarImagem)
+        {
+            return CustomResponse("Imagens cadastradas com sucesso");
+        }
 
         /// <summary>
         /// Recuperar todas imagens cadastradas

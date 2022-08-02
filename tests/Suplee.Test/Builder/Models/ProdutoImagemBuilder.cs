@@ -8,14 +8,27 @@ namespace Suplee.Test.Builder.Models
         public ProdutoImagemBuilder(
             Guid produtoId = default,
             string nomeImagem = default,
-            string url = default) : base(produtoId, nomeImagem, url)
+            string urlImagemOriginal = default,
+            string urlImagemReduzida = default,
+            string urlImagemMaior = default) : base(produtoId, nomeImagem, urlImagemOriginal, urlImagemReduzida, urlImagemMaior)
         {
         }
 
         public ProdutoImagemBuilder PadraoValido()
         {
+            ProdutoId = Guid.NewGuid();
             NomeImagem = "Imagem";
-            Url = "www.imagem.com";
+            UrlImagemOriginal = "www.imagem.com";
+            UrlImagemReduzida = "www.imagem.com";
+            UrlImagemMaior = "www.imagem.com";
+
+            return this;
+        }
+
+        public ProdutoImagemBuilder ComProduto(Produto produto)
+        {
+            ProdutoId = produto.Id;
+            Produto = produto;
 
             return this;
         }

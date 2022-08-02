@@ -41,7 +41,7 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.QuantidadeDisponivel, opt => opt.MapFrom(m => m.QuantidadeDisponivel))
                 .ForMember(i => i.Preco, opt => opt.MapFrom(m => m.Preco))
                 .ForMember(i => i.Categoria, opt => opt.MapFrom(m => m.Categoria))
-                .ForMember(i => i.Imagens, opt => opt.MapFrom(m => m.Imagens.ToList().Select(x => x.Url)))
+                .ForMember(i => i.Imagens, opt => opt.MapFrom(m => m.Imagens))
                 .ForMember(i => i.Efeitos, opt => opt.MapFrom(m => m.Efeitos.ToList().Select(x => x.Efeito)))
                 .ForMember(i => i.InformacaoNutricional, opt => opt.MapFrom(m => m.InformacaoNutricional));
 
@@ -51,8 +51,16 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.Preco, opt => opt.MapFrom(m => m.Preco))
                 .ForMember(i => i.NomeCategoria, opt => opt.MapFrom(m => m.Categoria.Nome))
                 .ForMember(i => i.NomeEfeito, opt => opt.MapFrom(m => m.Efeitos.Select(x => x.Efeito.Nome)))
-                .ForMember(i => i.Imagem, opt => opt.MapFrom(m => m.Imagens.FirstOrDefault().Url))
+                .ForMember(i => i.Imagem, opt => opt.MapFrom(m => m.Imagens))
                 .ForMember(i => i.QuantidadeDisponivel, opt => opt.MapFrom(m => m.QuantidadeDisponivel));
+
+            CreateMap<ProdutoImagem, ProdutoImagemViewModel>()
+                .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
+                .ForMember(i => i.ProdutoId, opt => opt.MapFrom(m => m.ProdutoId))
+                .ForMember(i => i.NomeImagem, opt => opt.MapFrom(m => m.NomeImagem))
+                .ForMember(i => i.UrlImagemOriginal, opt => opt.MapFrom(m => m.UrlImagemOriginal))
+                .ForMember(i => i.UrlImagemReduzida, opt => opt.MapFrom(m => m.UrlImagemReduzida))
+                .ForMember(i => i.UrlImagemMaior, opt => opt.MapFrom(m => m.UrlImagemMaior));
 
             CreateMap<Efeito, EfeitoViewModel>()
                 .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))

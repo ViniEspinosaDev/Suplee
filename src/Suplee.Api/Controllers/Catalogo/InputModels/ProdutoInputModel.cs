@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 
 namespace Suplee.Catalogo.Api.Controllers.Catalogo.InputModels
@@ -56,7 +57,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo.InputModels
         /// <summary>
         /// Imagens em Base64
         /// </summary>
-        public List<string> Imagens { get; set; }
+        public List<ImagemInputModel> Imagens { get; set; }
 
         /// <summary>
         /// Lista de Id dos Efeitos
@@ -67,6 +68,17 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo.InputModels
         /// Tabela com Informação Nutricional
         /// </summary>
         public InformacaoNutricionalInputModel InformacaoNutricional { get; set; }
+    }
+
+    /// <summary>
+    /// Imagem
+    /// </summary>
+    public class ImagemInputModel
+    {
+        /// <summary>
+        /// Imagem
+        /// </summary>
+        public IFormFile Imagem { get; set; }
     }
 
     /// <summary>

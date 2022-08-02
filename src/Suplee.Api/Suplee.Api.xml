@@ -233,6 +233,41 @@
             Tabela de Informação Nutricional
             </summary>
         </member>
+        <member name="T:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoImagemViewModel">
+            <summary>
+            Objeto de saída da Imagem do produto
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoImagemViewModel.Id">
+            <summary>
+            Id do Produto Imagem
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoImagemViewModel.ProdutoId">
+            <summary>
+            Id do produto
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoImagemViewModel.NomeImagem">
+            <summary>
+            Nome da imagem
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoImagemViewModel.UrlImagemOriginal">
+            <summary>
+            Url da imagem original
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoImagemViewModel.UrlImagemReduzida">
+            <summary>
+            Url da imagem reduzida
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoImagemViewModel.UrlImagemMaior">
+            <summary>
+            Url da imagem maior
+            </summary>
+        </member>
         <member name="T:Suplee.Api.Controllers.Catalogo.ViewModels.InformacaoNutricionalViewModel">
             <summary>
             Objeto de saída da Informação Nutricional
@@ -650,6 +685,26 @@
             Imagem
             </summary>
         </member>
+        <member name="T:Suplee.Api.Controllers.Testes.InputModels.CadastrarImagensInputModel">
+            <summary>
+            Imagens
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Testes.InputModels.CadastrarImagensInputModel.Imagens">
+            <summary>
+            Imagens
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Testes.InputModels.ImagemInputModel">
+            <summary>
+            Imagem
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Testes.InputModels.ImagemInputModel.Imagem">
+            <summary>
+            Imagem
+            </summary>
+        </member>
         <member name="T:Suplee.Api.Controllers.Testes.TesteController">
             <summary>
             Controler para fazer testes
@@ -668,6 +723,13 @@
         <member name="M:Suplee.Api.Controllers.Testes.TesteController.CadastrarImagem(Suplee.Api.Controllers.Testes.InputModels.CadastrarImagemInputModel)">
             <summary>
             Cadastrar imagem enviando File 
+            </summary>
+            <param name="cadastrarImagem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Testes.TesteController.CadastrarImagens(System.Collections.Generic.ICollection{Microsoft.AspNetCore.Http.IFormFile})">
+            <summary>
+            Cadastrar imagens enviando File 
             </summary>
             <param name="cadastrarImagem"></param>
             <returns></returns>
@@ -962,6 +1024,16 @@
         <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.InformacaoNutricional">
             <summary>
             Tabela com Informação Nutricional
+            </summary>
+        </member>
+        <member name="T:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ImagemInputModel">
+            <summary>
+            Imagem
+            </summary>
+        </member>
+        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ImagemInputModel.Imagem">
+            <summary>
+            Imagem
             </summary>
         </member>
         <member name="T:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.InformacaoNutricionalInputModel">
