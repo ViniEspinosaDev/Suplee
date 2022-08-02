@@ -64,7 +64,7 @@ namespace Suplee.Api.Controllers.Testes
         /// <returns></returns>
         [HttpPost("cadastrar-imagens")]
         //public ActionResult CadastrarImagens([FromForm] CadastrarImagensInputModel cadastrarImagem)
-        public ActionResult CadastrarImagens([FromForm] ICollection<IFormFile> cadastrarImagem)
+        public ActionResult CadastrarImagens([FromForm] IFormFileCollection cadastrarImagem)
         {
             return CustomResponse("Imagens cadastradas com sucesso");
         }

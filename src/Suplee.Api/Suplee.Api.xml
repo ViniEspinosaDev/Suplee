@@ -727,7 +727,7 @@
             <param name="cadastrarImagem"></param>
             <returns></returns>
         </member>
-        <member name="M:Suplee.Api.Controllers.Testes.TesteController.CadastrarImagens(System.Collections.Generic.ICollection{Microsoft.AspNetCore.Http.IFormFile})">
+        <member name="M:Suplee.Api.Controllers.Testes.TesteController.CadastrarImagens(Microsoft.AspNetCore.Http.IFormFileCollection)">
             <summary>
             Cadastrar imagens enviando File 
             </summary>
@@ -1024,16 +1024,6 @@
         <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ProdutoInputModel.InformacaoNutricional">
             <summary>
             Tabela com Informação Nutricional
-            </summary>
-        </member>
-        <member name="T:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ImagemInputModel">
-            <summary>
-            Imagem
-            </summary>
-        </member>
-        <member name="P:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.ImagemInputModel.Imagem">
-            <summary>
-            Imagem
             </summary>
         </member>
         <member name="T:Suplee.Catalogo.Api.Controllers.Catalogo.InputModels.InformacaoNutricionalInputModel">

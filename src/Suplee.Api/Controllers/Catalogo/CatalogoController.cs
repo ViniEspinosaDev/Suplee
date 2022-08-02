@@ -371,7 +371,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 quantidadeDisponivel: produtoInputModel.QuantidadeDisponivel,
                 preco: produtoInputModel.Preco,
                 dimensoes: new Dimensoes(produtoInputModel.Profundidade, produtoInputModel.Altura, produtoInputModel.Largura),
-                imagens: produtoInputModel.Imagens.Select(x => x.Imagem).ToList(),
+                imagens: produtoInputModel.Imagens,
                 efeitos: produtoInputModel.Efeitos,
                 informacaoNutricional: informacaoNutricional);
 

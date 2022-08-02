@@ -18,7 +18,7 @@ namespace Suplee.Catalogo.Domain.Commands
             int quantidadeDisponivel,
             decimal preco,
             Dimensoes dimensoes,
-            List<IFormFile> imagens,
+            IFormFileCollection imagens,
             List<Guid> efeitos,
             InformacaoNutricional informacaoNutricional)
         {
@@ -41,7 +41,7 @@ namespace Suplee.Catalogo.Domain.Commands
         public int QuantidadeDisponivel { get; protected set; }
         public decimal Preco { get; protected set; }
         public Dimensoes Dimensoes { get; protected set; }
-        public List<IFormFile> Imagens { get; protected set; }
+        public IFormFileCollection Imagens { get; protected set; }
         public List<Guid> Efeitos { get; protected set; }
         public InformacaoNutricional InformacaoNutricional { get; protected set; }
 
@@ -92,13 +92,13 @@ namespace Suplee.Catalogo.Domain.Commands
                 .GreaterThan(0)
                 .WithMessage("A profundidade do produto deve ser maior que zero");
 
-            RuleFor(p => p.Imagens.Count)
-                .GreaterThan(0)
-                .WithMessage("O produto deve ao menos possuir uma imagem");
+            RuleFor(p => p.Imagens)
+                .NotNull().WithMessage("O produto deve ao menos possuir uma imagem")
+                .NotEmpty().WithMessage("O produto deve ao menos possuir uma imagem");
 
             RuleFor(p => p.Efeitos.Count)
-                .GreaterThan(0)
-                .WithMessage("O produto deve ao menos ter vínculo com um efeito");
+                .NotNull().WithMessage("O produto deve ao menos ter vínculo com um efeito")
+                .NotEmpty().WithMessage("O produto deve ao menos ter vínculo com um efeito");
 
             RuleFor(p => p.InformacaoNutricional.Cabecalho)
                 .NotEmpty()
@@ -108,9 +108,9 @@ namespace Suplee.Catalogo.Domain.Commands
                 .NotEmpty()
                 .WithMessage("A legenda da informação nutricional não foi informado");
 
-            RuleFor(p => p.InformacaoNutricional.CompostosNutricionais.Count)
-                .GreaterThan(0)
-                .WithMessage("A informação nutricional deve ao menos possuir um composto nutricional");
+            RuleFor(p => p.InformacaoNutricional.CompostosNutricionais)
+                .NotNull().WithMessage("A informação nutricional deve ao menos possuir um composto nutricional")
+                .NotEmpty().WithMessage("A informação nutricional deve ao menos possuir um composto nutricional");
         }
     }
 }
