@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Suplee.Catalogo.Data;
 using Suplee.Identidade.Data;
 using System;
 
@@ -16,6 +17,18 @@ namespace Suplee.Test.Context
             var options = optionsBuilder.Options;
 
             return new IdentidadeContext(options);
+        }
+
+        public static CatalogoContext GetDatabaseContextCatalogo()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<CatalogoContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                .EnableSensitiveDataLogging();
+
+            var options = optionsBuilder.Options;
+
+            return new CatalogoContext(options);
         }
     }
 }

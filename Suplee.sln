@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31729.503
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5EA06726-199B-4C34-9539-BE8140E2CF2B}"
 EndProject
@@ -45,11 +45,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.Identidade.CrossCutt
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Teste", "Teste", "{729CA190-B606-4359-BA70-B2F9F00CCFF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.Teste.Domain", "src\Suplee.Teste.Domain\Suplee.Teste.Domain.csproj", "{B668B978-121B-4DFA-9B9A-B68DD6161791}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.Teste.Domain", "src\Suplee.Teste.Domain\Suplee.Teste.Domain.csproj", "{B668B978-121B-4DFA-9B9A-B68DD6161791}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.Teste.Data", "src\Suplee.Teste.Data\Suplee.Teste.Data.csproj", "{0C73F882-D438-4FA1-B32A-12B18645D828}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.Teste.Data", "src\Suplee.Teste.Data\Suplee.Teste.Data.csproj", "{0C73F882-D438-4FA1-B32A-12B18645D828}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.Teste.CrossCuttingIoC", "src\Suplee.Teste.CrossCuttingIoC\Suplee.Teste.CrossCuttingIoC.csproj", "{D623F06B-AC07-4017-86B9-0028026BB6C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.Teste.CrossCuttingIoC", "src\Suplee.Teste.CrossCuttingIoC\Suplee.Teste.CrossCuttingIoC.csproj", "{D623F06B-AC07-4017-86B9-0028026BB6C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -132,7 +132,6 @@ Global
 		{00C7231C-E5D4-4C57-A8A3-8895EBF83C1C} = {73A71841-0F6B-4717-B772-6446A712BC7B}
 		{A85DED76-23C9-4AA1-9F6E-0CF385B6C11B} = {73A71841-0F6B-4717-B772-6446A712BC7B}
 		{5F752736-2C29-486C-B0E6-F00B933B087B} = {73A71841-0F6B-4717-B772-6446A712BC7B}
-		{72F9FA56-BF64-44BC-8611-B0B335E21264} = {5EA06726-199B-4C34-9539-BE8140E2CF2B}
 		{3E8F1C51-7AE0-4AEA-93E9-57486ED0003F} = {43930DFC-D7B5-48BB-9F88-081C49DAFC82}
 		{4FAE6B29-908B-4CFC-B946-68A87B23D59B} = {D814A2E0-0745-4176-A5D8-54CD1F820A8B}
 		{CDD61DF7-E5E2-4C33-8D7C-0D2FF344C000} = {5EA06726-199B-4C34-9539-BE8140E2CF2B}

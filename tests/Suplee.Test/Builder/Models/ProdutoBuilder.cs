@@ -25,16 +25,20 @@ namespace Suplee.Test.Builder.Models
                 .PadraoValido()
                 .ComCompostosNutricionais()
                 .Build();
+            var categoria = new CategoriaBuilder().PadraoValido().Build();
+            var produtoEfeito = new ProdutoEfeitoBuilder().PadraoValido(Id, Guid.NewGuid()).Build();
 
             InformacaoNutricionalId = informacaoNutricional.Id;
             InformacaoNutricional = informacaoNutricional;
-            CategoriaId = Guid.Empty;
+            CategoriaId = categoria.Id;
+            Categoria = categoria;
             Nome = "Nome";
             Descricao = "Descrição";
             Composicao = "Composição";
             QuantidadeDisponivel = 1;
             Preco = 12.40m;
             Dimensoes = new Dimensoes(10m, 10m, 10m);
+            Efeitos.Add(produtoEfeito);
 
             return this;
         }

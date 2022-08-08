@@ -1,8 +1,10 @@
-﻿using Suplee.Catalogo.Data.Repository;
+﻿using Suplee.Catalogo.Data;
+using Suplee.Catalogo.Data.Repository;
 using Suplee.Catalogo.Domain.Enums;
 using Suplee.Catalogo.Domain.Interfaces;
 using Suplee.Catalogo.Domain.Models;
 using Suplee.Test.Builder.Models;
+using Suplee.Test.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +12,14 @@ using Xunit;
 
 namespace Suplee.Test.Repositories.Catalogo
 {
-    public class ProdutoRepositoryTest : CatalogoRepositoryBase
+    public class ProdutoRepositoryTest
     {
+        private readonly CatalogoContext _context;
         private readonly IProdutoRepository _produtoRepository;
-
-        public ProdutoRepositoryTest() : base()
+        public ProdutoRepositoryTest()
         {
-            _produtoRepository = new ProdutoRepository(DbContext);
+            _context = StubContextDomain.GetDatabaseContextCatalogo();
+            _produtoRepository = new ProdutoRepository(_context);
         }
 
         [Fact]
@@ -32,9 +35,7 @@ namespace Suplee.Test.Repositories.Catalogo
                 .PadraoValido()
                 .Build();
 
-            _produtoRepository.Adicionar(categoria);
-
-            DbContext.SaveChanges();
+            AdicionarCategoria(categoria);
 
             var categoriaAdicionada = await _produtoRepository.ObterCategoria(categoria.Id);
 
@@ -52,17 +53,13 @@ namespace Suplee.Test.Repositories.Catalogo
                 .PadraoValido()
                 .Build();
 
-            _produtoRepository.Adicionar(categoria);
-
-            DbContext.SaveChanges();
+            AdicionarCategoria(categoria);
 
             var categoriaAdicionada = await _produtoRepository.ObterCategoria(categoria.Id);
 
             categoriaAdicionada.Atualizar(nome: "Novo Nome", descricao: "Nova Descrição", icone: "Novo Icone", cor: ECor.GreenLight);
 
-            _produtoRepository.Atualizar(categoriaAdicionada);
-
-            DbContext.SaveChanges();
+            await _produtoRepository.UnitOfWork.Commit();
 
             var categoriaAtualizada = await _produtoRepository.ObterCategoria(categoria.Id);
 
@@ -79,9 +76,7 @@ namespace Suplee.Test.Repositories.Catalogo
                 .PadraoValido()
                 .Build();
 
-            _produtoRepository.Adicionar(efeito);
-
-            DbContext.SaveChanges();
+            AdicionarEfeito(efeito);
 
             var efeitoAdicionado = await _produtoRepository.ObterEfeito(efeito.Id);
 
@@ -98,17 +93,13 @@ namespace Suplee.Test.Repositories.Catalogo
                 .PadraoValido()
                 .Build();
 
-            _produtoRepository.Adicionar(efeito);
-
-            DbContext.SaveChanges();
+            AdicionarEfeito(efeito);
 
             var efeitoAdicionado = await _produtoRepository.ObterEfeito(efeito.Id);
 
             efeitoAdicionado.Atualizar(nome: "Novo Nome", descricao: "Nova Descrição", icone: "Novo Icone");
 
-            _produtoRepository.Atualizar(efeitoAdicionado);
-
-            DbContext.SaveChanges();
+            await _produtoRepository.UnitOfWork.Commit();
 
             var efeitoAtualizado = await _produtoRepository.ObterEfeito(efeito.Id);
 
@@ -136,10 +127,7 @@ namespace Suplee.Test.Repositories.Catalogo
                 .ComImagens(imagens)
                 .Build();
 
-            _produtoRepository.Adicionar(efeito);
-            _produtoRepository.Adicionar(produto);
-
-            DbContext.SaveChanges();
+            AdicionarProduto(produto);
 
             var produtoAdicionado = await _produtoRepository.ObterProduto(produto.Id);
 
@@ -159,8 +147,6 @@ namespace Suplee.Test.Repositories.Catalogo
 
             var categoria = new CategoriaBuilder().PadraoValido().Build();
 
-            var efeito = new EfeitoBuilder().PadraoValido().Build();
-
             var efeitos = new List<ProdutoEfeito>() { new ProdutoEfeitoBuilder().PadraoValido(produtoId, categoria.Id).Build() };
             var imagens = new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().ComProdutoId(produtoId).Build() };
 
@@ -171,16 +157,11 @@ namespace Suplee.Test.Repositories.Catalogo
                 .ComImagens(imagens)
                 .Build();
 
-            _produtoRepository.Adicionar(efeito);
-            _produtoRepository.Adicionar(produto);
-
-            DbContext.SaveChanges();
+            AdicionarProduto(produto);
 
             produto.Atualizar("Nome atualizado", "Descrição atualizada", "Composição atualizada", 10, 10.99m);
-            
-            _produtoRepository.Atualizar(produto);
 
-            DbContext.SaveChanges();
+            await _produtoRepository.UnitOfWork.Commit();
 
             var produtoAtualizado = await _produtoRepository.ObterProduto(produto.Id);
 
@@ -191,11 +172,72 @@ namespace Suplee.Test.Repositories.Catalogo
             Assert.Equal(10.99m, produtoAtualizado.Preco);
         }
 
-        // Deve_Obter_Produto_Pelo_Id (Guid produtoId);
-        // Deve_Obter_Categoria_Pelo_Id (Guid categoriaId);
-        // Deve_Obter_Efeito_Pelo_Id (Guid efeitoId);
-        // Deve_Obter_Produtos_Paginado (int pagina, int quantidade);
+        [Fact]
+        public async void Deve_Obter_Produto_Pelo_Id()
+        {
+            var categoria = new CategoriaBuilder().PadraoValido().Build();
+            var imagens = new ProdutoImagemBuilder().PadraoValido().Build();
+
+            var produto = new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(categoria)
+                .ComImagens(new List<ProdutoImagem>() { imagens })
+                .Build();
+
+            AdicionarProduto(produto);
+
+            var produtoAdicionado = await _produtoRepository.ObterProduto(produto.Id);
+
+            Assert.NotNull(produtoAdicionado);
+            Assert.NotNull(produtoAdicionado.Categoria);
+            Assert.NotNull(produtoAdicionado.Efeitos);
+            Assert.NotNull(produtoAdicionado.Imagens);
+        }
+
+        [Fact]
+        public async void Deve_Obter_Categoria_Pelo_Id()
+        {
+            var categoria = new CategoriaBuilder().PadraoValido().Build();
+
+            AdicionarCategoria(categoria);
+
+            var categoriaAdicionada = await _produtoRepository.ObterCategoria(categoria.Id);
+
+            Assert.NotNull(categoriaAdicionada);
+        }
+
+        [Fact]
+        public async void Deve_Obter_Efeito_Pelo_Id()
+        {
+            var efeito = new EfeitoBuilder().PadraoValido().Build();
+
+            AdicionarEfeito(efeito);
+
+            var efeitoAdicionada = await _produtoRepository.ObterEfeito(efeito.Id);
+
+            Assert.NotNull(efeitoAdicionada);
+        }
+
+        [Fact]
+        public async void Deve_Obter_Produto_Paginado()
+        {
+            var produtos = CriarProdutos();
+
+            produtos.ForEach(x => AdicionarProduto(x));
+
+            var produtosPaginado = await _produtoRepository.ObterProdutosPaginado(2, 3);
+
+            Assert.NotNull(produtosPaginado);
+            Assert.Equal(3, produtosPaginado.Count());
+        }
+
         // Deve_Obter_Produtos_Paginado_Pelo_Id_Categoria (Guid categoriaId, int pagina, int quantidade);
+        [Fact]
+        public async void Deve_Obter_Produtos_Paginado_Pelo_Id_Categoria()
+        {
+
+        }
+
         // Deve_Obter_Produtos_Paginado_Pelo_Nome_Categoria (string nomeCategoria, int pagina, int quantidade);
         // Deve_Obter_Produtos_Paginado_Pelo_Id_Efeito (Guid efeitoId, int pagina, int quantidade);
         // Deve_Obter_Produtos_Paginado_Pelo_Nome_Efeito (string nomeEfeito, int pagina, int quantidade);
@@ -204,5 +246,65 @@ namespace Suplee.Test.Repositories.Catalogo
         // Deve_Obter_Categorias();
         // Deve_Obter_Efeitos();
 
+
+        #region Métodos auxiliares
+        public List<Produto> CriarProdutos()
+        {
+            return new List<Produto>()
+            {
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(new CategoriaBuilder().PadraoValido().Build())
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .Build(),
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(new CategoriaBuilder().PadraoValido().Build())
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .Build(),
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(new CategoriaBuilder().PadraoValido().Build())
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .Build(),
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(new CategoriaBuilder().PadraoValido().Build())
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .Build(),
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(new CategoriaBuilder().PadraoValido().Build())
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .Build(),
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(new CategoriaBuilder().PadraoValido().Build())
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .Build()
+            };
+        }
+
+        private void AdicionarProduto(Produto produto)
+        {
+            _produtoRepository.Adicionar(produto);
+
+            _produtoRepository.UnitOfWork.Commit();
+        }
+
+        private void AdicionarEfeito(Efeito efeito)
+        {
+            _produtoRepository.Adicionar(efeito);
+
+            _produtoRepository.UnitOfWork.Commit();
+        }
+
+        private void AdicionarCategoria(Categoria categoria)
+        {
+            _produtoRepository.Adicionar(categoria);
+
+            _produtoRepository.UnitOfWork.Commit();
+        }
+        #endregion
     }
 }

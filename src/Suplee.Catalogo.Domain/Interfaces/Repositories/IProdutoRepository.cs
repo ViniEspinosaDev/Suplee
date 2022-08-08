@@ -29,10 +29,7 @@ namespace Suplee.Catalogo.Domain.Interfaces
         int QuantidadeProdutosPeloIdEfeito(Guid efeitoId);
 
         void Adicionar(Produto produto);
-        void Atualizar(Produto produto);
         void Adicionar(Categoria categoria);
-        void Atualizar(Categoria categoria);
         void Adicionar(Efeito efeito);
-        void Atualizar(Efeito efeito);
     }
 }
