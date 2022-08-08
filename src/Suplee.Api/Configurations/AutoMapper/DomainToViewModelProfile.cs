@@ -51,12 +51,10 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.Preco, opt => opt.MapFrom(m => m.Preco))
                 .ForMember(i => i.NomeCategoria, opt => opt.MapFrom(m => m.Categoria.Nome))
                 .ForMember(i => i.NomeEfeito, opt => opt.MapFrom(m => m.Efeitos.Select(x => x.Efeito.Nome)))
-                .ForMember(i => i.Imagem, opt => opt.MapFrom(m => m.Imagens))
+                .ForMember(i => i.Imagens, opt => opt.MapFrom(m => m.Imagens))
                 .ForMember(i => i.QuantidadeDisponivel, opt => opt.MapFrom(m => m.QuantidadeDisponivel));
 
             CreateMap<ProdutoImagem, ProdutoImagemViewModel>()
-                .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
-                .ForMember(i => i.ProdutoId, opt => opt.MapFrom(m => m.ProdutoId))
                 .ForMember(i => i.NomeImagem, opt => opt.MapFrom(m => m.NomeImagem))
                 .ForMember(i => i.UrlImagemOriginal, opt => opt.MapFrom(m => m.UrlImagemOriginal))
                 .ForMember(i => i.UrlImagemReduzida, opt => opt.MapFrom(m => m.UrlImagemReduzida))

@@ -173,7 +173,7 @@
             Lista de nomes dos Efeitos
             </summary>
         </member>
-        <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoResumidoViewModel.Imagem">
+        <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoResumidoViewModel.Imagens">
             <summary>
             URL da Imagem principal
             </summary>
@@ -236,16 +236,6 @@
         <member name="T:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoImagemViewModel">
             <summary>
             Objeto de saída da Imagem do produto
-            </summary>
-        </member>
-        <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoImagemViewModel.Id">
-            <summary>
-            Id do Produto Imagem
-            </summary>
-        </member>
-        <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoImagemViewModel.ProdutoId">
-            <summary>
-            Id do produto
             </summary>
         </member>
         <member name="P:Suplee.Api.Controllers.Catalogo.ViewModels.ProdutoImagemViewModel.NomeImagem">

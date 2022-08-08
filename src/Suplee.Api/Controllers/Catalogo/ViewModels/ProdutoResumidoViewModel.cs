@@ -49,6 +49,6 @@ namespace Suplee.Api.Controllers.Catalogo.ViewModels
         /// <summary>
         /// URL da Imagem principal
         /// </summary>
-        public string Imagem { get; set; }
+        public List<ProdutoImagemViewModel> Imagens { get; set; }
     }
 }

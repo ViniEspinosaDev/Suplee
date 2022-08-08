@@ -65,14 +65,6 @@ namespace Suplee.Api.Controllers.Catalogo.ViewModels
     public class ProdutoImagemViewModel
     {
         /// <summary>
-        /// Id do Produto Imagem
-        /// </summary>
-        public Guid Id { get; set; }
-        /// <summary>
-        /// Id do produto
-        /// </summary>
-        public Guid ProdutoId { get; set; }
-        /// <summary>
         /// Nome da imagem
         /// </summary>
         public string NomeImagem { get; set; }
