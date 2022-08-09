@@ -26,7 +26,9 @@ namespace Suplee.Test.Builder.Models
                 .ComCompostosNutricionais()
                 .Build();
             var categoria = new CategoriaBuilder().PadraoValido().Build();
-            var produtoEfeito = new ProdutoEfeitoBuilder().PadraoValido(Id, Guid.NewGuid()).Build();
+            var random = new Random();
+            var efeito = new EfeitoBuilder().PadraoValido().ComNome($"{random.Next()}_{random.Next()}").Build();
+            var produtoEfeito = new ProdutoEfeitoBuilder().PadraoValido(Id, efeito.Id).ComEfeito(efeito).Build();
 
             InformacaoNutricionalId = informacaoNutricional.Id;
             InformacaoNutricional = informacaoNutricional;
@@ -53,7 +55,7 @@ namespace Suplee.Test.Builder.Models
 
         public ProdutoBuilder ComEfeitos(List<ProdutoEfeito> efeitos)
         {
-            Efeitos = efeitos;
+            efeitos.ForEach(x => Efeitos.Add(x));
 
             return this;
         }
@@ -61,6 +63,13 @@ namespace Suplee.Test.Builder.Models
         public ProdutoBuilder ComImagens(List<ProdutoImagem> imagens)
         {
             Imagens = imagens;
+
+            return this;
+        }
+
+        public ProdutoBuilder ComNome(string nome)
+        {
+            Nome = nome;
 
             return this;
         }

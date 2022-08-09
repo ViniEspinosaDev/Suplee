@@ -21,6 +21,13 @@ namespace Suplee.Test.Builder.Models
             return this;
         }
 
+        public EfeitoBuilder ComNome(string nome)
+        {
+            Nome = nome;
+
+            return this;
+        }
+
         public Efeito Build() => this;
     }
 }

@@ -23,6 +23,13 @@ namespace Suplee.Test.Builder.Models
             return this;
         }
 
+        public CategoriaBuilder ComNome(string nome)
+        {
+            Nome = nome;
+
+            return this;
+        }
+
         public Categoria Build() => this;
     }
 }

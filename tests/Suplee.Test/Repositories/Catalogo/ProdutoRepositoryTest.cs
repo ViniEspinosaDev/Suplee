@@ -136,7 +136,7 @@ namespace Suplee.Test.Repositories.Catalogo
             Assert.Equal(produto.Categoria.Id, produtoAdicionado.Categoria.Id);
             Assert.Equal(produto.InformacaoNutricional.Id, produtoAdicionado.InformacaoNutricional.Id);
             Assert.Equal(1, produtoAdicionado.InformacaoNutricional.CompostosNutricionais.Count);
-            Assert.Equal(efeitos.FirstOrDefault().Id, produtoAdicionado.Efeitos.FirstOrDefault().Id);
+            Assert.Contains(produtoAdicionado.Efeitos, x => x.Id == efeitos.FirstOrDefault().Id);
             Assert.Equal(imagens.FirstOrDefault().Id, produtoAdicionado.Imagens.FirstOrDefault().Id);
         }
 
@@ -231,24 +231,127 @@ namespace Suplee.Test.Repositories.Catalogo
             Assert.Equal(3, produtosPaginado.Count());
         }
 
-        // Deve_Obter_Produtos_Paginado_Pelo_Id_Categoria (Guid categoriaId, int pagina, int quantidade);
         [Fact]
         public async void Deve_Obter_Produtos_Paginado_Pelo_Id_Categoria()
         {
+            var categoria = new CategoriaBuilder().PadraoValido().Build();
 
+            AdicionarCategoria(categoria);
+
+            var produtos = CriarProdutosComCategoria(categoria);
+
+            produtos.ForEach(x => AdicionarProduto(x));
+
+            var produtosPaginados = await _produtoRepository.ObterProdutosPaginadoPorIdCategoria(categoria.Id, 1, 5);
+
+            Assert.NotNull(produtosPaginados);
+            Assert.Equal(4, produtosPaginados.Count());
         }
 
-        // Deve_Obter_Produtos_Paginado_Pelo_Nome_Categoria (string nomeCategoria, int pagina, int quantidade);
-        // Deve_Obter_Produtos_Paginado_Pelo_Id_Efeito (Guid efeitoId, int pagina, int quantidade);
-        // Deve_Obter_Produtos_Paginado_Pelo_Nome_Efeito (string nomeEfeito, int pagina, int quantidade);
-        // Deve_Obter_Produtos_Paginado_Pelo_Nome_Produto (string nome, int pagina, int quantidade);
+        [Fact]
+        public async void Deve_Obter_Produtos_Paginado_Pelo_Nome_Categoria()
+        {
+            var categoria = new CategoriaBuilder().PadraoValido().ComNome("Categoria 1").Build();
 
-        // Deve_Obter_Categorias();
-        // Deve_Obter_Efeitos();
+            AdicionarCategoria(categoria);
 
+            var produtos = CriarProdutosComCategoria(categoria);
+
+            produtos.ForEach(x => AdicionarProduto(x));
+
+            var produtosPaginados = await _produtoRepository.ObterProdutosPaginadoPorNomeCategoria(categoria.Nome, 1, 5);
+
+            Assert.NotNull(produtosPaginados);
+            Assert.Equal(4, produtosPaginados.Count());
+        }
+
+        [Fact]
+        public async void Deve_Obter_Produtos_Paginado_Pelo_Id_Efeito()
+        {
+            var efeito = new EfeitoBuilder().PadraoValido().ComNome("Efeito Borboleta").Build();
+            var produtoEfeito = new ProdutoEfeitoBuilder().PadraoValido(Guid.Empty, efeito.Id).ComEfeito(efeito).Build();
+
+            var produtos = CriarProdutosComEfeito(produtoEfeito);
+
+            produtos.ForEach(x => AdicionarProduto(x));
+
+            var produtosPaginados = await _produtoRepository.ObterProdutosPaginadoPorIdEfeito(efeito.Id, 0, 0);
+
+            Assert.NotNull(produtosPaginados);
+            Assert.Single(produtosPaginados);
+        }
+
+        [Fact]
+        public async void Deve_Obter_Produtos_Paginado_Pelo_Nome_Efeito()
+        {
+            var efeito = new EfeitoBuilder().PadraoValido().ComNome("Efeito Borboleta").Build();
+            var produtoEfeito = new ProdutoEfeitoBuilder().PadraoValido(Guid.Empty, efeito.Id).ComEfeito(efeito).Build();
+
+            var produtos = CriarProdutosComEfeito(produtoEfeito);
+
+            produtos.ForEach(x => AdicionarProduto(x));
+
+            var produtosPaginados = await _produtoRepository.ObterProdutosPaginadoPorNomeEfeito(efeito.Nome, 1, 6);
+
+            Assert.NotNull(produtosPaginados);
+            Assert.Single(produtosPaginados);
+        }
+
+        [Fact]
+        public async void Deve_Obter_Produtos_Paginados_Pelo_Nome_Produto()
+        {
+            var produto = new ProdutoBuilder().PadraoValido().ComNome("Produtão").Build();
+            var produto2 = new ProdutoBuilder().PadraoValido().ComNome("Produton").Build();
+
+            AdicionarProduto(produto);
+            AdicionarProduto(produto2);
+
+            var produtoAdicionado = await _produtoRepository.ObterProdutosPaginadoPorNomeProduto(produto.Nome, 1, 3);
+
+            Assert.NotNull(produtoAdicionado);
+            Assert.Single(produtoAdicionado);
+        }
+
+        [Fact]
+        public async void Deve_Obter_Categorias()
+        {
+            var categorias = new List<Categoria>()
+            {
+                new CategoriaBuilder().PadraoValido().ComNome("Categoria 1").Build(),
+                new CategoriaBuilder().PadraoValido().ComNome("Categoria 2").Build(),
+                new CategoriaBuilder().PadraoValido().ComNome("Categoria 3").Build(),
+                new CategoriaBuilder().PadraoValido().ComNome("Categoria 4").Build(),
+            };
+
+            categorias.ForEach(x => AdicionarCategoria(x));
+
+            var categoriasAdicionadas = await _produtoRepository.ObterCategorias();
+
+            Assert.NotNull(categoriasAdicionadas);
+            Assert.Equal(categorias.Count(), categoriasAdicionadas.Count());
+        }
+
+        [Fact]
+        public async void Deve_Obter_Efeitos()
+        {
+            var efeitos = new List<Efeito>()
+            {
+                new EfeitoBuilder().PadraoValido().ComNome("Efeito 1").Build(),
+                new EfeitoBuilder().PadraoValido().ComNome("Efeito 2").Build(),
+                new EfeitoBuilder().PadraoValido().ComNome("Efeito 3").Build(),
+                new EfeitoBuilder().PadraoValido().ComNome("Efeito 4").Build(),
+            };
+
+            efeitos.ForEach(x => AdicionarEfeito(x));
+
+            var efeitosAdicionados = await _produtoRepository.ObterEfeitos();
+
+            Assert.NotNull(efeitosAdicionados);
+            Assert.Equal(efeitos.Count(), efeitosAdicionados.Count());
+        }
 
         #region Métodos auxiliares
-        public List<Produto> CriarProdutos()
+        private List<Produto> CriarProdutos()
         {
             return new List<Produto>()
             {
@@ -282,6 +385,67 @@ namespace Suplee.Test.Repositories.Catalogo
                 .ComCategoria(new CategoriaBuilder().PadraoValido().Build())
                 .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
                 .Build()
+            };
+        }
+
+        public List<Produto> CriarProdutosComCategoria(Categoria categoria)
+        {
+            return new List<Produto>()
+            {
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(categoria)
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .Build(),
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(categoria)
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .Build(),
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(categoria)
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .Build(),
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(categoria)
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .Build(),
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(new CategoriaBuilder().PadraoValido().Build())
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .Build(),
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(new CategoriaBuilder().PadraoValido().Build())
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .Build()
+            };
+        }
+
+        public List<Produto> CriarProdutosComEfeito(ProdutoEfeito efeito)
+        {
+            return new List<Produto>()
+            {
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(new CategoriaBuilder().PadraoValido().Build())
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .ComEfeitos(new List<ProdutoEfeito>() { efeito })
+                .Build(),
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(new CategoriaBuilder().PadraoValido().Build())
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .ComEfeitos(new List<ProdutoEfeito>() { efeito })
+                .Build(),
+                new ProdutoBuilder()
+                .PadraoValido()
+                .ComCategoria(new CategoriaBuilder().PadraoValido().Build())
+                .ComImagens(new List<ProdutoImagem>() { new ProdutoImagemBuilder().PadraoValido().Build() })
+                .Build(),
             };
         }
 
