@@ -24,6 +24,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Suplee.Catalogo.Data\Suplee.Catalogo.Data.csproj" />
     <ProjectReference Include="..\..\src\Suplee.Identidade.Data\Suplee.Identidade.Data.csproj" />
+    <ProjectReference Include="..\..\src\Suplee.Vendas.Data\Suplee.Vendas.Data.csproj" />
+    <ProjectReference Include="..\..\src\Suplee.Vendas.Domain\Suplee.Vendas.Domain.csproj" />
   </ItemGroup>
 
 </Project>
