@@ -39,8 +39,8 @@ namespace Suplee.Catalogo.Domain.Services
 
                 byte[] bytesImagem = imagem.GetBytes();
 
-                byte[] imagemReduzida = _imageHelper.ResizeImage(bytesImagem, 155, 235, RecuperarTipoImagem(extensao));
-                byte[] imagemMaior = _imageHelper.ResizeImage(bytesImagem, 279, 423, RecuperarTipoImagem(extensao));
+                byte[] imagemReduzida = _imageHelper.CropImage(bytesImagem, 155, 235, RecuperarTipoImagem(extensao));
+                byte[] imagemMaior = _imageHelper.CropImage(bytesImagem, 279, 423, RecuperarTipoImagem(extensao));
 
                 var retornoOriginal = await _imgbbService
                     .UploadImage(new ImgbbUploadInputModel(ConverterBytesEmBase64(bytesImagem), nomeImagemSemExtensao));
