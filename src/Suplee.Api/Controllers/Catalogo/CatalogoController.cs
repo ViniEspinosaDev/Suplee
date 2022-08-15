@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Suplee.Api.Controllers.Catalogo.ViewModels;
 using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
@@ -352,6 +353,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("produto")]
+        [EnableCors()]
         public async Task<ActionResult> CriarProduto([FromForm] ProdutoInputModel produtoInputModel)
         {
             //bool usuarioNaoRoboOuAdm = _usuario.TipoUsuario != ETipoUsuario.Administrador && _usuario.TipoUsuario != ETipoUsuario.Robo;
