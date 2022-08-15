@@ -353,7 +353,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("produto")]
-        [EnableCors()]
         public async Task<ActionResult> CriarProduto([FromForm] ProdutoInputModel produtoInputModel)
         {
             //bool usuarioNaoRoboOuAdm = _usuario.TipoUsuario != ETipoUsuario.Administrador && _usuario.TipoUsuario != ETipoUsuario.Robo;
