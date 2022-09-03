@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Suplee.Catalogo.Domain.Events;
 using Suplee.Catalogo.Domain.Interfaces;
 using Suplee.Catalogo.Domain.Interfaces.Services;
 using Suplee.Catalogo.Domain.Models;
@@ -28,7 +29,9 @@ namespace Suplee.Catalogo.Domain.Commands
             _imagemService = imagemService;
         }
 
-        public async Task<bool> Handle(AdicionarProdutoCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(
+            AdicionarProdutoCommand request, 
+            CancellationToken cancellationToken)
         {
             if (!request.IsValid())
             {
@@ -48,7 +51,8 @@ namespace Suplee.Catalogo.Domain.Commands
 
             produto.AdicionarInformacaoNutricional(request.InformacaoNutricional);
 
-            request.Efeitos.ForEach(x => produto.AdicionarProdutoEfeito(new ProdutoEfeito(produto.Id, x)));
+            request.Efeitos.ForEach(x => produto
+                .AdicionarProdutoEfeito(new ProdutoEfeito(produto.Id, x)));
 
             foreach (var imagem in request.Imagens)
             {
@@ -63,7 +67,9 @@ namespace Suplee.Catalogo.Domain.Commands
 
             var sucesso = await _produtoRepository.UnitOfWork.Commit();
 
-            // TODO: Futuramente lançar evento de ProdutoAdicionadoEvent
+            //if (sucesso)
+            //    await _mediatorHandler.PublicarDomainEvent(
+            //        new ProdutoAdicionadoEvent(produto));
 
             return sucesso;
         }
