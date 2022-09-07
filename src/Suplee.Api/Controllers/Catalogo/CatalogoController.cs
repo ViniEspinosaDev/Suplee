@@ -351,15 +351,16 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// </summary>
         /// <param name="produtoInputModel"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost("produto")]
         public async Task<ActionResult> CriarProduto(
             [FromForm] ProdutoInputModel produtoInputModel)
         {
-            bool usuarioNaoRoboOuAdm = _usuario.TipoUsuario != ETipoUsuario.Administrador 
-                && _usuario.TipoUsuario != ETipoUsuario.Robo;
+            //bool usuarioNaoRoboOuAdm = _usuario.TipoUsuario != ETipoUsuario.Administrador 
+            //    && _usuario.TipoUsuario != ETipoUsuario.Robo;
 
-            if (usuarioNaoRoboOuAdm)
-                return Forbid("Usuário não autorizado");
+            //if (usuarioNaoRoboOuAdm)
+            //    return Forbid("Usuário não autorizado");
 
             var informacaoNutricional = _mapper
                 .Map<InformacaoNutricional>(produtoInputModel.InformacaoNutricional);
