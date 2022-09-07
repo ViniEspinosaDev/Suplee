@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages;
+using Suplee.Vendas.Domain.Enums;
 using Suplee.Vendas.Domain.Interfaces;
 using Suplee.Vendas.Domain.Models;
 using System.Linq;
@@ -11,7 +12,8 @@ using static Suplee.Vendas.Domain.Models.Pedido;
 namespace Suplee.Vendas.Domain.Commands
 {
     public class PedidoCommandHandler : CommandHandler,
-        IRequestHandler<InserirProdutoCarrinhoCommand, bool>
+        IRequestHandler<InserirProdutoCarrinhoCommand, bool>,
+        IRequestHandler<ExcluirProdutoCarrinhoCommand, bool>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IPedidoRepository _pedidoRepository;
@@ -30,7 +32,8 @@ namespace Suplee.Vendas.Domain.Commands
                 return default(bool);
             }
 
-            var pedido = await _pedidoRepository.ObterPedidoPorUsuarioId(request.UsuarioId);
+            var pedido = await _pedidoRepository.ObterCarrinhoPorUsuarioId(request.UsuarioId);
+
             var pedidoProduto = new PedidoProduto(request.ProdutoId, request.NomeProduto, request.Quantidade, request.ValorUnitario);
 
             if (pedido == null)
@@ -43,6 +46,12 @@ namespace Suplee.Vendas.Domain.Commands
             }
             else
             {
+                if (pedido.Status != EPedidoStatus.Rascunho)
+                {
+                    await NotificarErro(request, "É necessário o pedido ser um rascunho para inserir produto");
+                    return false;
+                }
+
                 var existeProduto = pedido.ProdutoJaExiste(pedidoProduto);
 
                 pedido.AdicionarProduto(pedidoProduto);
@@ -59,7 +68,36 @@ namespace Suplee.Vendas.Domain.Commands
 
             var sucesso = await _pedidoRepository.UnitOfWork.Commit();
 
-            // if(sucesso && pedido.Status == EPedidoStatus.Iniciado) await _mediatorHandler.PublicarEvento(new ProdutoInseridoPedidoEvent(pedidoProduto.ProdutoId, pedidoProduto.Quantidade));
+            return sucesso;
+        }
+
+        public async Task<bool> Handle(ExcluirProdutoCarrinhoCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return default(bool);
+            }
+
+            var pedido = await _pedidoRepository.ObterCarrinhoPorUsuarioId(request.UsuarioId);
+
+            if (pedido == null)
+            {
+                await NotificarErro(request, "O usuário não possui carrinho");
+                return false;
+            }
+
+            var produto = pedido.Produtos.FirstOrDefault(x => x.ProdutoId == request.ProdutoId);
+
+            if (produto == null)
+            {
+                await NotificarErro(request, "Carrinho não possui o produto para excluir");
+                return false;
+            }
+
+            pedido.RemoverProduto(produto);
+
+            var sucesso = await _pedidoRepository.UnitOfWork.Commit();
 
             return sucesso;
         }

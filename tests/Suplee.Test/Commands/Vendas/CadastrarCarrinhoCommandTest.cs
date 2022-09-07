@@ -1,52 +1,12 @@
 ﻿namespace Suplee.Test.Commands.Vendas
 {
+    // Cadastrar carrinho completo. Receber vários itens e quantidades diferentes
     public class CadastrarCarrinhoCommandTest
     {
-        //[Fact]
-        //public void Deve_Cadastrar_Carrinho()
-        //{
-        //    Assert.False(true);
-        //}
+        // Deve receber uma lista de produtos/quantidade e adicionar tudo de uma vez
 
-        //[Fact]
-        //public void Deve_Inserir_Item_Carrinho()
-        //{
-        //    // Ao inserir um item no carrinho, verificar se já existe carrinho e adicionar o item, ou cria carrinho e adiciona item
-        //    Assert.False(true);
-        //}
+        // Validar se usuário já possui carrinho
 
-        //[Fact]
-        //public void Deve_Atualizar_Item_Carrinho()
-        //{
-        //    Assert.False(true);
-        //}
-
-        //[Fact]
-        //public void Deve_Excluir_Item_Carrinho()
-        //{
-        //    Assert.False(true);
-        //}
-
-        //[Fact]
-        //public void Deve_Transformar_Carrinho_Em_Pedido()
-        //{
-        //    Assert.False(true);
-        //}
+        // (Substituir produtos pelo da lista que está vindo)
     }
 }
-
-/*
- Pedido
-    Id 
-    Codigo
-    UsuarioId
-    Status ( )
-    Frete (Preço / Prazo)
-    ValorTotal
-    DataCadastro
-    Itens    
-
- ----- View model
-    Quantidade
- -----
- */

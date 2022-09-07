@@ -23,14 +23,10 @@ namespace Suplee.Vendas.Data.Repository
 
         public void Adicionar(Pedido pedido) => _vendasContext.Pedido.Add(pedido);
 
-        public async Task<Pedido> ObterPedidoPorUsuarioId(Guid usuarioId) =>
+        public async Task<Pedido> ObterCarrinhoPorUsuarioId(Guid usuarioId) =>
             await _vendasContext.Pedido
                 .Include(x => x.Produtos)
-                .FirstOrDefaultAsync(x => x.UsuarioId == usuarioId
-                    && x.Status != EPedidoStatus.Cancelado
-                    && x.Status != EPedidoStatus.Pago
-                    && x.Status != EPedidoStatus.Enviado
-                    && x.Status != EPedidoStatus.Entregue);
+                .FirstOrDefaultAsync(x => x.UsuarioId == usuarioId && x.Status == EPedidoStatus.Rascunho);
 
         public async Task<Pedido> ObterPorId(Guid pedidoId) =>
             await _vendasContext.Pedido

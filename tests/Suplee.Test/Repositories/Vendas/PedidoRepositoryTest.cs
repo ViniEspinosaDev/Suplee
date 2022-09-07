@@ -132,7 +132,7 @@ namespace Suplee.Test.Repositories.Vendas
 
             AdicionarPedidos(pedidos);
 
-            var rascunho = await _pedidoRepository.ObterPedidoPorUsuarioId(usuarioId);
+            var rascunho = await _pedidoRepository.ObterCarrinhoPorUsuarioId(usuarioId);
 
             Assert.NotNull(rascunho);
         }

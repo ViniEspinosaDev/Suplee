@@ -55,11 +55,30 @@ namespace Suplee.Test.Commands.Vendas
         }
 
         [Fact]
+        public async Task Deve_Validar_Se_Pedido_Rascunho_Antes_De_Inserir()
+        {
+            var pedido = new PedidoBuilder().PadraoValido().Iniciado().Build();
+
+            var comando = new InserirProdutoCarrinhoCommandBuilder().ComandoValido().Build();
+
+            pedido.AdicionarProduto(new PedidoProduto(comando.ProdutoId, comando.NomeProduto, comando.Quantidade, comando.ValorUnitario));
+
+            _pedidoRepository.Setup(x => x.ObterCarrinhoPorUsuarioId(It.IsAny<Guid>())).Returns(Task.FromResult(pedido));
+
+            var resultado = await _handler.Handle(comando, _cancellationToken);
+
+            _pedidoRepository.Verify(x => x.UnitOfWork.Commit(), Times.Never);
+            _mediatorHandler.Verify(x => x.PublicarNotificacao(It.Is<DomainNotification>(x => x.Value == "É necessário o pedido ser um rascunho para inserir produto")), Times.AtLeastOnce);
+
+            Assert.False(resultado);
+        }
+
+        [Fact]
         public async Task Deve_Criar_Novo_Pedido_Rascunho()
         {
             var comando = new InserirProdutoCarrinhoCommandBuilder().ComandoValido().Build();
 
-            _pedidoRepository.Setup(x => x.ObterPedidoPorUsuarioId(It.IsAny<Guid>())).Returns(Task.FromResult(default(Pedido)));
+            _pedidoRepository.Setup(x => x.ObterCarrinhoPorUsuarioId(It.IsAny<Guid>())).Returns(Task.FromResult(default(Pedido)));
             _pedidoRepository.Setup(x => x.UnitOfWork.Commit()).Returns(Task.FromResult(true));
 
             var resultado = await _handler.Handle(comando, _cancellationToken);
@@ -79,7 +98,7 @@ namespace Suplee.Test.Commands.Vendas
 
             pedido.AdicionarProduto(new PedidoProduto(comando.ProdutoId, comando.NomeProduto, comando.Quantidade, comando.ValorUnitario));
 
-            _pedidoRepository.Setup(x => x.ObterPedidoPorUsuarioId(It.IsAny<Guid>())).Returns(Task.FromResult(pedido));
+            _pedidoRepository.Setup(x => x.ObterCarrinhoPorUsuarioId(It.IsAny<Guid>())).Returns(Task.FromResult(pedido));
             _pedidoRepository.Setup(x => x.UnitOfWork.Commit()).Returns(Task.FromResult(true));
 
             var resultado = await _handler.Handle(comando, _cancellationToken);
@@ -97,7 +116,7 @@ namespace Suplee.Test.Commands.Vendas
 
             var comando = new InserirProdutoCarrinhoCommandBuilder().ComandoValido().Build();
 
-            _pedidoRepository.Setup(x => x.ObterPedidoPorUsuarioId(It.IsAny<Guid>())).Returns(Task.FromResult(pedido));
+            _pedidoRepository.Setup(x => x.ObterCarrinhoPorUsuarioId(It.IsAny<Guid>())).Returns(Task.FromResult(pedido));
             _pedidoRepository.Setup(x => x.UnitOfWork.Commit()).Returns(Task.FromResult(true));
 
             var resultado = await _handler.Handle(comando, _cancellationToken);

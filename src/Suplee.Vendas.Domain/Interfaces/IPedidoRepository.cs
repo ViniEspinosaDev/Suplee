@@ -8,7 +8,7 @@ namespace Suplee.Vendas.Domain.Interfaces
     public interface IPedidoRepository : IRepository<Pedido>
     {
         Task<Pedido> ObterPorId(Guid pedidoId);
-        Task<Pedido> ObterPedidoPorUsuarioId(Guid usuarioId);
+        Task<Pedido> ObterCarrinhoPorUsuarioId(Guid usuarioId);
 
         Task<bool> ExistePedidoIniciadoParaUsuario(Guid usuarioId);
 

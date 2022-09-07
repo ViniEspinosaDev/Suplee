@@ -1,6 +1,7 @@
 ﻿using Suplee.Vendas.Domain.Enums;
 using Suplee.Vendas.Domain.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Suplee.Test.Builder.Models
 {
@@ -56,6 +57,13 @@ namespace Suplee.Test.Builder.Models
         public PedidoBuilder Entregue()
         {
             Status = EPedidoStatus.Entregue;
+
+            return this;
+        }
+
+        public PedidoBuilder ComProdutos(List<PedidoProduto> produtos)
+        {
+            produtos.ForEach(produto => AdicionarProduto(produto));
 
             return this;
         }
