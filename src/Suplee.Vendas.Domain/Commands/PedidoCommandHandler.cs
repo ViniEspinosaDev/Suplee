@@ -13,7 +13,8 @@ namespace Suplee.Vendas.Domain.Commands
 {
     public class PedidoCommandHandler : CommandHandler,
         IRequestHandler<InserirProdutoCarrinhoCommand, bool>,
-        IRequestHandler<ExcluirProdutoCarrinhoCommand, bool>
+        IRequestHandler<ExcluirProdutoCarrinhoCommand, bool>,
+        IRequestHandler<AtualizarProdutoCarrinhoCommand, bool>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IPedidoRepository _pedidoRepository;
@@ -96,6 +97,39 @@ namespace Suplee.Vendas.Domain.Commands
             }
 
             pedido.RemoverProduto(produto);
+
+            var sucesso = await _pedidoRepository.UnitOfWork.Commit();
+
+            return sucesso;
+        }
+
+        public async Task<bool> Handle(AtualizarProdutoCarrinhoCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return default(bool);
+            }
+
+            var pedido = await _pedidoRepository.ObterCarrinhoPorUsuarioId(request.UsuarioId);
+
+            if (pedido == null)
+            {
+                await NotificarErro(request, "O usuário não possui carrinho");
+                return false;
+            }
+
+            var produto = pedido.Produtos.FirstOrDefault(x => x.ProdutoId == request.ProdutoId);
+
+            if (produto == null)
+            {
+                await NotificarErro(request, "Carrinho não possui o produto para atualizar");
+                return false;
+            }
+
+            produto.AtualizarQuantidade(request.Quantidade);
+
+            pedido.AtualizarProduto(produto);
 
             var sucesso = await _pedidoRepository.UnitOfWork.Commit();
 
