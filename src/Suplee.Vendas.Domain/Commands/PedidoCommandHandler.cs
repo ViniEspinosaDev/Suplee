@@ -1,9 +1,12 @@
 ﻿using MediatR;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages;
+using Suplee.Core.Messages.CommonMessages.Events;
 using Suplee.Vendas.Domain.Enums;
 using Suplee.Vendas.Domain.Interfaces;
 using Suplee.Vendas.Domain.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +17,8 @@ namespace Suplee.Vendas.Domain.Commands
     public class PedidoCommandHandler : CommandHandler,
         IRequestHandler<InserirProdutoCarrinhoCommand, bool>,
         IRequestHandler<ExcluirProdutoCarrinhoCommand, bool>,
-        IRequestHandler<AtualizarProdutoCarrinhoCommand, bool>
+        IRequestHandler<AtualizarProdutoCarrinhoCommand, bool>,
+        IRequestHandler<IniciarPedidoCommand, bool>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IPedidoRepository _pedidoRepository;
@@ -132,6 +136,52 @@ namespace Suplee.Vendas.Domain.Commands
             pedido.AtualizarProduto(produto);
 
             var sucesso = await _pedidoRepository.UnitOfWork.Commit();
+
+            return sucesso;
+        }
+
+        public async Task<bool> Handle(IniciarPedidoCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return default(bool);
+            }
+
+            var pedido = await _pedidoRepository.ObterCarrinhoPorUsuarioId(request.UsuarioId);
+
+            if (pedido == null)
+            {
+                await NotificarErro(request, "O usuário não possui carrinho");
+                return false;
+            }
+
+            if (pedido.Produtos.Count == 0)
+            {
+                await NotificarErro(request, "O carrinho não possui produto(s)");
+                return false;
+            }
+
+            if (!request.Sucesso)
+            {
+                await NotificarErro(request, "A operadora recusou o pagamento");
+                return false;
+            }
+
+            pedido.Iniciar();
+
+            var sucesso = await _pedidoRepository.UnitOfWork.Commit();
+
+            if (sucesso)
+            {
+                var produtos = new List<(Guid produtoId, int quantidade)>();
+
+                pedido.Produtos.ToList().ForEach(produto => produtos.Add((produtoId: produto.Id, quantidade: produto.Quantidade)));
+
+                var pedidoIniciadoEvent = new PedidoIniciadoEvent(request.UsuarioId, pedido.Id, produtos);
+
+                await _mediatorHandler.PublicarEvento(pedidoIniciadoEvent);
+            }
 
             return sucesso;
         }
