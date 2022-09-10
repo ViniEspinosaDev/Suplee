@@ -185,6 +185,11 @@ namespace Suplee.Catalogo.Data.Repository
             return await produtos.ToListAsync();
         }
 
+        public IEnumerable<Produto> ObterProdutosPelosIds(List<Guid> produtosId)
+        {
+            return _catalogoContext.Produtos.Where(x => produtosId.Contains(x.Id));
+        }
+
         public int QuantidadeTotalProdutos()
         {
             return _catalogoContext.Produtos.Count();

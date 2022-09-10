@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Suplee.Catalogo.Domain.Interfaces;
-using Suplee.Core.Messages.CommonMessages.Events;
+using Suplee.Catalogo.Domain.Interfaces.Services;
+using Suplee.Core.Communication.Mediator;
+using Suplee.Core.Messages.CommonMessages.IntegrationEvents;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,25 +10,45 @@ namespace Suplee.Catalogo.Domain.Events
 {
     public class CatalogoEventHandler :
         INotificationHandler<ProdutoAdicionadoEvent>,
-        INotificationHandler<PedidoIniciadoEvent>
+        INotificationHandler<PedidoIniciadoEvent>,
+        INotificationHandler<PedidoProcessamentoCanceladoEvent>
     {
-        private readonly IProdutoRepository _produtoLeituraRepository;
+        private readonly IProdutoRepository _produtoRepository;
+        private readonly IMediatorHandler _mediatorHandler;
+        private readonly IEstoqueService _estoqueService;
 
-        public CatalogoEventHandler(IProdutoRepository produtoRepository)
+        public CatalogoEventHandler(IProdutoRepository produtoRepository, IMediatorHandler mediatorHandler, IEstoqueService estoqueService)
         {
-            _produtoLeituraRepository = produtoRepository;
+            _produtoRepository = produtoRepository;
+            _mediatorHandler = mediatorHandler;
+            _estoqueService = estoqueService;
         }
 
         public async Task Handle(ProdutoAdicionadoEvent notification, CancellationToken cancellationToken)
         {
-            _produtoLeituraRepository.Adicionar(notification.Produto);
+            _produtoRepository.Adicionar(notification.Produto);
 
-            await _produtoLeituraRepository.UnitOfWork.Commit();
+            await _produtoRepository.UnitOfWork.Commit();
         }
 
         public async Task Handle(PedidoIniciadoEvent notification, CancellationToken cancellationToken)
         {
-            // TODO: Debitar estoque (Se der erro lançar evento para tornar pedido rascunho)
+            var result = await _estoqueService.DebitarListaProdutosPedido(notification.Pedido);
+
+            if (result)
+            {
+                // (message.PedidoId, message.ClienteId, message.Total, message.ProdutosPedido, message.NomeCartao, message.NumeroCartao, message.ExpiracaoCartao, message.CvvCartao));
+                await _mediatorHandler.PublicarEvento(new PedidoEstoqueConfirmadoEvent(notification.Pedido.PedidoId, notification.UsuarioId, notification.Pedido));
+            }
+            else
+            {
+                await _mediatorHandler.PublicarEvento(new PedidoEstoqueRejeitadoEvent(notification.Pedido.PedidoId, notification.UsuarioId));
+            }
+        }
+
+        public async Task Handle(PedidoProcessamentoCanceladoEvent notification, CancellationToken cancellationToken)
+        {
+            await _estoqueService.ReporListaProdutosPedido(notification.Pedido);
         }
     }
 }

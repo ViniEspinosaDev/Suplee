@@ -59,5 +59,28 @@ namespace Suplee.Catalogo.Domain.Models
             QuantidadeDisponivel = quantidadeDisponivel;
             Preco = preco;
         }
+
+        public void AlterarCategoria(Categoria categoria)
+        {
+            Categoria = categoria;
+            CategoriaId = categoria.Id;
+        }
+
+        public void DebitarEstoque(int quantidade)
+        {
+            if (quantidade < 0) quantidade *= -1;
+            if (!PossuiEstoque(quantidade)) throw new DomainException("Estoque insuficiente");
+            QuantidadeDisponivel -= quantidade;
+        }
+
+        public void ReporEstoque(int quantidade)
+        {
+            QuantidadeDisponivel += quantidade;
+        }
+
+        public bool PossuiEstoque(int quantidade)
+        {
+            return QuantidadeDisponivel >= quantidade;
+        }
     }
 }

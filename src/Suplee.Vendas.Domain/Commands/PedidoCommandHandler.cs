@@ -1,11 +1,13 @@
 ﻿using MediatR;
 using Suplee.Core.Communication.Mediator;
+using Suplee.Core.DomainObjects.DTO;
 using Suplee.Core.Messages;
-using Suplee.Core.Messages.CommonMessages.Events;
+using Suplee.Core.Messages.CommonMessages.IntegrationEvents;
+using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Vendas.Domain.Enums;
+using Suplee.Vendas.Domain.Events;
 using Suplee.Vendas.Domain.Interfaces;
 using Suplee.Vendas.Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -18,7 +20,10 @@ namespace Suplee.Vendas.Domain.Commands
         IRequestHandler<InserirProdutoCarrinhoCommand, bool>,
         IRequestHandler<ExcluirProdutoCarrinhoCommand, bool>,
         IRequestHandler<AtualizarProdutoCarrinhoCommand, bool>,
-        IRequestHandler<IniciarPedidoCommand, bool>
+        IRequestHandler<IniciarPedidoCommand, bool>,
+        IRequestHandler<CancelarProcessamentoPedidoCommand, bool>,
+        IRequestHandler<FinalizarPedidoCommand, bool>,
+        IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IPedidoRepository _pedidoRepository;
@@ -174,16 +179,73 @@ namespace Suplee.Vendas.Domain.Commands
 
             if (sucesso)
             {
-                var produtos = new List<(Guid produtoId, int quantidade)>();
+                var produtosDomainObject = new List<ProdutoDomainObject>();
 
-                pedido.Produtos.ToList().ForEach(produto => produtos.Add((produtoId: produto.Id, quantidade: produto.Quantidade)));
+                pedido.Produtos.ToList().ForEach(i => produtosDomainObject.Add(new ProdutoDomainObject { Id = i.ProdutoId, Quantidade = i.Quantidade }));
 
-                var pedidoIniciadoEvent = new PedidoIniciadoEvent(request.UsuarioId, pedido.Id, produtos);
+                var pedidoDomainObject = new PedidoDomainObject { PedidoId = pedido.Id, Produtos = produtosDomainObject };
+
+                var pedidoIniciadoEvent = new PedidoIniciadoEvent(request.UsuarioId, pedidoDomainObject);
 
                 await _mediatorHandler.PublicarEvento(pedidoIniciadoEvent);
             }
 
             return sucesso;
+        }
+
+        public async Task<bool> Handle(CancelarProcessamentoPedidoCommand request, CancellationToken cancellationToken)
+        {
+            var pedido = await _pedidoRepository.ObterPorId(request.PedidoId);
+
+            if (pedido == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("pedido", "Pedido não encontrado!"));
+                return false;
+            }
+
+            pedido.TornarRascunho();
+
+            return await _pedidoRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(FinalizarPedidoCommand request, CancellationToken cancellationToken)
+        {
+            var pedido = await _pedidoRepository.ObterPorId(request.PedidoId);
+
+            if (pedido == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("pedido", "Pedido não encontrado!"));
+                return false;
+            }
+
+            pedido.Finalizar();
+
+            pedido.AdicionarEvento(new PedidoFinalizadoEvent(request.PedidoId));
+
+            return await _pedidoRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(CancelarProcessamentoPedidoEstornarEstoqueCommand request, CancellationToken cancellationToken)
+        {
+            var pedido = await _pedidoRepository.ObterPorId(request.PedidoId);
+
+            if (pedido == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("pedido", "Pedido não encontrado!"));
+                return false;
+            }
+
+            var produtosDomainObject = new List<ProdutoDomainObject>();
+
+            pedido.Produtos.ToList().ForEach(i => produtosDomainObject.Add(new ProdutoDomainObject { Id = i.ProdutoId, Quantidade = i.Quantidade }));
+
+            var pedidoDomainObject = new PedidoDomainObject { PedidoId = pedido.Id, Produtos = produtosDomainObject };
+
+            pedido.AdicionarEvento(new PedidoProcessamentoCanceladoEvent(pedido.Id, pedido.UsuarioId, pedidoDomainObject));
+            
+            pedido.TornarRascunho();
+
+            return await _pedidoRepository.UnitOfWork.Commit();
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Moq;
-using Suplee.Core.Messages;
-using Suplee.Core.Messages.CommonMessages.Events;
+using Suplee.Core.Messages.CommonMessages.IntegrationEvents;
 using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Test.Builder.Commands.Vendas;
 using Suplee.Test.Builder.Models;
@@ -12,13 +11,13 @@ using Xunit;
 
 namespace Suplee.Test.Commands.Vendas
 {
-    public class PagarPedidoCommandTest : VendasCommandTestBase
+    public class IniciarPedidoCommandTest : VendasCommandTestBase
     {
         #region Validações comando
         [Fact]
         public void Deve_Validar_Comando_Valido()
         {
-            var comando = new PagarPedidoCommandBuilder().ComandoValido().Build();
+            var comando = new IniciarPedidoCommandBuilder().ComandoValido().Build();
 
             comando.IsValid();
             var resultadoValidacao = comando.ValidationResult;
@@ -29,7 +28,7 @@ namespace Suplee.Test.Commands.Vendas
         [Fact]
         public void Deve_Validar_Comando_Invalido()
         {
-            var comando = new PagarPedidoCommandBuilder().ComandoInvalido().Build();
+            var comando = new IniciarPedidoCommandBuilder().ComandoInvalido().Build();
 
             comando.IsValid();
             var resultadoValidacao = comando.ValidationResult;
@@ -43,7 +42,7 @@ namespace Suplee.Test.Commands.Vendas
         [Fact]
         public async Task Deve_Validar_Handler_Comando_Invalido()
         {
-            var comando = new PagarPedidoCommandBuilder().ComandoInvalido().Build();
+            var comando = new IniciarPedidoCommandBuilder().ComandoInvalido().Build();
 
             var resultado = await _handler.Handle(comando, _cancellationToken);
 
@@ -57,7 +56,7 @@ namespace Suplee.Test.Commands.Vendas
         [Fact]
         public async Task Deve_Validar_Se_Cliente_Tem_Carrinho()
         {
-            var comando = new PagarPedidoCommandBuilder().ComandoValido().Build();
+            var comando = new IniciarPedidoCommandBuilder().ComandoValido().Build();
 
             _pedidoRepository.Setup(x => x.ObterCarrinhoPorUsuarioId(It.IsAny<Guid>())).Returns(Task.FromResult(default(Pedido)));
 
@@ -76,7 +75,7 @@ namespace Suplee.Test.Commands.Vendas
 
             _pedidoRepository.Setup(x => x.ObterCarrinhoPorUsuarioId(It.IsAny<Guid>())).Returns(Task.FromResult(pedido));
 
-            var comando = new PagarPedidoCommandBuilder().ComandoValido().Build();
+            var comando = new IniciarPedidoCommandBuilder().ComandoValido().Build();
 
             var resultado = await _handler.Handle(comando, _cancellationToken);
 
@@ -96,7 +95,7 @@ namespace Suplee.Test.Commands.Vendas
 
             _pedidoRepository.Setup(x => x.ObterCarrinhoPorUsuarioId(It.IsAny<Guid>())).Returns(Task.FromResult(pedido));
 
-            var comando = new PagarPedidoCommandBuilder().ComandoValido().ComFalha().ComUsuarioId(pedido.UsuarioId).Build();
+            var comando = new IniciarPedidoCommandBuilder().ComandoValido().ComFalha().ComUsuarioId(pedido.UsuarioId).Build();
 
             var resultado = await _handler.Handle(comando, _cancellationToken);
 
@@ -117,7 +116,7 @@ namespace Suplee.Test.Commands.Vendas
             _pedidoRepository.Setup(x => x.ObterCarrinhoPorUsuarioId(It.IsAny<Guid>())).Returns(Task.FromResult(pedido));
             _pedidoRepository.Setup(x => x.UnitOfWork.Commit()).Returns(Task.FromResult(true));
 
-            var comando = new PagarPedidoCommandBuilder().ComandoValido().Build();
+            var comando = new IniciarPedidoCommandBuilder().ComandoValido().Build();
 
             var resultado = await _handler.Handle(comando, _cancellationToken);
 
@@ -127,10 +126,6 @@ namespace Suplee.Test.Commands.Vendas
 
             Assert.True(resultado);
         }
-
-        // Caso dê erro o débito de estoque lançar comando para TornarPedidoUmCarrinho
-
-        // Se der sucesso no debito de estoque lançar comando para RealizarPagamento (Outro contexto (Pagamento))
 
         // Dando certo o comando de pagamento do outro contexto, lançar evento de PagamentoRealizadoEvent e alterar status do pedido (Cancelado, pago ou enviado)
     }

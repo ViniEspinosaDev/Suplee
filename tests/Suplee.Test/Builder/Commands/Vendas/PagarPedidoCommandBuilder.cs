@@ -3,13 +3,13 @@ using System;
 
 namespace Suplee.Test.Builder.Commands.Vendas
 {
-    public class PagarPedidoCommandBuilder : IniciarPedidoCommand
+    public class IniciarPedidoCommandBuilder : IniciarPedidoCommand
     {
-        public PagarPedidoCommandBuilder(Guid usuarioId = default, bool sucesso = default) : base(usuarioId, sucesso)
+        public IniciarPedidoCommandBuilder(Guid usuarioId = default, bool sucesso = default) : base(usuarioId, sucesso)
         {
         }
 
-        public PagarPedidoCommandBuilder ComandoValido()
+        public IniciarPedidoCommandBuilder ComandoValido()
         {
             UsuarioId = Guid.NewGuid();
             Sucesso = true;
@@ -17,21 +17,21 @@ namespace Suplee.Test.Builder.Commands.Vendas
             return this;
         }
 
-        public PagarPedidoCommandBuilder ComandoInvalido()
+        public IniciarPedidoCommandBuilder ComandoInvalido()
         {
             UsuarioId = Guid.Empty;
 
             return this;
         }
 
-        public PagarPedidoCommandBuilder ComUsuarioId(Guid usuarioId)
+        public IniciarPedidoCommandBuilder ComUsuarioId(Guid usuarioId)
         {
             UsuarioId = usuarioId;
 
             return this;
         }
 
-        public PagarPedidoCommandBuilder ComFalha()
+        public IniciarPedidoCommandBuilder ComFalha()
         {
             Sucesso = false;
 

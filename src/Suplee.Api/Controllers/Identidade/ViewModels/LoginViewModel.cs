@@ -40,10 +40,6 @@
         /// Tipo de usuário
         /// </summary>
         public string TipoUsuario { get; set; }
-        /// <summary>
-        /// Claims
-        /// </summary>
-        //public IEnumerable<ClaimViewModel> Claims { get; set; }
     }
 
     /// <summary>

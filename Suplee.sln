@@ -55,9 +55,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vendas", "Vendas", "{E72DA0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.Vendas.Domain", "src\Suplee.Vendas.Domain\Suplee.Vendas.Domain.csproj", "{D9367F71-BE7E-44CC-85C5-6816C544211E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.Vendas.Data", "src\Suplee.Vendas.Data\Suplee.Vendas.Data.csproj", "{F1558DA4-4A32-4F54-BED9-D9CDB0BE175D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.Vendas.Data", "src\Suplee.Vendas.Data\Suplee.Vendas.Data.csproj", "{F1558DA4-4A32-4F54-BED9-D9CDB0BE175D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.Vendas.CrossCuttingIoC", "src\Suplee.Vendas.CrossCuttingIoC\Suplee.Vendas.CrossCuttingIoC.csproj", "{6126F500-0EB4-44E5-A022-417C505F7967}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suplee.Vendas.CrossCuttingIoC", "src\Suplee.Vendas.CrossCuttingIoC\Suplee.Vendas.CrossCuttingIoC.csproj", "{6126F500-0EB4-44E5-A022-417C505F7967}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pagamentos", "Pagamentos", "{985AB595-2F52-4E20-BFA9-30E69B6E1745}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.Pagamentos.Domain", "src\Suplee.Pagamentos.Domain\Suplee.Pagamentos.Domain.csproj", "{3390F499-3631-4C08-8E36-633B0B3BECE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.Pagamentos.AntiCorruption", "src\Suplee.Pagamentos.AntiCorruption\Suplee.Pagamentos.AntiCorruption.csproj", "{EC01FF5F-0BBC-40ED-8960-C0FFF94B865D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +147,14 @@ Global
 		{6126F500-0EB4-44E5-A022-417C505F7967}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6126F500-0EB4-44E5-A022-417C505F7967}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6126F500-0EB4-44E5-A022-417C505F7967}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3390F499-3631-4C08-8E36-633B0B3BECE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3390F499-3631-4C08-8E36-633B0B3BECE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3390F499-3631-4C08-8E36-633B0B3BECE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3390F499-3631-4C08-8E36-633B0B3BECE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC01FF5F-0BBC-40ED-8960-C0FFF94B865D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC01FF5F-0BBC-40ED-8960-C0FFF94B865D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC01FF5F-0BBC-40ED-8960-C0FFF94B865D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC01FF5F-0BBC-40ED-8960-C0FFF94B865D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -169,6 +183,9 @@ Global
 		{D9367F71-BE7E-44CC-85C5-6816C544211E} = {E72DA030-4ED2-4B51-8885-89815CA99236}
 		{F1558DA4-4A32-4F54-BED9-D9CDB0BE175D} = {E72DA030-4ED2-4B51-8885-89815CA99236}
 		{6126F500-0EB4-44E5-A022-417C505F7967} = {E72DA030-4ED2-4B51-8885-89815CA99236}
+		{985AB595-2F52-4E20-BFA9-30E69B6E1745} = {5EA06726-199B-4C34-9539-BE8140E2CF2B}
+		{3390F499-3631-4C08-8E36-633B0B3BECE3} = {985AB595-2F52-4E20-BFA9-30E69B6E1745}
+		{EC01FF5F-0BBC-40ED-8960-C0FFF94B865D} = {985AB595-2F52-4E20-BFA9-30E69B6E1745}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D537C530-F823-4ED5-8DAD-F1023CA0B6C2}
