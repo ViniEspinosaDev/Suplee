@@ -5,13 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Suplee.Catalogo.Data;
 using Suplee.Catalogo.Data.Repository;
 using Suplee.Catalogo.Domain.Commands;
+using Suplee.Catalogo.Domain.Events;
 using Suplee.Catalogo.Domain.Interfaces;
 using Suplee.Catalogo.Domain.Interfaces.Services;
 using Suplee.Catalogo.Domain.Services;
-using Suplee.Core.Communication.Mediator;
-using Suplee.Core.Data.EventSourcing;
-using Suplee.Core.Messages.CommonMessages.Notifications;
-using Suplee.EventSourcing;
+using Suplee.Core.Messages.CommonMessages.IntegrationEvents;
 
 namespace Suplee.Catalogo.CrossCuttingIoC
 {
@@ -21,42 +19,37 @@ namespace Suplee.Catalogo.CrossCuttingIoC
 
         public static void ConfigurarDependencias(IServiceCollection services, IConfiguration config)
         {
-            ConfigurarDependenciasPadrao(services);
-
             ConfigurarDependenciasDatabase(services, config);
             ConfigurarDependenciasRepository(services);
             ConfigurarDependenciasService(services);
             ConfigurarDependenciasCommand(services);
+            ConfigurarDependenciasEvent(services);
+        }
+
+        private static void ConfigurarDependenciasEvent(IServiceCollection services)
+        {
+            services.AddScoped<INotificationHandler<ProdutoAdicionadoEvent>, CatalogoEventHandler>();
+            services.AddScoped<INotificationHandler<PedidoIniciadoEvent>, CatalogoEventHandler>();
+            services.AddScoped<INotificationHandler<PedidoProcessamentoCanceladoEvent>, CatalogoEventHandler>();
         }
 
         private static void ConfigurarDependenciasService(IServiceCollection services)
         {
             services.AddScoped<ICorreiosService, CorreiosService>();
             services.AddScoped<IImagemService, ImagemService>();
-        }
-
-        private static void ConfigurarDependenciasPadrao(IServiceCollection services)
-        {
-            // Mediator
-            services.AddScoped<IMediatorHandler, MediatorHandler>();
-
-            // Notifications
-            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
-
-            // Event Sourcing
-            services.AddSingleton<IEventStoreService, EventStoreService>();
-            services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
+            services.AddScoped<IEstoqueService, EstoqueService>();
         }
 
         private static void ConfigurarDependenciasCommand(IServiceCollection services)
         {
             services.AddScoped<IRequestHandler<AdicionarProdutoCommand, bool>, CatalogoCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarProdutoCommand, bool>, CatalogoCommandHandler>();
         }
 
         private static void ConfigurarDependenciasDatabase(IServiceCollection services, IConfiguration config)
         {
-            //services.AddDbContext<CatalogoContext>(opt => opt.UseInMemoryDatabase("Database"));
             services.AddDbContext<CatalogoContext>(opt => opt.UseSqlServer(config.GetConnectionString(ConexaoSQL)));
+            //services.AddDbContext<CatalogoContext>(opt => opt.UseInMemoryDatabase("Database"));
         }
 
         private static void ConfigurarDependenciasRepository(IServiceCollection services)

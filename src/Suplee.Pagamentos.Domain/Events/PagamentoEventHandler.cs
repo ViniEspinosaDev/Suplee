@@ -23,11 +23,6 @@ namespace Suplee.Pagamentos.Domain.Events
                 PedidoId = notification.PedidoId,
                 UsuarioId = notification.UsuarioId,
                 SucessoNaTransacao = notification.SucessoNaTransacao
-                //Total = message.Total,
-                //NomeCartao = message.NomeCartao,
-                //NumeroCartao = message.NumeroCartao,
-                //ExpiracaoCartao = message.ExpiracaoCartao,
-                //CvvCartao = message.CvvCartao
             };
 
             await _pagamentoService.RealizarPagamentoPedido(pagamentoPedido);

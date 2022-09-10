@@ -7,20 +7,17 @@ using Suplee.Pagamentos.Domain.Interfaces;
 using Suplee.Pagamentos.Domain.Models;
 using System.Threading.Tasks;
 
-namespace NerdStore.Pagamentos.Business
+namespace Suplee.Pagamentos.Domain.Services
 {
     public class PagamentoService : IPagamentoService
     {
         private readonly IPagamentoCartaoCreditoFacade _pagamentoCartaoCreditoFacade;
-        private readonly IPagamentoRepository _pagamentoRepository;
         private readonly IMediatorHandler _mediatorHandler;
 
         public PagamentoService(IPagamentoCartaoCreditoFacade pagamentoCartaoCreditoFacade,
-                                IPagamentoRepository pagamentoRepository,
                                 IMediatorHandler mediatorHandler)
         {
             _pagamentoCartaoCreditoFacade = pagamentoCartaoCreditoFacade;
-            _pagamentoRepository = pagamentoRepository;
             _mediatorHandler = mediatorHandler;
         }
 
@@ -29,19 +26,9 @@ namespace NerdStore.Pagamentos.Business
             var pedido = new Pedido
             {
                 Id = pagamentoPedido.PedidoId
-                //Valor = pagamentoPedido.Total
             };
 
-            var pagamento = new Pagamento
-            {
-                //Valor = pagamentoPedido.Total,
-                //NomeCartao = pagamentoPedido.NomeCartao,
-                //NumeroCartao = pagamentoPedido.NumeroCartao,
-                //ExpiracaoCartao = pagamentoPedido.ExpiracaoCartao,
-                //CvvCartao = pagamentoPedido.CvvCartao,
-                PedidoId = pagamentoPedido.PedidoId,
-                SucessoNaTransacao = pagamentoPedido.SucessoNaTransacao
-            };
+            var pagamento = new Pagamento(pagamentoPedido.PedidoId, pagamentoPedido.SucessoNaTransacao);
 
             var transacao = _pagamentoCartaoCreditoFacade.RealizarPagamento(pedido, pagamento);
 
@@ -49,10 +36,6 @@ namespace NerdStore.Pagamentos.Business
             {
                 pagamento.AdicionarEvento(new PagamentoRealizadoEvent(pedido.Id, pagamentoPedido.UsuarioId, transacao.PagamentoId, transacao.Id));
 
-                _pagamentoRepository.Adicionar(pagamento);
-                _pagamentoRepository.AdicionarTransacao(transacao);
-
-                await _pagamentoRepository.UnitOfWork.Commit();
                 return transacao;
             }
 

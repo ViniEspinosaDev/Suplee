@@ -65,6 +65,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.Pagamentos.Domain", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.Pagamentos.AntiCorruption", "src\Suplee.Pagamentos.AntiCorruption\Suplee.Pagamentos.AntiCorruption.csproj", "{EC01FF5F-0BBC-40ED-8960-C0FFF94B865D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suplee.Pagamentos.CrossCuttingIoC", "src\Suplee.Pagamentos.CrossCuttingIoC\Suplee.Pagamentos.CrossCuttingIoC.csproj", "{03F27190-7554-4D6E-9153-75A5DBFFB310}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +157,10 @@ Global
 		{EC01FF5F-0BBC-40ED-8960-C0FFF94B865D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC01FF5F-0BBC-40ED-8960-C0FFF94B865D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC01FF5F-0BBC-40ED-8960-C0FFF94B865D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03F27190-7554-4D6E-9153-75A5DBFFB310}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03F27190-7554-4D6E-9153-75A5DBFFB310}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03F27190-7554-4D6E-9153-75A5DBFFB310}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03F27190-7554-4D6E-9153-75A5DBFFB310}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -186,6 +192,7 @@ Global
 		{985AB595-2F52-4E20-BFA9-30E69B6E1745} = {5EA06726-199B-4C34-9539-BE8140E2CF2B}
 		{3390F499-3631-4C08-8E36-633B0B3BECE3} = {985AB595-2F52-4E20-BFA9-30E69B6E1745}
 		{EC01FF5F-0BBC-40ED-8960-C0FFF94B865D} = {985AB595-2F52-4E20-BFA9-30E69B6E1745}
+		{03F27190-7554-4D6E-9153-75A5DBFFB310} = {985AB595-2F52-4E20-BFA9-30E69B6E1745}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D537C530-F823-4ED5-8DAD-F1023CA0B6C2}

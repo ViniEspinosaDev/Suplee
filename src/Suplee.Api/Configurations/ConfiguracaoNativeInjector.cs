@@ -21,9 +21,7 @@ namespace Suplee.Api.Configurations
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services
-                .Configure<MailConfiguration>(configuration.GetSection("MailConfiguration"))
-                .AddSingleton<IMailService, MailService>();
+            services.Configure<MailConfiguration>(configuration.GetSection("MailConfiguration")).AddSingleton<IMailService, MailService>();
 
             services.AddScoped<IUsuarioLogado, AspNetUser>();
 

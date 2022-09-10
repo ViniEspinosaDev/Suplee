@@ -2,16 +2,18 @@
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.IntegrationEvents;
 using Suplee.Vendas.Domain.Commands;
-using Suplee.Vendas.Domain.Events;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NerdStore.Vendas.Application.Events
+namespace Suplee.Vendas.Domain.Events
 {
     public class PedidoEventHandler :
-        INotificationHandler<PedidoRascunhoIniciadoEvent>,
         INotificationHandler<PedidoAtualizadoEvent>,
-        INotificationHandler<PedidoItemAdicionadoEvent>,
+        INotificationHandler<PedidoFinalizadoEvent>,
+        INotificationHandler<PedidoProdutoAdicionadoEvent>,
+        INotificationHandler<PedidoProdutoAtualizadoEvent>,
+        INotificationHandler<PedidoProdutoRemovidoEvent>,
+        INotificationHandler<PedidoRascunhoIniciadoEvent>,
         INotificationHandler<PedidoEstoqueRejeitadoEvent>,
         INotificationHandler<PagamentoRealizadoEvent>,
         INotificationHandler<PagamentoRecusadoEvent>
@@ -33,7 +35,17 @@ namespace NerdStore.Vendas.Application.Events
             return Task.CompletedTask;
         }
 
-        public Task Handle(PedidoItemAdicionadoEvent notification, CancellationToken cancellationToken)
+        public Task Handle(PedidoProdutoAdicionadoEvent notification, CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task Handle(PedidoProdutoRemovidoEvent notification, CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task Handle(PedidoProdutoAtualizadoEvent notification, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }
@@ -51,6 +63,11 @@ namespace NerdStore.Vendas.Application.Events
         public async Task Handle(PagamentoRecusadoEvent notification, CancellationToken cancellationToken)
         {
             await _mediatorHandler.EnviarComando(new CancelarProcessamentoPedidoEstornarEstoqueCommand(notification.PedidoId, notification.UsuarioId));
+        }
+
+        public Task Handle(PedidoFinalizadoEvent notification, CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
     }
 }

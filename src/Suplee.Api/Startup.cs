@@ -9,7 +9,9 @@ using Suplee.Catalogo.Api.Configurations.AutoMapper;
 using Suplee.Catalogo.CrossCuttingIoC;
 using Suplee.ExternalService.CrossCuttingIoC;
 using Suplee.Identidade.CrossCuttingIoC;
+using Suplee.Pagamentos.CrossCuttingIoC;
 using Suplee.Teste.CrossCuttingIoC;
+using Suplee.Vendas.CrossCuttingIoC;
 
 namespace Suplee.Catalogo.Api
 {
@@ -66,11 +68,13 @@ namespace Suplee.Catalogo.Api
 
         private void ConfigurarDependencias(IServiceCollection services)
         {
-            CoreNativeInjector.ConfigurarDependencias(services, Configuration);
             CatalogoNativeInjection.ConfigurarDependencias(services, Configuration);
+            CoreNativeInjector.ConfigurarDependencias(services, Configuration);
             ExternalServiceNativeInjection.ConfigurarDependencias(services, Configuration);
             IdentidadeNativeInjection.ConfigurarDependencias(services, Configuration);
+            PagamentosNativeInjection.ConfigurarDependencias(services, Configuration);
             TesteNativeInjection.ConfigurarDependencias(services, Configuration);
+            VendasNativeInjection.ConfigurarDependencias(services, Configuration);
         }
     }
 }

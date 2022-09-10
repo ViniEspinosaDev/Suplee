@@ -6,12 +6,17 @@ namespace Suplee.Pagamentos.Domain.Models
 {
     public class Transacao : Entity
     {
-        public Guid PedidoId { get; set; }
-        public Guid PagamentoId { get; set; }
-        public decimal Total { get; set; }
-        public EStatusTransacao StatusTransacao { get; set; }
+        public Transacao(Guid pedidoId, Guid pagamentoId, EStatusTransacao statusTransacao)
+        {
+            PedidoId = pedidoId;
+            PagamentoId = pagamentoId;
+            StatusTransacao = statusTransacao;
+        }
 
-        // EF. Rel.
-        public Pagamento Pagamento { get; set; }
+        public Guid PedidoId { get; protected set; }
+        public Guid PagamentoId { get; protected set; }
+        public EStatusTransacao StatusTransacao { get; protected set; }
+
+        public void AlterarStatus(EStatusTransacao statusTransacao) => StatusTransacao = statusTransacao;
     }
 }

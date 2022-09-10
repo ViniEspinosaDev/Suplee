@@ -5,10 +5,9 @@ namespace Suplee.Pagamentos.AntiCorruption
 {
     public class PayPalGateway : IPayPalGateway
     {
-        public bool CommitTransaction(bool sucesso, string cardHashKey = default, string orderId = default, decimal amount = default)
+        public bool CommitTransaction(bool success)
         {
-            //return new Random().Next(2) == 0;
-            return sucesso;
+            return success;
         }
 
         public string GetCardHashKey(string serviceKey, string cartaoCredito)

@@ -3,7 +3,6 @@ using Suplee.Core.Communication.Mediator;
 using Suplee.Core.DomainObjects.DTO;
 using Suplee.Core.Messages;
 using Suplee.Core.Messages.CommonMessages.IntegrationEvents;
-using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Vendas.Domain.Enums;
 using Suplee.Vendas.Domain.Events;
 using Suplee.Vendas.Domain.Interfaces;
@@ -199,7 +198,7 @@ namespace Suplee.Vendas.Domain.Commands
 
             if (pedido == null)
             {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification("pedido", "Pedido não encontrado!"));
+                await NotificarErro(request, "Pedido não encontrado");
                 return false;
             }
 
@@ -214,7 +213,7 @@ namespace Suplee.Vendas.Domain.Commands
 
             if (pedido == null)
             {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification("pedido", "Pedido não encontrado!"));
+                await NotificarErro(request, "Pedido não encontrado");
                 return false;
             }
 
@@ -231,7 +230,7 @@ namespace Suplee.Vendas.Domain.Commands
 
             if (pedido == null)
             {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification("pedido", "Pedido não encontrado!"));
+                await NotificarErro(request, "Pedido não encontrado");
                 return false;
             }
 
@@ -242,7 +241,7 @@ namespace Suplee.Vendas.Domain.Commands
             var pedidoDomainObject = new PedidoDomainObject { PedidoId = pedido.Id, Produtos = produtosDomainObject };
 
             pedido.AdicionarEvento(new PedidoProcessamentoCanceladoEvent(pedido.Id, pedido.UsuarioId, pedidoDomainObject));
-            
+
             pedido.TornarRascunho();
 
             return await _pedidoRepository.UnitOfWork.Commit();
