@@ -51,12 +51,6 @@ namespace Suplee.Catalogo.Domain.Services
 
             produto.DebitarEstoque(quantidade);
 
-            // TODO: 10 pode ser parametrizavel em arquivo de configuração
-            //if (produto.QuantidadeDisponivel < 10)
-            //{
-            //    await _mediatorHandler.PublicarEvento(new ProdutoAbaixoEstoqueEvent(produto.Id, produto.QuantidadeDisponivel));
-            //}
-
             return await _produtoRepository.UnitOfWork.Commit();
         }
 

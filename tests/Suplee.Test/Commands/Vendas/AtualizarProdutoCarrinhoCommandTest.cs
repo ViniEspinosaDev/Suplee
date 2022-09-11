@@ -2,6 +2,7 @@
 using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Test.Builder.Commands.Vendas;
 using Suplee.Test.Builder.Models;
+using Suplee.Vendas.Domain.Events;
 using Suplee.Vendas.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -102,6 +103,7 @@ namespace Suplee.Test.Commands.Vendas
 
             _pedidoRepository.Verify(x => x.UnitOfWork.Commit(), Times.Once);
             _mediatorHandler.Verify(x => x.PublicarNotificacao(It.IsAny<DomainNotification>()), Times.Never);
+            _mediatorHandler.Verify(x => x.PublicarEvento(It.IsAny<PedidoProdutoAtualizadoEvent>()), Times.Once);
 
             Assert.True(resultado);
         }

@@ -22,7 +22,8 @@ namespace Suplee.Vendas.Domain.Commands
         IRequestHandler<IniciarPedidoCommand, bool>,
         IRequestHandler<CancelarProcessamentoPedidoCommand, bool>,
         IRequestHandler<FinalizarPedidoCommand, bool>,
-        IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>
+        IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>,
+        IRequestHandler<CadastrarCarrinhoCommand, bool>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IPedidoRepository _pedidoRepository;
@@ -77,6 +78,18 @@ namespace Suplee.Vendas.Domain.Commands
 
             var sucesso = await _pedidoRepository.UnitOfWork.Commit();
 
+            if (sucesso)
+            {
+                await _mediatorHandler.PublicarEvento(
+                    new PedidoProdutoAdicionadoEvent(
+                        request.UsuarioId,
+                        pedidoProduto.PedidoId,
+                        pedidoProduto.ProdutoId,
+                        pedidoProduto.NomeProduto,
+                        pedidoProduto.ValorUnitario,
+                        pedidoProduto.Quantidade));
+            }
+
             return sucesso;
         }
 
@@ -107,6 +120,9 @@ namespace Suplee.Vendas.Domain.Commands
             pedido.RemoverProduto(produto);
 
             var sucesso = await _pedidoRepository.UnitOfWork.Commit();
+
+            if (sucesso)
+                await _mediatorHandler.PublicarEvento(new PedidoProdutoRemovidoEvent(request.UsuarioId, pedido.Id, produto.Id));
 
             return sucesso;
         }
@@ -140,6 +156,9 @@ namespace Suplee.Vendas.Domain.Commands
             pedido.AtualizarProduto(produto);
 
             var sucesso = await _pedidoRepository.UnitOfWork.Commit();
+
+            if (sucesso)
+                await _mediatorHandler.PublicarEvento(new PedidoProdutoAtualizadoEvent(request.UsuarioId, pedido.Id, request.ProdutoId, request.Quantidade));
 
             return sucesso;
         }
@@ -194,6 +213,12 @@ namespace Suplee.Vendas.Domain.Commands
 
         public async Task<bool> Handle(CancelarProcessamentoPedidoCommand request, CancellationToken cancellationToken)
         {
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return default(bool);
+            }
+
             var pedido = await _pedidoRepository.ObterPorId(request.PedidoId);
 
             if (pedido == null)
@@ -209,6 +234,12 @@ namespace Suplee.Vendas.Domain.Commands
 
         public async Task<bool> Handle(FinalizarPedidoCommand request, CancellationToken cancellationToken)
         {
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return default(bool);
+            }
+
             var pedido = await _pedidoRepository.ObterPorId(request.PedidoId);
 
             if (pedido == null)
@@ -219,13 +250,22 @@ namespace Suplee.Vendas.Domain.Commands
 
             pedido.Finalizar();
 
-            pedido.AdicionarEvento(new PedidoFinalizadoEvent(request.PedidoId));
+            var sucesso = await _pedidoRepository.UnitOfWork.Commit();
 
-            return await _pedidoRepository.UnitOfWork.Commit();
+            if (sucesso)
+                await _mediatorHandler.PublicarEvento(new PedidoFinalizadoEvent(request.PedidoId));
+
+            return sucesso;
         }
 
         public async Task<bool> Handle(CancelarProcessamentoPedidoEstornarEstoqueCommand request, CancellationToken cancellationToken)
         {
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return default(bool);
+            }
+
             var pedido = await _pedidoRepository.ObterPorId(request.PedidoId);
 
             if (pedido == null)
@@ -240,11 +280,61 @@ namespace Suplee.Vendas.Domain.Commands
 
             var pedidoDomainObject = new PedidoDomainObject { PedidoId = pedido.Id, Produtos = produtosDomainObject };
 
-            pedido.AdicionarEvento(new PedidoProcessamentoCanceladoEvent(pedido.Id, pedido.UsuarioId, pedidoDomainObject));
-
             pedido.TornarRascunho();
 
-            return await _pedidoRepository.UnitOfWork.Commit();
+            var sucesso = await _pedidoRepository.UnitOfWork.Commit();
+
+            if (sucesso)
+                await _mediatorHandler.PublicarEvento(new PedidoProcessamentoCanceladoEvent(pedido.Id, pedido.UsuarioId, pedidoDomainObject));
+
+            return sucesso;
+        }
+
+        public async Task<bool> Handle(CadastrarCarrinhoCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return default(bool);
+            }
+
+            var pedido = await _pedidoRepository.ObterCarrinhoPorUsuarioId(request.UsuarioId);
+
+            var pedidoProdutos = new List<PedidoProduto>();
+
+            request.Produtos.ForEach(produto =>
+                pedidoProdutos.Add(new PedidoProduto(produto.ProdutoId, produto.NomeProduto, produto.Quantidade, produto.ValorUnitario)));
+
+            if (pedido == null)
+            {
+                pedido = PedidoFactory.NovoPedidoRascunho(request.UsuarioId);
+
+                pedido.AdicionarProdutos(pedidoProdutos);
+
+                _pedidoRepository.Adicionar(pedido);
+            }
+            else
+            {
+                foreach (var pedidoProduto in pedidoProdutos)
+                {
+                    var existeProduto = pedido.ProdutoJaExiste(pedidoProduto);
+
+                    pedido.AdicionarProduto(pedidoProduto);
+
+                    if (existeProduto)
+                    {
+                        _pedidoRepository.AtualizarPedidoProduto(pedido.Produtos.FirstOrDefault(p => p.ProdutoId == pedidoProduto.ProdutoId));
+                    }
+                    else
+                    {
+                        _pedidoRepository.AdicionarPedidoProduto(pedidoProduto);
+                    }
+                }
+            }
+
+            var sucesso = await _pedidoRepository.UnitOfWork.Commit();
+
+            return sucesso;
         }
     }
 }

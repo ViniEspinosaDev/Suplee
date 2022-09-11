@@ -50,6 +50,7 @@ namespace Suplee.Vendas.CrossCuttingIoC
             services.AddScoped<IRequestHandler<CancelarProcessamentoPedidoCommand, bool>, PedidoCommandHandler>();
             services.AddScoped<IRequestHandler<FinalizarPedidoCommand, bool>, PedidoCommandHandler>();
             services.AddScoped<IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<CadastrarCarrinhoCommand, bool>, PedidoCommandHandler>();
         }
 
         private static void ConfigurarDependenciasBancoDados(IServiceCollection services, IConfiguration configuration)

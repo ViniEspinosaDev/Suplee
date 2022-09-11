@@ -13,7 +13,7 @@ namespace Suplee.Test.Builder.Models
 
         public PedidoBuilder PadraoValido()
         {
-            Codigo = 1;
+            Codigo = "#adwadq2";
             UsuarioId = Guid.NewGuid();
             Status = EPedidoStatus.Rascunho;
 

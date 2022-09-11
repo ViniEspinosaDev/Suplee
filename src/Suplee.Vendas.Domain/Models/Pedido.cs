@@ -1,4 +1,5 @@
 ﻿using Suplee.Core.DomainObjects;
+using Suplee.Core.Tools;
 using Suplee.Vendas.Domain.Enums;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Suplee.Vendas.Domain.Models
         public Pedido(Guid usuarioId)
         {
             UsuarioId = usuarioId;
+            Codigo = "#" + HashPassword.GenerateRandomCode(6);
             Status = EPedidoStatus.Rascunho;
             DataCadastro = DateTime.Now;
             _produtos = new List<PedidoProduto>();
@@ -20,7 +22,7 @@ namespace Suplee.Vendas.Domain.Models
             CalcularValorTotal();
         }
 
-        public int Codigo { get; protected set; }
+        public string Codigo { get; protected set; }
         public Guid UsuarioId { get; protected set; }
         public EPedidoStatus Status { get; protected set; }
         public decimal ValorTotal { get; protected set; }
@@ -35,6 +37,15 @@ namespace Suplee.Vendas.Domain.Models
         public bool ProdutoJaExiste(PedidoProduto produto)
         {
             return _produtos.Any(p => p.ProdutoId == produto.ProdutoId);
+        }
+
+        public void AdicionarProdutos(List<PedidoProduto> produtos)
+        {
+            if (produtos is null) return;
+
+            _produtos.RemoveAll(x => true);
+
+            produtos.ForEach(produto => AdicionarProduto(produto));
         }
 
         public void AdicionarProduto(PedidoProduto produto)

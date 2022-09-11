@@ -126,7 +126,5 @@ namespace Suplee.Test.Commands.Vendas
 
             Assert.True(resultado);
         }
-
-        // Dando certo o comando de pagamento do outro contexto, lançar evento de PagamentoRealizadoEvent e alterar status do pedido (Cancelado, pago ou enviado)
     }
 }

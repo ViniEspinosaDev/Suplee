@@ -34,7 +34,7 @@ namespace Suplee.Pagamentos.Domain.Services
 
             if (transacao.StatusTransacao == EStatusTransacao.Pago)
             {
-                pagamento.AdicionarEvento(new PagamentoRealizadoEvent(pedido.Id, pagamentoPedido.UsuarioId, transacao.PagamentoId, transacao.Id));
+                await _mediatorHandler.PublicarEvento(new PagamentoRealizadoEvent(pedido.Id, pagamentoPedido.UsuarioId, transacao.PagamentoId, transacao.Id));
 
                 return transacao;
             }
