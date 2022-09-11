@@ -12,8 +12,8 @@ namespace Suplee.Vendas.Data.Mappings
 
             builder.HasKey("Id");
 
-            builder.Property(c => c.Codigo)
-                .HasDefaultValueSql("NEXT VALUE FOR MinhaSequencia");
+            //builder.Property(c => c.Codigo)
+            //    .HasDefaultValueSql("NEXT VALUE FOR MinhaSequencia");
 
             builder
                 .HasMany(p => p.Produtos)

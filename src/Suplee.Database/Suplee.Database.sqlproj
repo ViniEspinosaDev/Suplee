@@ -62,6 +62,7 @@
     <Folder Include="Seed\Catalogo" />
     <Folder Include="Tables\Identidade" />
     <Folder Include="Tables\Teste" />
+    <Folder Include="Tables\Vendas" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Catalogo\Categoria.sql" />
@@ -75,6 +76,8 @@
     <Build Include="Tables\Teste\TesteImagem.sql" />
     <Build Include="Tables\Identidade\ConfirmacaoUsuario.sql" />
     <Build Include="Tables\Identidade\Endereco.sql" />
+    <Build Include="Tables\Vendas\Pedido.sql" />
+    <Build Include="Tables\Vendas\PedidoProduto.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Seed\Catalogo\CriarCatalogoSeed.sql" />
