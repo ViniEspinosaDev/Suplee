@@ -10,7 +10,7 @@ namespace Suplee.Vendas.Domain.Commands
         public CadastrarCarrinhoCommand(Guid usuarioId, List<CadastrarCarrinhoCommandProduto> produtos)
         {
             UsuarioId = usuarioId;
-            Produtos = produtos;
+            Produtos = produtos ?? new List<CadastrarCarrinhoCommandProduto>();
         }
 
         public Guid UsuarioId { get; protected set; }

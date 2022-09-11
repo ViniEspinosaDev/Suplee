@@ -43,7 +43,7 @@ namespace Suplee.Vendas.Domain.Models
         {
             if (produtos is null) return;
 
-            _produtos.RemoveAll(x => true);
+            RemoverProdutos();
 
             produtos.ForEach(produto => AdicionarProduto(produto));
         }
@@ -65,6 +65,13 @@ namespace Suplee.Vendas.Domain.Models
 
             produto.CalcularValor();
             _produtos.Add(produto);
+
+            CalcularValorTotal();
+        }
+
+        public void RemoverProdutos()
+        {
+            _produtos.RemoveAll(x => true);
 
             CalcularValorTotal();
         }

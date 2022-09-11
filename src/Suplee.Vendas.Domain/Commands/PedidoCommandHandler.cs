@@ -315,20 +315,13 @@ namespace Suplee.Vendas.Domain.Commands
             }
             else
             {
+                pedido.RemoverProdutos();
+
+                pedido.AdicionarProdutos(pedidoProdutos);
+
                 foreach (var pedidoProduto in pedidoProdutos)
                 {
-                    var existeProduto = pedido.ProdutoJaExiste(pedidoProduto);
-
-                    pedido.AdicionarProduto(pedidoProduto);
-
-                    if (existeProduto)
-                    {
-                        _pedidoRepository.AtualizarPedidoProduto(pedido.Produtos.FirstOrDefault(p => p.ProdutoId == pedidoProduto.ProdutoId));
-                    }
-                    else
-                    {
-                        _pedidoRepository.AdicionarPedidoProduto(pedidoProduto);
-                    }
+                    _pedidoRepository.AdicionarPedidoProduto(pedidoProduto);
                 }
             }
 

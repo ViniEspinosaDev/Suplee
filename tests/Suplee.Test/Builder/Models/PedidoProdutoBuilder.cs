@@ -1,4 +1,5 @@
-﻿using Suplee.Vendas.Domain.Models;
+﻿using Suplee.Catalogo.Domain.Models;
+using Suplee.Vendas.Domain.Models;
 using System;
 
 namespace Suplee.Test.Builder.Models
@@ -26,6 +27,16 @@ namespace Suplee.Test.Builder.Models
         public PedidoProdutoBuilder ComPedido(Guid pedidoId)
         {
             AssociarPedido(pedidoId);
+
+            return this;
+        }
+
+        public PedidoProdutoBuilder ComProduto(Produto produto)
+        {
+            ProdutoId = produto.Id;
+            NomeProduto = produto.Nome;
+            Quantidade = produto.QuantidadeDisponivel;
+            ValorUnitario = produto.Preco;
 
             return this;
         }
