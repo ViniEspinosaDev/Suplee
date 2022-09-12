@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
 using Suplee.Api.Controllers.Identidade.InputModel;
 using Suplee.Api.Controllers.Identidade.InputModels;
+using Suplee.Api.Controllers.Vendas.InputModels;
 using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
 using Suplee.Catalogo.Domain.Models;
 using Suplee.Core.Tools;
 using Suplee.Identidade.Domain.Autenticacao.Commands;
 using Suplee.Identidade.Domain.Identidade.Commands;
 using Suplee.Identidade.Domain.Models;
+using Suplee.Vendas.Domain.Commands;
 using System;
+using static Suplee.Vendas.Domain.Commands.CadastrarCarrinhoCommand;
 
 namespace Suplee.Catalogo.Api.Configurations.AutoMapper
 {
@@ -23,6 +26,20 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
         {
             MapeiaContextoCatalogo();
             MapeiaContextoIdentidade();
+            MapeiaContextoVendas();
+        }
+
+        private void MapeiaContextoVendas()
+        {
+            CreateMap<CadastrarCarrinhoInputModel, CadastrarCarrinhoCommand>()
+                .ForMember(f => f.UsuarioId, opt => opt.MapFrom(m => m.UsuarioId))
+                .ForMember(f => f.Produtos, opt => opt.MapFrom(m => m.Produtos));
+
+            CreateMap<CarrinhoProdutoInputModel, CadastrarCarrinhoCommandProduto>()
+                .ForMember(f => f.ProdutoId, opt => opt.MapFrom(m => m.ProdutoId))
+                .ForMember(f => f.NomeProduto, opt => opt.MapFrom(m => m.NomeProduto))
+                .ForMember(f => f.Quantidade, opt => opt.MapFrom(m => m.Quantidade))
+                .ForMember(f => f.ValorUnitario, opt => opt.MapFrom(m => m.ValorUnitario));
         }
 
         private void MapeiaContextoIdentidade()

@@ -735,6 +735,67 @@
             Enviar e-mail
             </summary>
         </member>
+        <member name="T:Suplee.Api.Controllers.Vendas.InputModels.CadastrarCarrinhoInputModel">
+            <summary>
+             Carrinho input model
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.CadastrarCarrinhoInputModel.UsuarioId">
+            <summary>
+            Não precisa trazer do frontend pois é pego pelo Token
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.CadastrarCarrinhoInputModel.Produtos">
+            <summary>
+            Produto
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Vendas.InputModels.CarrinhoProdutoInputModel">
+            <summary>
+            Produto para o carrinho
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.CarrinhoProdutoInputModel.ProdutoId">
+            <summary>
+            Produto id
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.CarrinhoProdutoInputModel.NomeProduto">
+            <summary>
+            Nome produto
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.CarrinhoProdutoInputModel.Quantidade">
+            <summary>
+            Quantidade
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.CarrinhoProdutoInputModel.ValorUnitario">
+            <summary>
+            Valor unitário
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Controllers.Vendas.VendasController">
+            <summary>
+            Endpoints de vendas
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Vendas.VendasController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,AutoMapper.IMapper)">
+            <summary>
+            Construtor de vendas
+            </summary>
+            <param name="notifications"></param>
+            <param name="mediatorHandler"></param>
+            <param name="usuario"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Vendas.VendasController.CadastrarCarrinho(Suplee.Api.Controllers.Vendas.InputModels.CadastrarCarrinhoInputModel)">
+            <summary>
+            Cadastrar carrinho com os produtos
+            </summary>
+            <param name="carrinhoInputModel"></param>
+            <returns></returns>
+        </member>
         <member name="T:Suplee.Api.Extensions.AspNetUser">
             <summary>
             Recupera informações do token

@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\Testes\ViewModels\" />
+    <Folder Include="Controllers\Vendas\ViewModels\" />
   </ItemGroup>
 
 
