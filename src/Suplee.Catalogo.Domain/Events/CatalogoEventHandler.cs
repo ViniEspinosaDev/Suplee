@@ -37,7 +37,7 @@ namespace Suplee.Catalogo.Domain.Events
 
             if (result)
             {
-                await _mediatorHandler.PublicarEvento(new PedidoEstoqueConfirmadoEvent(notification.Pedido.PedidoId, notification.UsuarioId, notification.Pedido));
+                await _mediatorHandler.PublicarEvento(new PedidoEstoqueConfirmadoEvent(notification.Pedido.PedidoId, notification.UsuarioId, notification.Pedido, notification.SucessoNaTransacao));
             }
             else
             {

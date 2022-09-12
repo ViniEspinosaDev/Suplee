@@ -16,14 +16,14 @@ using static Suplee.Vendas.Domain.Models.Pedido;
 namespace Suplee.Vendas.Domain.Commands
 {
     public class PedidoCommandHandler : CommandHandler,
+        IRequestHandler<CadastrarCarrinhoCommand, bool>,
         IRequestHandler<InserirProdutoCarrinhoCommand, bool>,
         IRequestHandler<ExcluirProdutoCarrinhoCommand, bool>,
         IRequestHandler<AtualizarProdutoCarrinhoCommand, bool>,
         IRequestHandler<IniciarPedidoCommand, bool>,
         IRequestHandler<CancelarProcessamentoPedidoCommand, bool>,
         IRequestHandler<FinalizarPedidoCommand, bool>,
-        IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>,
-        IRequestHandler<CadastrarCarrinhoCommand, bool>
+        IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IPedidoRepository _pedidoRepository;
@@ -32,6 +32,46 @@ namespace Suplee.Vendas.Domain.Commands
         {
             _mediatorHandler = mediatorHandler;
             _pedidoRepository = pedidoRepository;
+        }
+
+        public async Task<bool> Handle(CadastrarCarrinhoCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return default(bool);
+            }
+
+            var pedido = await _pedidoRepository.ObterCarrinhoPorUsuarioId(request.UsuarioId);
+
+            var pedidoProdutos = new List<PedidoProduto>();
+
+            request.Produtos.ForEach(produto =>
+                pedidoProdutos.Add(new PedidoProduto(produto.ProdutoId, produto.NomeProduto, produto.Quantidade, produto.ValorUnitario)));
+
+            if (pedido == null)
+            {
+                pedido = PedidoFactory.NovoPedidoRascunho(request.UsuarioId);
+
+                pedido.AdicionarProdutos(pedidoProdutos);
+
+                _pedidoRepository.Adicionar(pedido);
+            }
+            else
+            {
+                pedido.RemoverProdutos();
+
+                pedido.AdicionarProdutos(pedidoProdutos);
+
+                foreach (var pedidoProduto in pedidoProdutos)
+                {
+                    _pedidoRepository.AdicionarPedidoProduto(pedidoProduto);
+                }
+            }
+
+            var sucesso = await _pedidoRepository.UnitOfWork.Commit();
+
+            return sucesso;
         }
 
         public async Task<bool> Handle(InserirProdutoCarrinhoCommand request, CancellationToken cancellationToken)
@@ -203,7 +243,7 @@ namespace Suplee.Vendas.Domain.Commands
 
                 var pedidoDomainObject = new PedidoDomainObject { PedidoId = pedido.Id, Produtos = produtosDomainObject };
 
-                var pedidoIniciadoEvent = new PedidoIniciadoEvent(request.UsuarioId, pedidoDomainObject);
+                var pedidoIniciadoEvent = new PedidoIniciadoEvent(request.UsuarioId, pedidoDomainObject, request.Sucesso);
 
                 await _mediatorHandler.PublicarEvento(pedidoIniciadoEvent);
             }
@@ -286,46 +326,6 @@ namespace Suplee.Vendas.Domain.Commands
 
             if (sucesso)
                 await _mediatorHandler.PublicarEvento(new PedidoProcessamentoCanceladoEvent(pedido.Id, pedido.UsuarioId, pedidoDomainObject));
-
-            return sucesso;
-        }
-
-        public async Task<bool> Handle(CadastrarCarrinhoCommand request, CancellationToken cancellationToken)
-        {
-            if (!request.IsValid())
-            {
-                NotificarErrosValidacao(request);
-                return default(bool);
-            }
-
-            var pedido = await _pedidoRepository.ObterCarrinhoPorUsuarioId(request.UsuarioId);
-
-            var pedidoProdutos = new List<PedidoProduto>();
-
-            request.Produtos.ForEach(produto =>
-                pedidoProdutos.Add(new PedidoProduto(produto.ProdutoId, produto.NomeProduto, produto.Quantidade, produto.ValorUnitario)));
-
-            if (pedido == null)
-            {
-                pedido = PedidoFactory.NovoPedidoRascunho(request.UsuarioId);
-
-                pedido.AdicionarProdutos(pedidoProdutos);
-
-                _pedidoRepository.Adicionar(pedido);
-            }
-            else
-            {
-                pedido.RemoverProdutos();
-
-                pedido.AdicionarProdutos(pedidoProdutos);
-
-                foreach (var pedidoProduto in pedidoProdutos)
-                {
-                    _pedidoRepository.AdicionarPedidoProduto(pedidoProduto);
-                }
-            }
-
-            var sucesso = await _pedidoRepository.UnitOfWork.Commit();
 
             return sucesso;
         }

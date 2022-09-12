@@ -735,6 +735,26 @@
             Enviar e-mail
             </summary>
         </member>
+        <member name="T:Suplee.Api.Controllers.Vendas.InputModels.AtualizarProdutoCarrinhoInputModel">
+            <summary>
+            Atualizar produto do carrinho
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.AtualizarProdutoCarrinhoInputModel.UsuarioId">
+            <summary>
+            Usuário id
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.AtualizarProdutoCarrinhoInputModel.ProdutoId">
+            <summary>
+            Produto id
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.AtualizarProdutoCarrinhoInputModel.Quantidade">
+            <summary>
+            Quantidade
+            </summary>
+        </member>
         <member name="T:Suplee.Api.Controllers.Vendas.InputModels.CadastrarCarrinhoInputModel">
             <summary>
              Carrinho input model
@@ -775,6 +795,21 @@
             Valor unitário
             </summary>
         </member>
+        <member name="T:Suplee.Api.Controllers.Vendas.InputModels.ExcluirProdutoCarrinhoInputModel">
+            <summary>
+            Excluir produto do carrinho
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.ExcluirProdutoCarrinhoInputModel.UsuarioId">
+            <summary>
+            Usuário id
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.ExcluirProdutoCarrinhoInputModel.ProdutoId">
+            <summary>
+            Produto id
+            </summary>
+        </member>
         <member name="T:Suplee.Api.Controllers.Vendas.InputModels.InserirProdutoCarrinhoInputModel">
             <summary>
             Produto carrinho
@@ -805,6 +840,21 @@
             Valor unitário
             </summary>
         </member>
+        <member name="T:Suplee.Api.Controllers.Vendas.InputModels.RealizarPagamentoInputModel">
+            <summary>
+            Realizar pagamento
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.RealizarPagamentoInputModel.UsuarioId">
+            <summary>
+            Usuário id (recuperado pelo token)
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.RealizarPagamentoInputModel.Sucesso">
+            <summary>
+            Sucesso
+            </summary>
+        </member>
         <member name="T:Suplee.Api.Controllers.Vendas.VendasController">
             <summary>
             Endpoints de vendas
@@ -823,7 +873,7 @@
             <summary>
             Cadastrar carrinho com os produtos
             </summary>
-            <param name="carrinhoInputModel"></param>
+            <param name="cadastrarCarrinho"></param>
             <returns></returns>
         </member>
         <member name="M:Suplee.Api.Controllers.Vendas.VendasController.InserirProdutoCarrinho(Suplee.Api.Controllers.Vendas.InputModels.InserirProdutoCarrinhoInputModel)">
@@ -831,6 +881,27 @@
             Inserir produto no carrinho
             </summary>
             <param name="produtoCarrinho"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Vendas.VendasController.AtualizarProdutoCarrinho(Suplee.Api.Controllers.Vendas.InputModels.AtualizarProdutoCarrinhoInputModel)">
+            <summary>
+            Atualizar produto no carrinho
+            </summary>
+            <param name="produtoCarrinho"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Vendas.VendasController.ExcluirProdutoCarrinho(Suplee.Api.Controllers.Vendas.InputModels.ExcluirProdutoCarrinhoInputModel)">
+            <summary>
+            Excluir produto do carrinho
+            </summary>
+            <param name="produtoCarrinho"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Vendas.VendasController.RealizarPagamento(Suplee.Api.Controllers.Vendas.InputModels.RealizarPagamentoInputModel)">
+            <summary>
+            Fazer o pagamento do pedido
+            </summary>
+            <param name="realizarPagamento"></param>
             <returns></returns>
         </member>
         <member name="T:Suplee.Api.Extensions.AspNetUser">

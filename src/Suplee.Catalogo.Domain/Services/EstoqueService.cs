@@ -51,7 +51,7 @@ namespace Suplee.Catalogo.Domain.Services
 
             produto.DebitarEstoque(quantidade);
 
-            return await _produtoRepository.UnitOfWork.Commit();
+            return true;
         }
 
         public async Task<bool> ReporListaProdutosPedido(PedidoDomainObject pedido)

@@ -42,14 +42,14 @@ namespace Suplee.Api.Controllers.Vendas
         /// <summary>
         /// Cadastrar carrinho com os produtos
         /// </summary>
-        /// <param name="carrinhoInputModel"></param>
+        /// <param name="cadastrarCarrinho"></param>
         /// <returns></returns>
         [HttpPost("cadastrar-carrinho")]
-        public async Task<ActionResult> CadastrarCarrinho(CadastrarCarrinhoInputModel carrinhoInputModel)
+        public async Task<ActionResult> CadastrarCarrinho(CadastrarCarrinhoInputModel cadastrarCarrinho)
         {
-            carrinhoInputModel.UsuarioId = UsuarioId;
+            cadastrarCarrinho.UsuarioId = UsuarioId;
 
-            var comando = _mapper.Map<CadastrarCarrinhoCommand>(carrinhoInputModel);
+            var comando = _mapper.Map<CadastrarCarrinhoCommand>(cadastrarCarrinho);
 
             await _mediatorHandler.EnviarComando(comando);
 
@@ -73,11 +73,56 @@ namespace Suplee.Api.Controllers.Vendas
             return CustomResponse();
         }
 
-        // Atualizar produto no carrinho
+        /// <summary>
+        /// Atualizar produto no carrinho
+        /// </summary>
+        /// <param name="produtoCarrinho"></param>
+        /// <returns></returns>
+        [HttpPut("atualizar-produto-carrinho")]
+        public async Task<ActionResult> AtualizarProdutoCarrinho(AtualizarProdutoCarrinhoInputModel produtoCarrinho)
+        {
+            produtoCarrinho.UsuarioId = UsuarioId;
+            
+            var comando = _mapper.Map<AtualizarProdutoCarrinhoCommand>(produtoCarrinho);
 
-        // Excluir produto do carrinho
+            await _mediatorHandler.EnviarComando(comando);
 
-        // Fazer o pagamento do pedido
+            return CustomResponse();
+        }
+
+        /// <summary>
+        /// Excluir produto do carrinho
+        /// </summary>
+        /// <param name="produtoCarrinho"></param>
+        /// <returns></returns>
+        [HttpDelete("excluir-produto-carrinho")]
+        public async Task<ActionResult> ExcluirProdutoCarrinho(ExcluirProdutoCarrinhoInputModel produtoCarrinho)
+        {
+            produtoCarrinho.UsuarioId = UsuarioId;
+
+            var comando = _mapper.Map<ExcluirProdutoCarrinhoCommand>(produtoCarrinho);
+
+            await _mediatorHandler.EnviarComando(comando);
+
+            return CustomResponse();
+        }
+
+        /// <summary>
+        /// Fazer o pagamento do pedido
+        /// </summary>
+        /// <param name="realizarPagamento"></param>
+        /// <returns></returns>
+        [HttpPost("realizar-pagamento")]
+        public async Task<ActionResult> RealizarPagamento(RealizarPagamentoInputModel realizarPagamento)
+        {
+            realizarPagamento.UsuarioId = UsuarioId;
+
+            var comando = _mapper.Map<IniciarPedidoCommand>(realizarPagamento);
+
+            await _mediatorHandler.EnviarComando(comando);
+
+            return CustomResponse();
+        }
 
         // Recuperar o carrinho
 
