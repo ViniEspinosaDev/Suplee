@@ -40,6 +40,13 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(f => f.NomeProduto, opt => opt.MapFrom(m => m.NomeProduto))
                 .ForMember(f => f.Quantidade, opt => opt.MapFrom(m => m.Quantidade))
                 .ForMember(f => f.ValorUnitario, opt => opt.MapFrom(m => m.ValorUnitario));
+
+            CreateMap<InserirProdutoCarrinhoInputModel, InserirProdutoCarrinhoCommand>()
+                .ForMember(f => f.UsuarioId, opt => opt.MapFrom(m => m.UsuarioId))
+                .ForMember(f => f.ProdutoId, opt => opt.MapFrom(m => m.ProdutoId))
+                .ForMember(f => f.NomeProduto, opt => opt.MapFrom(m => m.NomeProduto))
+                .ForMember(f => f.Quantidade, opt => opt.MapFrom(m => m.Quantidade))
+                .ForMember(f => f.ValorUnitario, opt => opt.MapFrom(m => m.ValorUnitario));
         }
 
         private void MapeiaContextoIdentidade()

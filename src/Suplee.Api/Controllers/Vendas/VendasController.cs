@@ -56,16 +56,31 @@ namespace Suplee.Api.Controllers.Vendas
             return CustomResponse();
         }
 
-        // Recuperar o carrinho
+        /// <summary>
+        /// Inserir produto no carrinho
+        /// </summary>
+        /// <param name="produtoCarrinho"></param>
+        /// <returns></returns>
+        [HttpPost("inserir-produto-carrinho")]
+        public async Task<ActionResult> InserirProdutoCarrinho(InserirProdutoCarrinhoInputModel produtoCarrinho)
+        {
+            produtoCarrinho.UsuarioId = UsuarioId;
 
-        // Recuperar histórico de pedido
+            var comando = _mapper.Map<InserirProdutoCarrinhoCommand>(produtoCarrinho);
+
+            await _mediatorHandler.EnviarComando(comando);
+
+            return CustomResponse();
+        }
 
         // Atualizar produto no carrinho
 
         // Excluir produto do carrinho
 
-        // Inserir produto no carrinho
-
         // Fazer o pagamento do pedido
+
+        // Recuperar o carrinho
+
+        // Recuperar histórico de pedido
     }
 }

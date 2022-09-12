@@ -10,13 +10,13 @@ namespace Suplee.Core.Communication.Mediator
     public class MediatorHandler : IMediatorHandler
     {
         private readonly IMediator _mediator;
-        private readonly IEventSourcingRepository _eventSourcingRepository;
+        //private readonly IEventSourcingRepository _eventSourcingRepository;
 
         public MediatorHandler(IMediator mediator,
                                IEventSourcingRepository eventSourcingRepository)
         {
             _mediator = mediator;
-            _eventSourcingRepository = eventSourcingRepository;
+            //_eventSourcingRepository = eventSourcingRepository;
         }
 
         public async Task<R> EnviarComando<R>(Command<R> comando)
@@ -27,8 +27,7 @@ namespace Suplee.Core.Communication.Mediator
         public async Task PublicarEvento<T>(T evento) where T : Event
         {
             await _mediator.Publish(evento);
-            await _eventSourcingRepository.SalvarEvento(evento);
-
+            //await _eventSourcingRepository.SalvarEvento(evento);
         }
 
         public async Task PublicarNotificacao<T>(T notificacao) where T : DomainNotification

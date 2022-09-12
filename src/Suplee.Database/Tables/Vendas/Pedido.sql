@@ -3,7 +3,7 @@
 	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
     [UsuarioId] UNIQUEIDENTIFIER NOT NULL,
     [Codigo] NVARCHAR(7) NOT NULL, 
-    [Status] SMALLINT NOT NULL, 
+    [Status] INT NOT NULL, 
     [ValorTotal] DECIMAL(18, 2) NOT NULL, 
     [DataCadastro] DATETIME NOT NULL,
 

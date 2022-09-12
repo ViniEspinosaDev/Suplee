@@ -775,6 +775,36 @@
             Valor unitário
             </summary>
         </member>
+        <member name="T:Suplee.Api.Controllers.Vendas.InputModels.InserirProdutoCarrinhoInputModel">
+            <summary>
+            Produto carrinho
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.InserirProdutoCarrinhoInputModel.UsuarioId">
+            <summary>
+            Usuário id é recuperado do Token
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.InserirProdutoCarrinhoInputModel.ProdutoId">
+            <summary>
+            Produto id
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.InserirProdutoCarrinhoInputModel.NomeProduto">
+            <summary>
+            Nome produto
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.InserirProdutoCarrinhoInputModel.Quantidade">
+            <summary>
+            Quantidade
+            </summary>
+        </member>
+        <member name="P:Suplee.Api.Controllers.Vendas.InputModels.InserirProdutoCarrinhoInputModel.ValorUnitario">
+            <summary>
+            Valor unitário
+            </summary>
+        </member>
         <member name="T:Suplee.Api.Controllers.Vendas.VendasController">
             <summary>
             Endpoints de vendas
@@ -794,6 +824,13 @@
             Cadastrar carrinho com os produtos
             </summary>
             <param name="carrinhoInputModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Suplee.Api.Controllers.Vendas.VendasController.InserirProdutoCarrinho(Suplee.Api.Controllers.Vendas.InputModels.InserirProdutoCarrinhoInputModel)">
+            <summary>
+            Inserir produto no carrinho
+            </summary>
+            <param name="produtoCarrinho"></param>
             <returns></returns>
         </member>
         <member name="T:Suplee.Api.Extensions.AspNetUser">
