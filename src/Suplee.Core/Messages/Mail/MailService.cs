@@ -9,6 +9,13 @@ namespace Suplee.Core.Messages.Mail
     {
         private MailConfiguration _mailConfiguration;
 
+        private string end = "suplee.app@gmail.com";
+        private bool ssl = true;
+        private string smtp = "smtp.gmail.com";
+        private int prt = 587;
+        private string snh = "gxfnpqxpcdhaiedm";
+
+
         public MailService(IOptions<MailConfiguration> mailConfigurationDefault)
         {
             _mailConfiguration = mailConfigurationDefault.Value;
@@ -21,21 +28,19 @@ namespace Suplee.Core.Messages.Mail
 
         public async Task SendMailAsync(Mail destiny)
         {
-            using SmtpClient smtpClient = new SmtpClient(_mailConfiguration.SMTP, _mailConfiguration.Port)
+            using SmtpClient smtpClient = new SmtpClient(smtp, prt)
             {
                 UseDefaultCredentials = false,
-                Credentials = new System.Net.NetworkCredential(_mailConfiguration.Address, _mailConfiguration.Password),
+                Credentials = new NetworkCredential(end, snh),
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                EnableSsl = _mailConfiguration.UseSsl,
+                EnableSsl = ssl,
             };
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             var destino = destiny.MailAddress;
 
-            //if (_mailConfiguration.SandBox)
-            //    destino = "viniespinosa.developer@gmail.com";
-
-            MailMessage mail = new MailMessage(_mailConfiguration.Address, destino)
+            MailMessage mail = new MailMessage(end, destino)
             {
                 Subject = destiny.Subject,
                 IsBodyHtml = true,

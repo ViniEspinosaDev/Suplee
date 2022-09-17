@@ -11,6 +11,7 @@ namespace Suplee.ExternalService.Imgbb.Services
     public class ImgbbService : IImgbbService
     {
         private readonly ImgbbConfiguracao _imgbbConfig;
+        private string key = "5f6e7b6c08b780e10bdbbd3ed9ae7d6b";
 
         public ImgbbService(IOptions<ImgbbConfiguracao> imgbbConfiguracao)
         {
@@ -19,7 +20,7 @@ namespace Suplee.ExternalService.Imgbb.Services
 
         public async Task<ResponseApi<ImgbbUploadImageResponse>> UploadImage(ImgbbUploadInputModel imgbbUploadInputModel)
         {
-            var url = $"{_imgbbConfig.Url}/1/upload?key={_imgbbConfig.Key}";
+            var url = $"{_imgbbConfig.Url}/1/upload?key={key}";
 
             FlurlClient flurlClient = new FlurlClient(url);
 
