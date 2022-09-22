@@ -2,6 +2,7 @@
 {
     public class Dimensoes
     {
+        public Dimensoes() { }
         public Dimensoes(decimal profundidade, decimal altura, decimal largura)
         {
             Profundidade = profundidade;

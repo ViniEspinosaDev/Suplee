@@ -1,22 +1,17 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Suplee.Api.Controllers.Catalogo.ViewModels;
 using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
 using Suplee.Catalogo.Domain.Commands;
 using Suplee.Catalogo.Domain.Interfaces;
 using Suplee.Catalogo.Domain.Interfaces.Services;
-using Suplee.Catalogo.Domain.Models;
-using Suplee.Catalogo.Domain.ValueObjects;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
-using Suplee.Identidade.Domain.Enums;
 using Suplee.Identidade.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Suplee.Catalogo.Api.Controllers.Catalogo
@@ -29,12 +24,11 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
     public class CatalogoController : MainController
     {
         private readonly IProdutoRepository _produtoRepository;
-        private readonly IMapper _mapper;
         private readonly IMediatorHandler _mediatorHandler;
         private readonly ICorreiosService _correiosService;
+        private readonly IMapper _mapper;
 
         private const int QuantidadePorPagina = 12;
-
 
         /// <summary>
         /// Construtor do Catalogo
@@ -68,16 +62,9 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("produtos/nome")]
-        public async Task<ActionResult> ObterProdutosPeloNome(
-            [FromQuery] string nome,
-            [FromQuery] int? pagina,
-            [FromQuery] int? quantidade)
+        public async Task<ActionResult> ObterProdutosPeloNome([FromQuery] string nome, [FromQuery] int? pagina, [FromQuery] int? quantidade)
         {
-            if (string.IsNullOrEmpty(nome))
-                return NoContent();
-
-            var produtos = await _produtoRepository
-                .ObterProdutosPaginadoPorNomeProduto(nome, pagina ?? 0, quantidade ?? QuantidadePorPagina);
+            var produtos = await _produtoRepository.ObterProdutosPaginadoPorNomeProduto(nome, pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             if (produtos is null)
             {
@@ -138,16 +125,16 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("produtos/id-efeito")]
-        public async Task<ActionResult> ObterProdutoPorIdEfeito(
-            [FromQuery] Guid efeitoId,
-            [FromQuery] int? pagina,
-            [FromQuery] int? quantidade)
+        public async Task<ActionResult> ObterProdutoPorIdEfeito([FromQuery] Guid efeitoId, [FromQuery] int? pagina, [FromQuery] int? quantidade)
         {
             var produtos = await _produtoRepository
                 .ObterProdutosPaginadoPorIdEfeito(efeitoId, pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             if (produtos is null)
-                return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
+            {
+                NotificarErro("", "Não foi possível obter os produtos");
+                return CustomResponse();
+            }
 
             int quantidadeProdutos = _produtoRepository.QuantidadeTotalProdutos();
             int quantidadeProdutosPeloIdEfeito = _produtoRepository.QuantidadeProdutosPeloIdEfeito(efeitoId);
@@ -173,16 +160,16 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("produtos/nome-efeito")]
-        public async Task<ActionResult> ObterProdutoPorNomeEfeito(
-            [FromQuery] string nomeEfeito,
-            [FromQuery] int? pagina,
-            [FromQuery] int? quantidade)
+        public async Task<ActionResult> ObterProdutoPorNomeEfeito([FromQuery] string nomeEfeito, [FromQuery] int? pagina, [FromQuery] int? quantidade)
         {
             var produtos = await _produtoRepository
                 .ObterProdutosPaginadoPorNomeEfeito(nomeEfeito, pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             if (produtos is null)
-                return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
+            {
+                NotificarErro("", "Não foi possível obter os produtos");
+                return CustomResponse();
+            }
 
             int quantidadeProdutos = _produtoRepository.QuantidadeTotalProdutos();
             int quantidadeProdutosPeloNomeEfeito = _produtoRepository.QuantidadeProdutosPeloNomeEfeito(nomeEfeito);
@@ -208,16 +195,16 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("produtos/id-categoria")]
-        public async Task<ActionResult> ObterProdutoPorIdCategoria(
-            [FromQuery] Guid categoriaId,
-            [FromQuery] int? pagina,
-            [FromQuery] int? quantidade)
+        public async Task<ActionResult> ObterProdutoPorIdCategoria([FromQuery] Guid categoriaId, [FromQuery] int? pagina, [FromQuery] int? quantidade)
         {
             var produtos = await _produtoRepository
                 .ObterProdutosPaginadoPorIdCategoria(categoriaId, pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             if (produtos is null)
-                return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
+            {
+                NotificarErro("", "Não foi possível obter os produtos");
+                return CustomResponse();
+            }
 
             int quantidadeProdutos = _produtoRepository.QuantidadeTotalProdutos();
             int quantidadeProdutosPeloIdCategoria = _produtoRepository.QuantidadeProdutosPeloIdCategoria(categoriaId);
@@ -243,16 +230,16 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("produtos/nome-categoria")]
-        public async Task<ActionResult> ObterProdutoPorNomeCategoria(
-            [FromQuery] string nomeCategoria,
-            [FromQuery] int? pagina,
-            [FromQuery] int? quantidade)
+        public async Task<ActionResult> ObterProdutoPorNomeCategoria([FromQuery] string nomeCategoria, [FromQuery] int? pagina, [FromQuery] int? quantidade)
         {
             var produtos = await _produtoRepository
                 .ObterProdutosPaginadoPorNomeCategoria(nomeCategoria, pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             if (produtos is null)
-                return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
+            {
+                NotificarErro("", "Não foi possível obter os produtos");
+                return CustomResponse();
+            }
 
             int quantidadeProdutos = _produtoRepository.QuantidadeTotalProdutos();
             int quantidadeProdutosPeloNomeCategoria = _produtoRepository.QuantidadeProdutosPeloNomeCategoria(nomeCategoria);
@@ -275,15 +262,16 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("produtos")]
-        public async Task<ActionResult> ObterProdutos(
-            [FromQuery] int? pagina,
-            [FromQuery] int? quantidade)
+        public async Task<ActionResult> ObterProdutos([FromQuery] int? pagina, [FromQuery] int? quantidade)
         {
             var produtos = await _produtoRepository
                 .ObterProdutosPaginado(pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             if (produtos is null)
-                return BadRequest(new { Success = false, Errors = "Não foi possível obter os produtos" });
+            {
+                NotificarErro("", "Não foi possível obter os produtos");
+                return CustomResponse();
+            }
 
             int quantidadeProdutos = _produtoRepository.QuantidadeTotalProdutos();
 
@@ -310,7 +298,10 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             var efeitos = await _produtoRepository.ObterEfeitos();
 
             if (efeitos is null)
-                return BadRequest(new { Success = false, Errors = "Não foi possível obter os efeitos" });
+            {
+                NotificarErro("", "Não foi possível obter os efeitos");
+                return CustomResponse();
+            }
 
             return Ok(efeitos);
         }
@@ -326,7 +317,10 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             var efeitos = await _produtoRepository.ObterCategorias();
 
             if (efeitos is null)
-                return BadRequest(new { Success = false, Errors = "Não foi possível obter as categorias" });
+            {
+                NotificarErro("", "Não foi possível obter as categorias");
+                return CustomResponse();
+            }
 
             return Ok(efeitos);
         }
@@ -353,36 +347,9 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("produto")]
-        public async Task<ActionResult> CriarProduto(
-            [FromForm] ProdutoInputModel produtoInputModel)
+        public async Task<ActionResult> CriarProduto([FromForm] ProdutoInputModel produtoInputModel)
         {
-            //bool usuarioNaoRoboOuAdm = _usuario.TipoUsuario != ETipoUsuario.Administrador 
-            //    && _usuario.TipoUsuario != ETipoUsuario.Robo;
-
-            //if (usuarioNaoRoboOuAdm)
-            //    return Forbid("Usuário não autorizado");
-
-            var informacaoNutricional = _mapper
-                .Map<InformacaoNutricional>(produtoInputModel.InformacaoNutricional);
-
-            informacaoNutricional.MapearCompostosNutricionais();
-
-            var comando = new AdicionarProdutoCommand(
-                categoriaId: produtoInputModel.CategoriaId,
-                nome: produtoInputModel.Nome,
-                descricao: produtoInputModel.Descricao,
-                composicao: produtoInputModel.Composicao,
-                quantidadeDisponivel: produtoInputModel.QuantidadeDisponivel,
-                preco: produtoInputModel.Preco,
-                dimensoes: new Dimensoes
-                    (
-                        produtoInputModel.Profundidade, 
-                        produtoInputModel.Altura, 
-                        produtoInputModel.Largura
-                    ),
-                imagens: produtoInputModel.Imagens,
-                efeitos: produtoInputModel.Efeitos,
-                informacaoNutricional: informacaoNutricional);
+            var comando = _mapper.Map<AdicionarProdutoCommand>(produtoInputModel);
 
             await _mediatorHandler.EnviarComando(comando);
 

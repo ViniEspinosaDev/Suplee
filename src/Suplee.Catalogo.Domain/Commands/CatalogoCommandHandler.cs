@@ -37,6 +37,8 @@ namespace Suplee.Catalogo.Domain.Commands
                 return false;
             }
 
+            request.InformacaoNutricional.MapearCompostosNutricionais();
+
             var produto = new Produto(
                 informacaoNutricionalId: request.InformacaoNutricional.Id,
                 categoriaId: request.CategoriaId,
@@ -64,7 +66,10 @@ namespace Suplee.Catalogo.Domain.Commands
 
             var sucesso = await _produtoRepository.UnitOfWork.Commit();
 
-            if (sucesso) await _mediatorHandler.PublicarDomainEvent(new ProdutoAdicionadoEvent(produto));
+            if (sucesso)
+            {
+                await _mediatorHandler.PublicarDomainEvent(new ProdutoAdicionadoEvent(produto, request.CategoriaId, request.Efeitos));
+            }
 
             return sucesso;
         }
