@@ -37,6 +37,8 @@ namespace Suplee.Catalogo.Domain.Commands
                 return false;
             }
 
+            request.InformacaoNutricional.MapearCompostosNutricionais();
+
             var produto = new Produto(
                 informacaoNutricionalId: request.InformacaoNutricional.Id,
                 categoriaId: request.CategoriaId,

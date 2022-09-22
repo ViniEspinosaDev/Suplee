@@ -10,6 +10,7 @@ namespace Suplee.Catalogo.Domain.Commands
 {
     public class AdicionarProdutoCommand : Command<bool>
     {
+        public AdicionarProdutoCommand() { }
         public AdicionarProdutoCommand(
             Guid categoriaId,
             string nome,
@@ -18,7 +19,7 @@ namespace Suplee.Catalogo.Domain.Commands
             int quantidadeDisponivel,
             decimal preco,
             Dimensoes dimensoes,
-            IFormFileCollection imagens,
+            List<IFormFile> imagens,
             List<Guid> efeitos,
             InformacaoNutricional informacaoNutricional)
         {
@@ -41,7 +42,7 @@ namespace Suplee.Catalogo.Domain.Commands
         public int QuantidadeDisponivel { get; protected set; }
         public decimal Preco { get; protected set; }
         public Dimensoes Dimensoes { get; protected set; }
-        public IFormFileCollection Imagens { get; protected set; }
+        public List<IFormFile> Imagens { get; protected set; }
         public List<Guid> Efeitos { get; protected set; }
         public InformacaoNutricional InformacaoNutricional { get; protected set; }
 

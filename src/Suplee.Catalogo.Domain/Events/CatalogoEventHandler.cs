@@ -26,9 +26,9 @@ namespace Suplee.Catalogo.Domain.Events
 
         public async Task Handle(ProdutoAdicionadoEvent notification, CancellationToken cancellationToken)
         {
-            _produtoRepository.Adicionar(notification.Produto);
+            //_produtoRepository.Adicionar(notification.Produto);
 
-            await _produtoRepository.UnitOfWork.Commit();
+            //await _produtoRepository.UnitOfWork.Commit();
         }
 
         public async Task Handle(PedidoIniciadoEvent notification, CancellationToken cancellationToken)

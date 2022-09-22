@@ -7,8 +7,6 @@ using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
 using Suplee.Catalogo.Domain.Commands;
 using Suplee.Catalogo.Domain.Interfaces;
 using Suplee.Catalogo.Domain.Interfaces.Services;
-using Suplee.Catalogo.Domain.Models;
-using Suplee.Catalogo.Domain.ValueObjects;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Identidade.Domain.Interfaces;
@@ -351,33 +349,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         [HttpPost("produto")]
         public async Task<ActionResult> CriarProduto([FromForm] ProdutoInputModel produtoInputModel)
         {
-            //bool usuarioNaoRoboOuAdm = _usuario.TipoUsuario != ETipoUsuario.Administrador 
-            //    && _usuario.TipoUsuario != ETipoUsuario.Robo;
-
-            //if (usuarioNaoRoboOuAdm)
-            //    return Forbid("Usuário não autorizado");
-
-            var informacaoNutricional = _mapper
-                .Map<InformacaoNutricional>(produtoInputModel.InformacaoNutricional);
-
-            informacaoNutricional.MapearCompostosNutricionais();
-
-            var comando = new AdicionarProdutoCommand(
-                categoriaId: produtoInputModel.CategoriaId,
-                nome: produtoInputModel.Nome,
-                descricao: produtoInputModel.Descricao,
-                composicao: produtoInputModel.Composicao,
-                quantidadeDisponivel: produtoInputModel.QuantidadeDisponivel,
-                preco: produtoInputModel.Preco,
-                dimensoes: new Dimensoes
-                    (
-                        produtoInputModel.Profundidade,
-                        produtoInputModel.Altura,
-                        produtoInputModel.Largura
-                    ),
-                imagens: produtoInputModel.Imagens,
-                efeitos: produtoInputModel.Efeitos,
-                informacaoNutricional: informacaoNutricional);
+            var comando = _mapper.Map<AdicionarProdutoCommand>(produtoInputModel);
 
             await _mediatorHandler.EnviarComando(comando);
 

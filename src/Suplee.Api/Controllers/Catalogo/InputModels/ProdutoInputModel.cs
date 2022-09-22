@@ -57,7 +57,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo.InputModels
         /// <summary>
         /// Imagens em Base64
         /// </summary>
-        public IFormFileCollection Imagens { get; set; }
+        public List<IFormFile> Imagens { get; set; }
 
         /// <summary>
         /// Lista de Id dos Efeitos

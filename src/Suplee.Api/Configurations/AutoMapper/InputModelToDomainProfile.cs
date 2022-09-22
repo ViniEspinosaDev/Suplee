@@ -3,7 +3,9 @@ using Suplee.Api.Controllers.Identidade.InputModel;
 using Suplee.Api.Controllers.Identidade.InputModels;
 using Suplee.Api.Controllers.Vendas.InputModels;
 using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
+using Suplee.Catalogo.Domain.Commands;
 using Suplee.Catalogo.Domain.Models;
+using Suplee.Catalogo.Domain.ValueObjects;
 using Suplee.Core.Tools;
 using Suplee.Identidade.Domain.Autenticacao.Commands;
 using Suplee.Identidade.Domain.Identidade.Commands;
@@ -112,15 +114,27 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
 
         private void MapeiaContextoCatalogo()
         {
+            CreateMap<InformacaoNutricionalInputModel, InformacaoNutricional>()
+                .ForMember(f => f.Cabecalho, opt => opt.MapFrom(m => m.Cabecalho.Trim()))
+                .ForMember(f => f.Legenda, opt => opt.MapFrom(m => m.Legenda.Trim()))
+                .ForMember(f => f.CompostosNutricionais, opt => opt.MapFrom(m => m.CompostosNutricionais));
+
             CreateMap<CompostoNutricionalInputModel, CompostoNutricional>()
                 .ForMember(f => f.Composto, opt => opt.MapFrom(m => m.Composto.Trim()))
                 .ForMember(f => f.Porcao, opt => opt.MapFrom(m => m.Porcao.Trim()))
                 .ForMember(f => f.ValorDiario, opt => opt.MapFrom(m => m.ValorDiario.Trim()));
 
-            CreateMap<InformacaoNutricionalInputModel, InformacaoNutricional>()
-                .ForMember(f => f.Cabecalho, opt => opt.MapFrom(m => m.Cabecalho.Trim()))
-                .ForMember(f => f.Legenda, opt => opt.MapFrom(m => m.Legenda.Trim()))
-                .ForMember(f => f.CompostosNutricionais, opt => opt.MapFrom(m => m.CompostosNutricionais));
+            CreateMap<ProdutoInputModel, AdicionarProdutoCommand>()
+                .ForMember(f => f.CategoriaId, opt => opt.MapFrom(m => m.CategoriaId))
+                .ForMember(f => f.Nome, opt => opt.MapFrom(m => m.Nome))
+                .ForMember(f => f.Descricao, opt => opt.MapFrom(m => m.Descricao))
+                .ForMember(f => f.Composicao, opt => opt.MapFrom(m => m.Composicao))
+                .ForMember(f => f.QuantidadeDisponivel, opt => opt.MapFrom(m => m.QuantidadeDisponivel))
+                .ForMember(f => f.Preco, opt => opt.MapFrom(m => m.Preco))
+                .ForMember(f => f.Dimensoes, opt => opt.MapFrom(m => new Dimensoes(m.Profundidade, m.Altura, m.Largura)))
+                .ForMember(f => f.Imagens, opt => opt.MapFrom(m => m.Imagens))
+                .ForMember(f => f.Efeitos, opt => opt.MapFrom(m => m.Efeitos))
+                .ForMember(f => f.InformacaoNutricional, opt => opt.MapFrom(m => m.InformacaoNutricional));
         }
 
         private Guid ConverterTextoEmGuid(string texto)
