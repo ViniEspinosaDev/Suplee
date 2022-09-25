@@ -14,7 +14,6 @@ namespace Suplee.Vendas.CrossCuttingIoC
     public static class VendasNativeInjection
     {
         const string ConexaoSQL = "SqlConnection";
-        const string cnxao = "Server=tcp:supleedatabase.clbx4cq85ddx.us-east-1.rds.amazonaws.com,1433; Initial Catalog=supleedatabase; User=supleeadmin; Password=SupleeDb123; MultipleActiveResultSets=True; Application Name=Suplee";
 
         public static void ConfigurarDependencias(IServiceCollection services, IConfiguration configuration)
         {
@@ -56,9 +55,7 @@ namespace Suplee.Vendas.CrossCuttingIoC
 
         private static void ConfigurarDependenciasBancoDados(IServiceCollection services, IConfiguration configuration)
         {
-            //services.AddDbContext<VendasContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConexaoSQL)));
-            services.AddDbContext<VendasContext>(options => options.UseSqlServer(cnxao));
-            //services.AddDbContext<AutenticacaoDbContext>(options => options.UseInMemoryDatabase("database"));
+            services.AddDbContext<VendasContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConexaoSQL)));
         }
     }
 }

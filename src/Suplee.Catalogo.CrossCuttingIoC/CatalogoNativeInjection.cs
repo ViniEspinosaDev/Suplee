@@ -16,7 +16,6 @@ namespace Suplee.Catalogo.CrossCuttingIoC
     public static class CatalogoNativeInjection
     {
         const string ConexaoSQL = "SqlConnection";
-        const string cnxao = "Server=tcp:supleedatabase.clbx4cq85ddx.us-east-1.rds.amazonaws.com,1433; Initial Catalog=supleedatabase; User=supleeadmin; Password=SupleeDb123; MultipleActiveResultSets=True; Application Name=Suplee";
 
         public static void ConfigurarDependencias(IServiceCollection services, IConfiguration config)
         {
@@ -49,9 +48,7 @@ namespace Suplee.Catalogo.CrossCuttingIoC
 
         private static void ConfigurarDependenciasDatabase(IServiceCollection services, IConfiguration config)
         {
-            //services.AddDbContext<CatalogoContext>(opt => opt.UseSqlServer(config.GetConnectionString(ConexaoSQL)));
-            services.AddDbContext<CatalogoContext>(opt => opt.UseSqlServer(cnxao));
-            //services.AddDbContext<CatalogoContext>(opt => opt.UseInMemoryDatabase("Database"));
+            services.AddDbContext<CatalogoContext>(opt => opt.UseSqlServer(config.GetConnectionString(ConexaoSQL)));
         }
 
         private static void ConfigurarDependenciasRepository(IServiceCollection services)
