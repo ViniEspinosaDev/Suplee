@@ -52,11 +52,11 @@ namespace Suplee.Api.Configurations
                     }
                 });
 
-                var assembly = Assembly.GetAssembly(typeof(Startup));
+                //var assembly = Assembly.GetAssembly(typeof(Startup));
 
-                var xmlFile = $"{assembly.GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
+                //var xmlFile = $"{assembly.GetName().Name}.xml";
+                //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                //c.IncludeXmlComments(xmlPath);
             });
 
             return services;

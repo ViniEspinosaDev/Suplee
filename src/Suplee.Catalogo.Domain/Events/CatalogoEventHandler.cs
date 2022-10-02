@@ -20,6 +20,7 @@ namespace Suplee.Catalogo.Domain.Events
         private readonly IProdutoRepository _produtoRepository;
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IEstoqueService _estoqueService;
+        //private readonly IProdutoLeituraRepository _produtoLeituraRepository;
 
         public CatalogoEventHandler(IProdutoRepository produtoRepository, IMediatorHandler mediatorHandler, IEstoqueService estoqueService)
         {
