@@ -7,10 +7,10 @@ EXPOSE 443
 ENV ASPNETCORE_ENVIRONMENT Production
 
 # SQL 
-ENV SQL_SERVER suplee.database
+ENV SQL_SERVER tcp:supleedatabase.clbx4cq85ddx.us-east-1.rds.amazonaws.com,1433
 ENV SQL_NAME_DB supleedatabase
 ENV SQL_USER sa
-ENV SQL_PASSWORD ea!@#12345
+ENV SQL_PASSWORD senha8080
 ENV SQL_APP_NAME Suplee
 
 # IMGBB

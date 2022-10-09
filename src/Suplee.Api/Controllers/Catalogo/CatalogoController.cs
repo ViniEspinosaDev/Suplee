@@ -7,7 +7,6 @@ using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
 using Suplee.Catalogo.Domain.Commands;
 using Suplee.Catalogo.Domain.Interfaces;
 using Suplee.Catalogo.Domain.Interfaces.Services;
-using Suplee.Core.API.Enviroment;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Identidade.Domain.Interfaces;
@@ -28,7 +27,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         private readonly IMediatorHandler _mediatorHandler;
         private readonly ICorreiosService _correiosService;
         private readonly IMapper _mapper;
-        private readonly IEnvironment _environment;
 
         private const int QuantidadePorPagina = 12;
 
@@ -48,14 +46,12 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             IUsuarioLogado usuario,
             IProdutoRepository produtoRepository,
             IMapper mapper,
-            ICorreiosService correiosService,
-            IEnvironment environment) : base(notifications, mediatorHandler, usuario)
+            ICorreiosService correiosService) : base(notifications, mediatorHandler, usuario)
         {
             _mediatorHandler = mediatorHandler;
             _produtoRepository = produtoRepository;
             _mapper = mapper;
             _correiosService = correiosService;
-            _environment = environment;
         }
 
         /// <summary>
