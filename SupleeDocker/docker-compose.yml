@@ -19,6 +19,8 @@ services:
     container_name: supleeSqlDb
     ports:
     - "11433:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
     environment: 
       MSSQL_SA_PASSWORD: ea!@#12345
       MSSQL_PID: Developer

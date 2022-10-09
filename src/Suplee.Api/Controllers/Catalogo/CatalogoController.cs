@@ -59,21 +59,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         }
 
         /// <summary>
-        /// Testar variáveis de ambiente
-        /// </summary>
-        /// <returns></returns>
-        [AllowAnonymous]
-        [HttpGet("env-test")]
-        public async Task<ActionResult> ObterVariaveisAmbiente()
-        {
-            Console.WriteLine("EMAIL - " + _environment.ConfiguracaoEmail.ToString());
-            Console.WriteLine("IMGBB - " + _environment.ConfiguracaoImgbb.ToString());
-            Console.WriteLine("SQL - " + _environment.ConexaoSQL);
-
-            return CustomResponse();
-        }
-
-        /// <summary>
         /// Obter produtos por nome
         /// </summary>
         /// <param name="nome"></param>

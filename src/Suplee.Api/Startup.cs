@@ -83,7 +83,7 @@ namespace Suplee.Catalogo.Api
             TesteNativeInjection.ConfigurarDependencias(environment, services, Configuration);
             VendasNativeInjection.ConfigurarDependencias(environment, services);
 
-            Console.WriteLine("-- Printando variáveis de ambiente --");
+            Console.WriteLine("-- Printando variaveis de ambiente --");
             Console.WriteLine($"SQL - {environment.ConexaoSQL}");
             Console.WriteLine($"MongoDB - {environment.ConexaoMongoDb}");
             Console.WriteLine($"EMAIL - {environment.ConfiguracaoEmail}");
