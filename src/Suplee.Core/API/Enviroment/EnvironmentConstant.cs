@@ -3,6 +3,7 @@
     public static class EnvironmentConstant
     {
         public const string Ambiente = "ASPNETCORE_ENVIRONMENT";
+        public const string Descricao = "TESTE_VARIABLE";
 
         public const string SQL_Servidor = "SQL_SERVER";
         public const string SQL_NomeBD = "SQL_NAME_DB";

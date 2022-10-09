@@ -68,7 +68,7 @@ namespace Suplee.Core.API.Enviroment
                 if (Desenvolvimento)
                     return _connectionStringsConfiguration.MongoConnection;
 
-                return $"Necessário configurar conexão Mongo para ambiente - {Environment.GetEnvironmentVariable(EnvironmentConstant.Ambiente)}";
+                return $"{Environment.GetEnvironmentVariable(EnvironmentConstant.Descricao)} - Necessário configurar conexão Mongo para ambiente - {Environment.GetEnvironmentVariable(EnvironmentConstant.Ambiente)}";
             }
         }
 

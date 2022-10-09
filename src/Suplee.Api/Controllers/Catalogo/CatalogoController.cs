@@ -7,6 +7,7 @@ using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
 using Suplee.Catalogo.Domain.Commands;
 using Suplee.Catalogo.Domain.Interfaces;
 using Suplee.Catalogo.Domain.Interfaces.Services;
+using Suplee.Core.API.Enviroment;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Identidade.Domain.Interfaces;
@@ -27,6 +28,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         private readonly IMediatorHandler _mediatorHandler;
         private readonly ICorreiosService _correiosService;
         private readonly IMapper _mapper;
+        private readonly IEnvironment _environment;
 
         private const int QuantidadePorPagina = 12;
 
@@ -46,12 +48,37 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             IUsuarioLogado usuario,
             IProdutoRepository produtoRepository,
             IMapper mapper,
-            ICorreiosService correiosService) : base(notifications, mediatorHandler, usuario)
+            ICorreiosService correiosService,
+            IEnvironment environment) : base(notifications, mediatorHandler, usuario)
         {
             _mediatorHandler = mediatorHandler;
             _produtoRepository = produtoRepository;
             _mapper = mapper;
             _correiosService = correiosService;
+            _environment = environment;
+        }
+
+        [AllowAnonymous]
+        [HttpGet("teste")]
+        public async Task<ActionResult> Teste()
+        {
+            var retorno = new
+            {
+                a = "-- Printando variaveis de ambiente --",
+                b = $"SQL - {_environment.ConexaoSQL}",
+                c = $"MongoDB - {_environment.ConexaoMongoDb}",
+                d = $"EMAIL - {_environment.ConfiguracaoEmail}",
+                e = $"EMAIL - {_environment.ConfiguracaoEmail}",
+                f = $"IMGBB - {_environment.ConfiguracaoImgbb}"
+            };
+
+            Console.WriteLine("-- Printando variaveis de ambiente --");
+            Console.WriteLine($"SQL - {_environment.ConexaoSQL}");
+            Console.WriteLine($"MongoDB - {_environment.ConexaoMongoDb}");
+            Console.WriteLine($"EMAIL - {_environment.ConfiguracaoEmail}");
+            Console.WriteLine($"IMGBB - {_environment.ConfiguracaoImgbb}");
+
+            return Ok(retorno);
         }
 
         /// <summary>

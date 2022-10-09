@@ -1047,12 +1047,6 @@
             <param name="correiosService"></param>
             <param name="environment"></param>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterVariaveisAmbiente">
-            <summary>
-            Testar variáveis de ambiente
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterProdutosPeloNome(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
             Obter produtos por nome
