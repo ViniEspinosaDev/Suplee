@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Data.EventSourcing;
@@ -17,7 +16,7 @@ namespace Suplee.Api.Configurations
         /// <summary>
         /// Injeta dependências do Core
         /// </summary>
-        public static IServiceCollection ConfigurarDependencias(IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigurarDependencias(IServiceCollection services)
         {
             ConfigurarDependenciasPadrao(services);
 

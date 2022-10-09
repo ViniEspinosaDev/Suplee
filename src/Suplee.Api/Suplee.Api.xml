@@ -24,7 +24,7 @@
             Injeta as dependencias das configurações
             </summary>
         </member>
-        <member name="M:Suplee.Api.Configurations.ConfiguracaoNativeInjector.ConfigurarDependencias(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Suplee.Api.Configurations.ConfiguracaoNativeInjector.ConfigurarDependencias(Suplee.Core.API.Enviroment.IEnvironment,Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             Injeta as dependencias das configurações
             </summary>
@@ -34,9 +34,19 @@
             Injeta dependências do Core
             </summary>
         </member>
-        <member name="M:Suplee.Api.Configurations.CoreNativeInjector.ConfigurarDependencias(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Suplee.Api.Configurations.CoreNativeInjector.ConfigurarDependencias(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Injeta dependências do Core
+            </summary>
+        </member>
+        <member name="T:Suplee.Api.Configurations.EnvironmentNativeInjector">
+            <summary>
+            Organizar as variáveis de ambiente
+            </summary>
+        </member>
+        <member name="M:Suplee.Api.Configurations.EnvironmentNativeInjector.ConfigurarVariaveisAmbiente(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:Suplee.Api.Configurations.SwaggerConfiguration">
@@ -860,7 +870,7 @@
             Endpoints de vendas
             </summary>
         </member>
-        <member name="M:Suplee.Api.Controllers.Vendas.VendasController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,AutoMapper.IMapper)">
+        <member name="M:Suplee.Api.Controllers.Vendas.VendasController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,AutoMapper.IMapper,Suplee.Vendas.Domain.Interfaces.IPedidoRepository)">
             <summary>
             Construtor de vendas
             </summary>
@@ -868,6 +878,7 @@
             <param name="mediatorHandler"></param>
             <param name="usuario"></param>
             <param name="mapper"></param>
+            <param name="pedidoRepository"></param>
         </member>
         <member name="M:Suplee.Api.Controllers.Vendas.VendasController.CadastrarCarrinho(Suplee.Api.Controllers.Vendas.InputModels.CadastrarCarrinhoInputModel)">
             <summary>
@@ -1024,7 +1035,7 @@
             Endpoints do Catalogo
             </summary>
         </member>
-        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,Suplee.Catalogo.Domain.Interfaces.IProdutoRepository,AutoMapper.IMapper,Suplee.Catalogo.Domain.Interfaces.Services.ICorreiosService)">
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.#ctor(MediatR.INotificationHandler{Suplee.Core.Messages.CommonMessages.Notifications.DomainNotification},Suplee.Core.Communication.Mediator.IMediatorHandler,Suplee.Identidade.Domain.Interfaces.IUsuarioLogado,Suplee.Catalogo.Domain.Interfaces.IProdutoRepository,AutoMapper.IMapper,Suplee.Catalogo.Domain.Interfaces.Services.ICorreiosService,Suplee.Core.API.Enviroment.IEnvironment)">
             <summary>
             Construtor do Catalogo
             </summary>
@@ -1034,6 +1045,13 @@
             <param name="mapper"></param>
             <param name="usuario"></param>
             <param name="correiosService"></param>
+            <param name="environment"></param>
+        </member>
+        <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterVariaveisAmbiente">
+            <summary>
+            Testar variáveis de ambiente
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Suplee.Catalogo.Api.Controllers.Catalogo.CatalogoController.ObterProdutosPeloNome(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>

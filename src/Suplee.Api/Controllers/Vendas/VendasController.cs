@@ -8,6 +8,7 @@ using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Vendas.Domain.Commands;
+using Suplee.Vendas.Domain.Interfaces;
 using System.Threading.Tasks;
 
 namespace Suplee.Api.Controllers.Vendas
@@ -21,6 +22,7 @@ namespace Suplee.Api.Controllers.Vendas
     {
         private readonly IMapper _mapper;
         private readonly IMediatorHandler _mediatorHandler;
+        private readonly IPedidoRepository _pedidoRepository;
 
         /// <summary>
         /// Construtor de vendas
@@ -29,14 +31,17 @@ namespace Suplee.Api.Controllers.Vendas
         /// <param name="mediatorHandler"></param>
         /// <param name="usuario"></param>
         /// <param name="mapper"></param>
+        /// <param name="pedidoRepository"></param>
         public VendasController(
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler,
             IUsuarioLogado usuario,
-            IMapper mapper) : base(notifications, mediatorHandler, usuario)
+            IMapper mapper,
+            IPedidoRepository pedidoRepository) : base(notifications, mediatorHandler, usuario)
         {
             _mediatorHandler = mediatorHandler;
             _mapper = mapper;
+            _pedidoRepository = pedidoRepository;
         }
 
         /// <summary>
@@ -82,7 +87,7 @@ namespace Suplee.Api.Controllers.Vendas
         public async Task<ActionResult> AtualizarProdutoCarrinho(AtualizarProdutoCarrinhoInputModel produtoCarrinho)
         {
             produtoCarrinho.UsuarioId = UsuarioId;
-            
+
             var comando = _mapper.Map<AtualizarProdutoCarrinhoCommand>(produtoCarrinho);
 
             await _mediatorHandler.EnviarComando(comando);
@@ -125,6 +130,13 @@ namespace Suplee.Api.Controllers.Vendas
         }
 
         // Recuperar o carrinho
+        //[HttpGet("recuperar-carrinho")]
+        //public async Task<ActionResult> RecuperarCarrinho()
+        //{
+        //    var pedidoRascunho = await _pedidoRepository.ObterCarrinhoPorUsuarioId(UsuarioId);
+
+
+        //}
 
         // Recuperar histórico de pedido
     }

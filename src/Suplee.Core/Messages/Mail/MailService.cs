@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using Suplee.Core.API.Enviroment;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -9,9 +10,9 @@ namespace Suplee.Core.Messages.Mail
     {
         private MailConfiguration _mailConfiguration;
 
-        public MailService(IOptions<MailConfiguration> mailConfigurationDefault)
+        public MailService(IEnvironment environment)
         {
-            _mailConfiguration = mailConfigurationDefault.Value;
+            _mailConfiguration = environment.ConfiguracaoEmail;
         }
 
         public void OverrideMailConfiguration(MailConfiguration mailConfiguration)

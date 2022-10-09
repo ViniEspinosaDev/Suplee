@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+
+  suplee.api:
+    image: suplee.api
+    container_name: suplee.api
+    restart: always
+    build:
+      context: ../src
+      dockerfile: Dockerfile
+    ports:
+      - "5002:80"
+    depends_on:
+    - suplee.mongodb
+    
+  suplee.database:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: supleeSqlDb
+    ports:
+    - "11433:1433"
+    environment: 
+      MSSQL_SA_PASSWORD: ea!@#12345
+      MSSQL_PID: Developer
+      ACCEPT_EULA: 'Y'
+    
+  suplee.mongodb:
+    image: mongo
+    container_name: supleeMongoDb
+    ports:
+      - "27017:27017"
+
+    

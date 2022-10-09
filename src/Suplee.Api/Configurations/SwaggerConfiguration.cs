@@ -4,12 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
-using Suplee.Catalogo.Api;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace Suplee.Api.Configurations
 {

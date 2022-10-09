@@ -1,6 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Suplee.ExternalService.Imgbb.DTO;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Suplee.Core.API.Enviroment;
 using Suplee.ExternalService.Imgbb.Interfaces;
 using Suplee.ExternalService.Imgbb.Services;
 
@@ -8,11 +7,13 @@ namespace Suplee.ExternalService.CrossCuttingIoC
 {
     public static class ExternalServiceNativeInjection
     {
-        public static void ConfigurarDependencias(IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<ImgbbConfiguracao>(configuration.GetSection("ExternalService:Imgbb"));
+        private static IEnvironment _environment;
 
-            services.AddSingleton<IImgbbService, ImgbbService>();
+        public static void ConfigurarDependencias(IEnvironment environment, IServiceCollection services)
+        {
+            _environment = environment;
+
+            services.AddSingleton<IImgbbService>(s => new ImgbbService(_environment));
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Suplee.Core.API.Enviroment;
 using Suplee.Core.Messages.CommonMessages.IntegrationEvents;
 using Suplee.Vendas.Data;
 using Suplee.Vendas.Data.Repository;
@@ -13,11 +13,13 @@ namespace Suplee.Vendas.CrossCuttingIoC
 {
     public static class VendasNativeInjection
     {
-        const string ConexaoSQL = "SqlConnection";
+        private static IEnvironment _environment;
 
-        public static void ConfigurarDependencias(IServiceCollection services, IConfiguration configuration)
+        public static void ConfigurarDependencias(IEnvironment environment, IServiceCollection services)
         {
-            ConfigurarDependenciasBancoDados(services, configuration);
+            _environment = environment;
+
+            ConfigurarDependenciasBancoDados(services);
             ConfigurarDependenciasCommand(services);
             ConfigurarDependenciasRepository(services);
             ConfigurarDependenciasEvent(services);
@@ -53,9 +55,9 @@ namespace Suplee.Vendas.CrossCuttingIoC
             services.AddScoped<IRequestHandler<CadastrarCarrinhoCommand, bool>, PedidoCommandHandler>();
         }
 
-        private static void ConfigurarDependenciasBancoDados(IServiceCollection services, IConfiguration configuration)
+        private static void ConfigurarDependenciasBancoDados(IServiceCollection services)
         {
-            services.AddDbContext<VendasContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConexaoSQL)));
+            services.AddDbContext<VendasContext>(options => options.UseSqlServer(_environment.ConexaoSQL));
         }
     }
 }

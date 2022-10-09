@@ -9,16 +9,19 @@ using Suplee.Catalogo.Domain.Events;
 using Suplee.Catalogo.Domain.Interfaces;
 using Suplee.Catalogo.Domain.Interfaces.Services;
 using Suplee.Catalogo.Domain.Services;
+using Suplee.Core.API.Enviroment;
 using Suplee.Core.Messages.CommonMessages.IntegrationEvents;
 
 namespace Suplee.Catalogo.CrossCuttingIoC
 {
     public static class CatalogoNativeInjection
     {
-        const string ConexaoSQL = "SqlConnection";
+        private static IEnvironment _environment;
 
-        public static void ConfigurarDependencias(IServiceCollection services, IConfiguration config)
+        public static void ConfigurarDependencias(IEnvironment environment, IServiceCollection services, IConfiguration config)
         {
+            _environment = environment;
+
             ConfigurarDependenciasDatabase(services, config);
             ConfigurarDependenciasRepository(services);
             ConfigurarDependenciasService(services);
@@ -48,7 +51,7 @@ namespace Suplee.Catalogo.CrossCuttingIoC
 
         private static void ConfigurarDependenciasDatabase(IServiceCollection services, IConfiguration config)
         {
-            services.AddDbContext<CatalogoContext>(opt => opt.UseSqlServer(config.GetConnectionString(ConexaoSQL)));
+            services.AddDbContext<CatalogoContext>(opt => opt.UseSqlServer(_environment.ConexaoSQL));
         }
 
         private static void ConfigurarDependenciasRepository(IServiceCollection services)

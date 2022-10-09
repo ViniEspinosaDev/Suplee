@@ -7,6 +7,7 @@ using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
 using Suplee.Catalogo.Domain.Commands;
 using Suplee.Catalogo.Domain.Interfaces;
 using Suplee.Catalogo.Domain.Interfaces.Services;
+using Suplee.Core.API.Enviroment;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Identidade.Domain.Interfaces;
@@ -27,6 +28,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         private readonly IMediatorHandler _mediatorHandler;
         private readonly ICorreiosService _correiosService;
         private readonly IMapper _mapper;
+        private readonly IEnvironment _environment;
 
         private const int QuantidadePorPagina = 12;
 
@@ -39,18 +41,36 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         /// <param name="mapper"></param>
         /// <param name="usuario"></param>
         /// <param name="correiosService"></param>
+        /// <param name="environment"></param>
         public CatalogoController(
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler,
             IUsuarioLogado usuario,
             IProdutoRepository produtoRepository,
             IMapper mapper,
-            ICorreiosService correiosService) : base(notifications, mediatorHandler, usuario)
+            ICorreiosService correiosService,
+            IEnvironment environment) : base(notifications, mediatorHandler, usuario)
         {
             _mediatorHandler = mediatorHandler;
             _produtoRepository = produtoRepository;
             _mapper = mapper;
             _correiosService = correiosService;
+            _environment = environment;
+        }
+
+        /// <summary>
+        /// Testar variáveis de ambiente
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("env-test")]
+        public async Task<ActionResult> ObterVariaveisAmbiente()
+        {
+            Console.WriteLine("EMAIL - " + _environment.ConfiguracaoEmail.ToString());
+            Console.WriteLine("IMGBB - " + _environment.ConfiguracaoImgbb.ToString());
+            Console.WriteLine("SQL - " + _environment.ConexaoSQL);
+
+            return CustomResponse();
         }
 
         /// <summary>

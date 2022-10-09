@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Suplee.Core.API.Enviroment;
 using Suplee.Identidade.CrossCuttingIoC.Extensions;
 using Suplee.Identidade.Data;
 using Suplee.Identidade.Data.Context;
@@ -20,11 +21,13 @@ namespace Suplee.Identidade.CrossCuttingIoC
 {
     public static class IdentidadeNativeInjection
     {
-        const string ConexaoSQL = "SqlConnection";
+        private static IEnvironment _environment;
 
-        public static void ConfigurarDependencias(IServiceCollection services, IConfiguration configuration)
+        public static void ConfigurarDependencias(IEnvironment environment, IServiceCollection services, IConfiguration configuration)
         {
-            ConfigurarDependenciasBancoDados(services, configuration);
+            _environment = environment;
+
+            ConfigurarDependenciasBancoDados(services);
             ConfigurarDependenciasJwtToken(services, configuration);
             ConfigurarDependenciasCommand(services);
             ConfigurarDependenciasRepository(services);
@@ -82,10 +85,10 @@ namespace Suplee.Identidade.CrossCuttingIoC
             });
         }
 
-        private static void ConfigurarDependenciasBancoDados(IServiceCollection services, IConfiguration configuration)
+        private static void ConfigurarDependenciasBancoDados(IServiceCollection services)
         {
-            services.AddDbContext<AutenticacaoDbContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConexaoSQL)));
-            services.AddDbContext<IdentidadeContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConexaoSQL)));
+            services.AddDbContext<AutenticacaoDbContext>(options => options.UseSqlServer(_environment.ConexaoSQL));
+            services.AddDbContext<IdentidadeContext>(options => options.UseSqlServer(_environment.ConexaoSQL));
 
             services
                 .AddDefaultIdentity<IdentityUser>()

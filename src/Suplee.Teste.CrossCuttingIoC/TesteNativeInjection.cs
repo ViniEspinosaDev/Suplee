@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Suplee.Core.API.Enviroment;
 using Suplee.Teste.Data;
 using Suplee.Teste.Data.Repository;
 using Suplee.Teste.Domain.Commands;
@@ -11,10 +12,12 @@ namespace Suplee.Teste.CrossCuttingIoC
 {
     public static class TesteNativeInjection
     {
-        const string ConexaoSQL = "SqlConnection";
+        private static IEnvironment _environment;
 
-        public static void ConfigurarDependencias(IServiceCollection services, IConfiguration config)
+        public static void ConfigurarDependencias(IEnvironment environment, IServiceCollection services, IConfiguration config)
         {
+            _environment = environment;
+
             ConfigurarDependenciasDatabase(services, config);
             ConfigurarDependenciasRepository(services);
             ConfigurarDependenciasCommand(services);
@@ -27,7 +30,7 @@ namespace Suplee.Teste.CrossCuttingIoC
 
         private static void ConfigurarDependenciasDatabase(IServiceCollection services, IConfiguration config)
         {
-            services.AddDbContext<TesteContext>(opt => opt.UseSqlServer(config.GetConnectionString(ConexaoSQL)));
+            services.AddDbContext<TesteContext>(opt => opt.UseSqlServer(config.GetConnectionString(_environment.ConexaoSQL)));
         }
 
         private static void ConfigurarDependenciasRepository(IServiceCollection services)

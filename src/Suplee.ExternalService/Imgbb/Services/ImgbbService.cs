@@ -1,5 +1,6 @@
 ﻿using Flurl.Http;
-using Microsoft.Extensions.Options;
+using Suplee.Core.API.Enviroment;
+using Suplee.Core.Messages.Mail;
 using Suplee.ExternalService.Imgbb.DTO;
 using Suplee.ExternalService.Imgbb.Interfaces;
 using System;
@@ -10,16 +11,16 @@ namespace Suplee.ExternalService.Imgbb.Services
 {
     public class ImgbbService : IImgbbService
     {
-        private readonly ImgbbConfiguracao _imgbbConfig;
+        private readonly ImgbbConfiguration _imgbbConfiguracao;
 
-        public ImgbbService(IOptions<ImgbbConfiguracao> imgbbConfiguracao)
+        public ImgbbService(IEnvironment environment)
         {
-            _imgbbConfig = imgbbConfiguracao.Value;
+            _imgbbConfiguracao = environment.ConfiguracaoImgbb;
         }
 
         public async Task<ResponseApi<ImgbbUploadImageResponse>> UploadImage(ImgbbUploadInputModel imgbbUploadInputModel)
         {
-            var url = $"{_imgbbConfig.Url}/1/upload?key={_imgbbConfig.Key}";
+            var url = $"{_imgbbConfiguracao.Url}/1/upload?key={_imgbbConfiguracao.Key}";
 
             FlurlClient flurlClient = new FlurlClient(url);
 

@@ -7,11 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Suplee.Api.Configurations;
 using Suplee.Catalogo.Api.Configurations.AutoMapper;
 using Suplee.Catalogo.CrossCuttingIoC;
+using Suplee.Core.API.Enviroment;
 using Suplee.ExternalService.CrossCuttingIoC;
 using Suplee.Identidade.CrossCuttingIoC;
 using Suplee.Pagamentos.CrossCuttingIoC;
 using Suplee.Teste.CrossCuttingIoC;
 using Suplee.Vendas.CrossCuttingIoC;
+using System;
 
 namespace Suplee.Catalogo.Api
 {
@@ -48,8 +50,6 @@ namespace Suplee.Catalogo.Api
 
             services.AddMediatR(typeof(Startup));
 
-            services.ConfigurarDependencias(Configuration);
-
             ConfigurarDependencias(services);
         }
 
@@ -68,13 +68,26 @@ namespace Suplee.Catalogo.Api
 
         private void ConfigurarDependencias(IServiceCollection services)
         {
-            CatalogoNativeInjection.ConfigurarDependencias(services, Configuration);
-            CoreNativeInjector.ConfigurarDependencias(services, Configuration);
-            ExternalServiceNativeInjection.ConfigurarDependencias(services, Configuration);
-            IdentidadeNativeInjection.ConfigurarDependencias(services, Configuration);
+            CoreNativeInjector.ConfigurarDependencias(services);
+            EnvironmentNativeInjector.ConfigurarVariaveisAmbiente(services, Configuration);
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            var environment = (IEnvironment)serviceProvider.GetService(typeof(IEnvironment));
+
+            ConfiguracaoNativeInjector.ConfigurarDependencias(environment, services, Configuration);
+            IdentidadeNativeInjection.ConfigurarDependencias(environment, services, Configuration);
+            CatalogoNativeInjection.ConfigurarDependencias(environment, services, Configuration);
+            ExternalServiceNativeInjection.ConfigurarDependencias(environment, services);
             PagamentosNativeInjection.ConfigurarDependencias(services, Configuration);
-            TesteNativeInjection.ConfigurarDependencias(services, Configuration);
-            VendasNativeInjection.ConfigurarDependencias(services, Configuration);
+            TesteNativeInjection.ConfigurarDependencias(environment, services, Configuration);
+            VendasNativeInjection.ConfigurarDependencias(environment, services);
+
+            Console.WriteLine("-- Printando variáveis de ambiente --");
+            Console.WriteLine($"SQL - {environment.ConexaoSQL}");
+            Console.WriteLine($"MongoDB - {environment.ConexaoMongoDb}");
+            Console.WriteLine($"EMAIL - {environment.ConfiguracaoEmail}");
+            Console.WriteLine($"IMGBB - {environment.ConfiguracaoImgbb}");
         }
     }
 }
