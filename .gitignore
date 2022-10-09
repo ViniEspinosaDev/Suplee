@@ -15,6 +15,10 @@ mono_crash.1cfb5decbf.0.json
 subir docker-compose.txt
 /DockerProject/subir docker-compose.txt
 
+# Ignore local appSettings
+/src/Suplee.Api/appsettings.json
+appsettings.json
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -60,7 +64,6 @@ project.lock.json
 project.fragment.lock.json
 artifacts/
 # **/Properties/launchSettings.json
-# appsettings.json
 
 # StyleCop
 StyleCopReport.xml
