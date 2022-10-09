@@ -13,33 +13,18 @@ using Suplee.Identidade.CrossCuttingIoC;
 using Suplee.Pagamentos.CrossCuttingIoC;
 using Suplee.Teste.CrossCuttingIoC;
 using Suplee.Vendas.CrossCuttingIoC;
-using System;
 
 namespace Suplee.Catalogo.Api
 {
-    /// <summary>
-    /// Startup class
-    /// </summary>
     public class Startup
     {
-        /// <summary>
-        /// Startup's constructor
-        /// </summary>
-        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        /// <summary>
-        /// Appsettings.json
-        /// </summary>
         public IConfiguration Configuration { get; }
 
-        /// <summary>
-        /// // This method gets called by the runtime. Use this method to add services to the container.
-        /// </summary>
-        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApiConfiguration();
@@ -53,12 +38,6 @@ namespace Suplee.Catalogo.Api
             ConfigurarDependencias(services);
         }
 
-        /// <summary>
-        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
-        /// <param name="provider"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             app.UseApiConfiguration(env);

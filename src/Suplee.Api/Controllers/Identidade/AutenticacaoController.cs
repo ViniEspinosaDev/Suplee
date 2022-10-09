@@ -22,9 +22,6 @@ using System.Threading.Tasks;
 
 namespace Suplee.Api.Controllers.Identidade
 {
-    /// <summary>
-    /// Endpoints de identidade
-    /// </summary>
     [AllowAnonymous]
     [Route("api/[controller]")]
     public class AutenticacaoController : MainController
@@ -33,14 +30,6 @@ namespace Suplee.Api.Controllers.Identidade
         private readonly IMediatorHandler _mediatorHandler;
         private readonly ConfiguracaoAplicacao _configuracaoAplicacao;
 
-        /// <summary>
-        /// Construtor de Autenticação
-        /// </summary>
-        /// <param name="notifications"></param>
-        /// <param name="mediatorHandler"></param>
-        /// <param name="usuario"></param>
-        /// <param name="appSettings"></param>
-        /// <param name="mapper"></param>
         public AutenticacaoController(
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler,
@@ -127,7 +116,6 @@ namespace Suplee.Api.Controllers.Identidade
                     Nome = usuario.Nome,
                     Email = usuario.Email,
                     TipoUsuario = usuario.Tipo.ToString()
-                    //Claims = claims.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
                 }
             };
 

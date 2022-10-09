@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Suplee.Api.Controllers.Identidade.InputModel;
 using Suplee.Api.Controllers.Identidade.InputModels;
+using Suplee.Api.Controllers.Identidade.ViewModels;
 using Suplee.Catalogo.Api.Controllers;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
@@ -17,33 +18,25 @@ using System.Threading.Tasks;
 
 namespace Suplee.Api.Controllers.Identidade
 {
-    /// <summary>
-    /// Endpoints de identidade
-    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     public class IdentidadeController : MainController
     {
         private readonly IMapper _mapper;
         private readonly IMediatorHandler _mediatorHandler;
+        private readonly IUsuarioRepository _usuarioRepository;
 
-        /// <summary>
-        /// Construtor de identidade
-        /// </summary>
-        /// <param name="notifications"></param>
-        /// <param name="mediatorHandler"></param>
-        /// <param name="usuario"></param>
-        /// <param name="appSettings"></param>
-        /// <param name="mapper"></param>
         public IdentidadeController(
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler,
             IUsuarioLogado usuario,
             IOptions<ConfiguracaoAplicacao> appSettings,
-            IMapper mapper) : base(notifications, mediatorHandler, usuario)
+            IMapper mapper,
+            IUsuarioRepository usuarioRepository) : base(notifications, mediatorHandler, usuario)
         {
             _mapper = mapper;
             _mediatorHandler = mediatorHandler;
+            _usuarioRepository = usuarioRepository;
         }
 
         /// <summary>
@@ -73,8 +66,6 @@ namespace Suplee.Api.Controllers.Identidade
         [HttpPut("editar-usuario")]
         public async Task<ActionResult> EditarConta(EditarUsuarioInputModel editarUsuario)
         {
-            editarUsuario.AdicionarUsuarioIdNosEnderecos();
-
             var comando = _mapper.Map<EditarUsuarioCommand>(editarUsuario);
 
             await _mediatorHandler.EnviarComando(comando);
@@ -146,5 +137,38 @@ namespace Suplee.Api.Controllers.Identidade
 
             return CustomResponse("Senha alterada com sucesso");
         }
+
+        /// <summary>
+        /// Recuperar informações para edição de usuário
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("recuperar-informacoes-usuario")]
+        public async Task<ActionResult> RecuperarInformacoesUsuario()
+        {
+            var usuario = _usuarioRepository.ObterPeloId(UsuarioId);
+
+            if (usuario == null)
+            {
+                NotificarErro("", "Não existe usuário para este Id");
+                return await Task.FromResult(CustomResponse());
+            }
+
+            var usuarioViewModel = _mapper.Map<UsuarioViewModel>(usuario);
+
+            return CustomResponse(usuarioViewModel);
+        }
+
+        // Recupear informações usuário pra edição
+
+        // Recuperar todas informações usuário
+        /*
+         Informacoes básicas (nome, cpf, email, telefone)
+        Endereço (tudo)
+        Carrinho
+         
+         */
+
+
+        // Criar coluna na tabela de endereços para verificar qual endereço padrão
     }
 }

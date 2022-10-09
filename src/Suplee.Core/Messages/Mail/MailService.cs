@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Suplee.Core.API.Enviroment;
+﻿using Suplee.Core.API.Enviroment;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;

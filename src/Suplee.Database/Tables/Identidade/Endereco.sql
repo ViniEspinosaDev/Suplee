@@ -13,6 +13,7 @@
     [TipoLocal] INT NOT NULL, 
     [Telefone] NVARCHAR(15) NULL, 
     [InformacaoAdicional] NVARCHAR(255) NULL, 
+    [EnderecoPadrao] BIT NOT NULL DEFAULT 0, 
 
     CONSTRAINT [FK_Endereco_Usuario] FOREIGN KEY ([UsuarioId]) REFERENCES [Usuario]([Id]),
 )

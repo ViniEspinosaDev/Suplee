@@ -47,7 +47,10 @@ namespace Suplee.Identidade.Domain.Models
         public ETipoLocal TipoLocal { get; protected set; }
         public string Telefone { get; protected set; }
         public string InformacaoAdicional { get; protected set; }
+        public bool EnderecoPadrao { get; protected set; }
 
         public Usuario Usuario { get; protected set; }
+
+        public void VincularUsuarioId(Guid usuarioId) => UsuarioId = usuarioId;
     }
 }

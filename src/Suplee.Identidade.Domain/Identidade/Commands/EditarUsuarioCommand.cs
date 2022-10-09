@@ -47,10 +47,6 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
 
             RuleForEach(x => x.Enderecos).ChildRules(Endereco =>
                 {
-                    Endereco.RuleFor(x => x.UsuarioId)
-                        .NotEqual(Guid.Empty).WithMessage("O Id do usuário não foi informado")
-                        .OverridePropertyName("ValidacaoUsuarioId");
-
                     Endereco.RuleFor(x => x.NomeDestinatario)
                        .NotEmpty().WithMessage("O Nome do destinatário não foi informado")
                        .OverridePropertyName("ValidacaoNomeDestinatario");

@@ -3,7 +3,6 @@ using Suplee.Core.Tools;
 using Suplee.Identidade.Domain.Enums;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Suplee.Identidade.Domain.Models
 {
@@ -48,6 +47,9 @@ namespace Suplee.Identidade.Domain.Models
         {
             Nome = nome;
             Celular = celular;
+
+            enderecos.ForEach(x => x.VincularUsuarioId(Id));
+
             Enderecos = enderecos;
         }
     }

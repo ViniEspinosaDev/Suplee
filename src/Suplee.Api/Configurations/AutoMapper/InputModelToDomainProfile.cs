@@ -97,8 +97,7 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(f => f.Enderecos, opt => opt.MapFrom(m => m.Enderecos));
 
             CreateMap<EnderecoInputModel, Endereco>()
-                .ForMember(f => f.Id, opt => opt.MapFrom(m => ConverterTextoEmGuid(m.Id.Trim())))
-                .ForMember(f => f.UsuarioId, opt => opt.MapFrom(m => ConverterTextoEmGuid(m.UsuarioId.Trim())))
+                .ForMember(f => f.Id, opt => opt.MapFrom(m => ConverterTextoEmGuid(m.EnderecoId.Trim())))
                 .ForMember(f => f.NomeDestinatario, opt => opt.MapFrom(m => m.NomeDestinatario.Trim()))
                 .ForMember(f => f.CEP, opt => opt.MapFrom(m => m.CEP.FormatarCEPApenasNumeros()))
                 .ForMember(f => f.Estado, opt => opt.MapFrom(m => m.Estado.Trim()))
@@ -109,7 +108,8 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(f => f.Complemento, opt => opt.MapFrom(m => m.Complemento.Trim()))
                 .ForMember(f => f.TipoLocal, opt => opt.MapFrom(m => m.TipoLocal))
                 .ForMember(f => f.Telefone, opt => opt.MapFrom(m => m.Telefone.Trim()))
-                .ForMember(f => f.InformacaoAdicional, opt => opt.MapFrom(m => m.InformacaoAdicional.Trim()));
+                .ForMember(f => f.InformacaoAdicional, opt => opt.MapFrom(m => m.InformacaoAdicional.Trim()))
+                .ForMember(f => f.EnderecoPadrao, opt => opt.MapFrom(m => m.EnderecoPadrao));
         }
 
         private void MapeiaContextoCatalogo()

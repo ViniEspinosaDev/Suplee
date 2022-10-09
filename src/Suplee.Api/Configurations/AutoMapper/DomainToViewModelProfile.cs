@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Suplee.Api.Controllers.Catalogo.ViewModels;
+using Suplee.Api.Controllers.Identidade.ViewModels;
 using Suplee.Catalogo.Domain.DTO;
 using Suplee.Catalogo.Domain.Models;
+using Suplee.Identidade.Domain.Models;
 using System.Linq;
 
 namespace Suplee.Catalogo.Api.Configurations.AutoMapper
@@ -17,6 +19,35 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
         public DomainToViewModelProfile()
         {
             MapeiaContextoCatalogo();
+            MapeiaContextoIdentidade();
+        }
+
+        private void MapeiaContextoIdentidade()
+        {
+            CreateMap<Usuario, UsuarioViewModel>()
+                .ForMember(i => i.UsuarioId, opt => opt.MapFrom(m => m.Id))
+                .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome))
+                .ForMember(i => i.Email, opt => opt.MapFrom(m => m.Email))
+                .ForMember(i => i.CPF, opt => opt.MapFrom(m => m.CPF))
+                .ForMember(i => i.Celular, opt => opt.MapFrom(m => m.Celular))
+                .ForMember(i => i.Tipo, opt => opt.MapFrom(m => m.Tipo))
+                .ForMember(i => i.DataCadastro, opt => opt.MapFrom(m => m.DataCadastro))
+                .ForMember(i => i.Enderecos, opt => opt.MapFrom(m => m.Enderecos));
+
+            CreateMap<Endereco, EnderecoViewModel>()
+                .ForMember(i => i.EnderecoId, opt => opt.MapFrom(m => m.Id))
+                .ForMember(i => i.NomeDestinatario, opt => opt.MapFrom(m => m.NomeDestinatario))
+                .ForMember(i => i.CEP, opt => opt.MapFrom(m => m.CEP))
+                .ForMember(i => i.Estado, opt => opt.MapFrom(m => m.Estado))
+                .ForMember(i => i.Cidade, opt => opt.MapFrom(m => m.Cidade))
+                .ForMember(i => i.Bairro, opt => opt.MapFrom(m => m.Bairro))
+                .ForMember(i => i.Rua, opt => opt.MapFrom(m => m.Rua))
+                .ForMember(i => i.Numero, opt => opt.MapFrom(m => m.Numero))
+                .ForMember(i => i.Complemento, opt => opt.MapFrom(m => m.Complemento))
+                .ForMember(i => i.TipoLocal, opt => opt.MapFrom(m => m.TipoLocal))
+                .ForMember(i => i.Telefone, opt => opt.MapFrom(m => m.Telefone))
+                .ForMember(i => i.InformacaoAdicional, opt => opt.MapFrom(m => m.InformacaoAdicional))
+                .ForMember(i => i.EnderecoPadrao, opt => opt.MapFrom(m => m.EnderecoPadrao));
         }
 
         private void MapeiaContextoCatalogo()
