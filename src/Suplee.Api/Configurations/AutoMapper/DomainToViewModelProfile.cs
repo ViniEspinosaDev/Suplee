@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Suplee.Api.Controllers.Catalogo.ViewModels;
 using Suplee.Api.Controllers.Identidade.ViewModels;
+using Suplee.Api.Controllers.Vendas;
 using Suplee.Catalogo.Domain.DTO;
-using Suplee.Catalogo.Domain.Models;
 using Suplee.Identidade.Domain.Models;
 using System.Linq;
+using CatalogoModels = Suplee.Catalogo.Domain.Models;
+using VendasModels = Suplee.Vendas.Domain.Models;
 
 namespace Suplee.Catalogo.Api.Configurations.AutoMapper
 {
@@ -14,6 +16,29 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
         {
             MapeiaContextoCatalogo();
             MapeiaContextoIdentidade();
+            MapeiaContextoVendas();
+        }
+
+        private void MapeiaContextoVendas()
+        {
+            CreateMap<VendasModels.Pedido, CarrinhoViewModel>()
+                .ForMember(i => i.Codigo, opt => opt.MapFrom(m => m.Codigo))
+                .ForMember(i => i.Status, opt => opt.MapFrom(m => m.Status.ToString()))
+                .ForMember(i => i.ValorTotal, opt => opt.MapFrom(m => m.ValorTotal))
+                .ForMember(i => i.DataCadastro, opt => opt.MapFrom(m => m.DataCadastro))
+                .ForMember(i => i.Produtos, opt => opt.MapFrom(m => m.Produtos));
+
+            CreateMap<VendasModels.PedidoProduto, ProdutoCarrinhoViewModel>()
+                .ForMember(i => i.NomeProduto, opt => opt.MapFrom(m => m.Produto.Nome))
+                .ForMember(i => i.Quantidade, opt => opt.MapFrom(m => m.Quantidade))
+                .ForMember(i => i.ValorUnitario, opt => opt.MapFrom(m => m.ValorUnitario))
+                .ForMember(i => i.Imagens, opt => opt.MapFrom(m => m.Produto.Imagens));
+
+            CreateMap<VendasModels.ProdutoImagem, ProdutoImagemViewModel>()
+                .ForMember(i => i.NomeImagem, opt => opt.MapFrom(m => m.NomeImagem))
+                .ForMember(i => i.UrlImagemOriginal, opt => opt.MapFrom(m => m.UrlImagemOriginal))
+                .ForMember(i => i.UrlImagemReduzida, opt => opt.MapFrom(m => m.UrlImagemReduzida))
+                .ForMember(i => i.UrlImagemMaior, opt => opt.MapFrom(m => m.UrlImagemMaior));
         }
 
         private void MapeiaContextoIdentidade()
@@ -46,19 +71,19 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
 
         private void MapeiaContextoCatalogo()
         {
-            CreateMap<CompostoNutricional, CompostoNutricionalViewModel>()
+            CreateMap<CatalogoModels.CompostoNutricional, CompostoNutricionalViewModel>()
                .ForMember(i => i.Composto, opt => opt.MapFrom(m => m.Composto))
                .ForMember(i => i.Porcao, opt => opt.MapFrom(m => m.Porcao))
                .ForMember(i => i.ValorDiario, opt => opt.MapFrom(m => m.ValorDiario))
                .ForMember(i => i.Ordem, opt => opt.MapFrom(m => m.Ordem));
 
 
-            CreateMap<InformacaoNutricional, InformacaoNutricionalViewModel>()
+            CreateMap<CatalogoModels.InformacaoNutricional, InformacaoNutricionalViewModel>()
                 .ForMember(i => i.Cabecalho, opt => opt.MapFrom(m => m.Cabecalho))
                 .ForMember(i => i.Legenda, opt => opt.MapFrom(m => m.Legenda))
                 .ForMember(i => i.CompostosNutricionais, opt => opt.MapFrom(m => m.CompostosNutricionais));
 
-            CreateMap<Produto, ProdutoViewModel>()
+            CreateMap<CatalogoModels.Produto, ProdutoViewModel>()
                 .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
                 .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome))
                 .ForMember(i => i.Descricao, opt => opt.MapFrom(m => m.Descricao))
@@ -70,7 +95,7 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.Efeitos, opt => opt.MapFrom(m => m.Efeitos.ToList().Select(x => x.Efeito)))
                 .ForMember(i => i.InformacaoNutricional, opt => opt.MapFrom(m => m.InformacaoNutricional));
 
-            CreateMap<Produto, ProdutoResumidoViewModel>()
+            CreateMap<CatalogoModels.Produto, ProdutoResumidoViewModel>()
                 .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
                 .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome))
                 .ForMember(i => i.Preco, opt => opt.MapFrom(m => m.Preco))
@@ -79,17 +104,17 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.Imagens, opt => opt.MapFrom(m => m.Imagens))
                 .ForMember(i => i.QuantidadeDisponivel, opt => opt.MapFrom(m => m.QuantidadeDisponivel));
 
-            CreateMap<ProdutoImagem, ProdutoImagemViewModel>()
+            CreateMap<CatalogoModels.ProdutoImagem, ProdutoImagemViewModel>()
                 .ForMember(i => i.NomeImagem, opt => opt.MapFrom(m => m.NomeImagem))
                 .ForMember(i => i.UrlImagemOriginal, opt => opt.MapFrom(m => m.UrlImagemOriginal))
                 .ForMember(i => i.UrlImagemReduzida, opt => opt.MapFrom(m => m.UrlImagemReduzida))
                 .ForMember(i => i.UrlImagemMaior, opt => opt.MapFrom(m => m.UrlImagemMaior));
 
-            CreateMap<Efeito, EfeitoViewModel>()
+            CreateMap<CatalogoModels.Efeito, EfeitoViewModel>()
                 .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
                 .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome));
 
-            CreateMap<Categoria, CategoriaViewModel>()
+            CreateMap<CatalogoModels.Categoria, CategoriaViewModel>()
                 .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
                 .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome));
 

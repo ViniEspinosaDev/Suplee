@@ -26,6 +26,8 @@ namespace Suplee.Vendas.Data.Repository
         public async Task<Pedido> ObterCarrinhoPorUsuarioId(Guid usuarioId) =>
             await _vendasContext.Pedido
                 .Include(x => x.Produtos)
+                    .ThenInclude(x => x.Produto)
+                        .ThenInclude(x => x.Imagens)
                 .FirstOrDefaultAsync(x => x.UsuarioId == usuarioId && x.Status == EPedidoStatus.Rascunho);
 
         public async Task<Pedido> ObterPorId(Guid pedidoId) =>

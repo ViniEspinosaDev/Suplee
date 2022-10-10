@@ -7,7 +7,7 @@ namespace Suplee.Test.Builder.Commands.Vendas
     {
         public ExcluirProdutoCarrinhoCommandBuilder(
             Guid usuarioId = default,
-            Guid produtoId = default) : base(usuarioId, produtoId)
+            Guid produtoId = default) : base(produtoId)
         {
         }
 

@@ -4,16 +4,16 @@ using Suplee.Vendas.Domain.Models;
 
 namespace Suplee.Vendas.Data.Mappings
 {
-    public class PedidoProdutoMapping : IEntityTypeConfiguration<PedidoProduto>
+    public class ProdutoMapping : IEntityTypeConfiguration<Produto>
     {
-        public void Configure(EntityTypeBuilder<PedidoProduto> builder)
+        public void Configure(EntityTypeBuilder<Produto> builder)
         {
-            builder.ToTable("PedidoProduto");
+            builder.ToTable("Produto");
 
             builder.HasKey(c => c.Id);
 
-            builder.HasOne(x => x.Produto)
-                .WithMany()
+            builder.HasMany(x => x.Imagens)
+                .WithOne(x => x.Produto)
                 .HasForeignKey(x => x.ProdutoId);
         }
     }

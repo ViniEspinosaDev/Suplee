@@ -6,9 +6,8 @@ namespace Suplee.Vendas.Domain.Commands
 {
     public class InserirProdutoCarrinhoCommand : Command<bool>
     {
-        public InserirProdutoCarrinhoCommand(Guid usuarioId, Guid produtoId, string nomeProduto, int quantidade, decimal valorUnitario)
+        public InserirProdutoCarrinhoCommand(Guid produtoId, string nomeProduto, int quantidade, decimal valorUnitario)
         {
-            UsuarioId = usuarioId;
             ProdutoId = produtoId;
             NomeProduto = nomeProduto;
             Quantidade = quantidade;
@@ -20,6 +19,8 @@ namespace Suplee.Vendas.Domain.Commands
         public string NomeProduto { get; protected set; }
         public int Quantidade { get; protected set; }
         public decimal ValorUnitario { get; protected set; }
+
+        public void VincularUsuarioId(Guid usuarioId) => UsuarioId = usuarioId;
 
         public override bool IsValid()
         {

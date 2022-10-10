@@ -10,7 +10,7 @@ namespace Suplee.Test.Builder.Commands.Vendas
             Guid produtoId = default,
             string nomeProduto = default,
             int quantidade = default,
-            decimal valorUnitario = default) : base(usuarioId, produtoId, nomeProduto, quantidade, valorUnitario)
+            decimal valorUnitario = default) : base(produtoId, nomeProduto, quantidade, valorUnitario)
         {
         }
 

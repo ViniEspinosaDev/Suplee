@@ -13,6 +13,8 @@ namespace Suplee.Vendas.Data
 
         public DbSet<Pedido> Pedido { get; set; }
         public DbSet<PedidoProduto> PedidoProduto { get; set; }
+        public DbSet<Produto> Produto { get; set; }
+        public DbSet<ProdutoImagem> ProdutoImagem { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

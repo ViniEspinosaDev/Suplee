@@ -6,14 +6,15 @@ namespace Suplee.Vendas.Domain.Commands
 {
     public class IniciarPedidoCommand : Command<bool>
     {
-        public IniciarPedidoCommand(Guid usuarioId, bool sucesso)
+        public IniciarPedidoCommand(bool sucesso)
         {
-            UsuarioId = usuarioId;
             Sucesso = sucesso;
         }
 
         public Guid UsuarioId { get; protected set; }
         public bool Sucesso { get; protected set; }
+
+        public void VincularUsuarioId(Guid usuarioId) => UsuarioId = usuarioId;
 
         public override bool IsValid()
         {

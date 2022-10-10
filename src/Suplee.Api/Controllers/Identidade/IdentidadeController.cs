@@ -132,8 +132,6 @@ namespace Suplee.Api.Controllers.Identidade
             return CustomResponse("Endereço cadastrado com sucesso");
         }
 
-        // Recupear informações usuário pra edição
-
         // Recuperar todas informações usuário
         /*
          Informacoes básicas (nome, cpf, email, telefone)
@@ -141,8 +139,5 @@ namespace Suplee.Api.Controllers.Identidade
         Carrinho
          
          */
-
-
-        // Criar coluna na tabela de endereços para verificar qual endereço padrão
     }
 }

@@ -7,14 +7,15 @@ namespace Suplee.Vendas.Domain.Commands
 {
     public class CadastrarCarrinhoCommand : Command<bool>
     {
-        public CadastrarCarrinhoCommand(Guid usuarioId, List<CadastrarCarrinhoCommandProduto> produtos)
+        public CadastrarCarrinhoCommand(List<CadastrarCarrinhoCommandProduto> produtos)
         {
-            UsuarioId = usuarioId;
             Produtos = produtos ?? new List<CadastrarCarrinhoCommandProduto>();
         }
 
         public Guid UsuarioId { get; protected set; }
         public List<CadastrarCarrinhoCommandProduto> Produtos { get; protected set; }
+
+        public void VincularUsuarioId(Guid usuarioId) => UsuarioId = usuarioId;
 
         public override bool IsValid()
         {

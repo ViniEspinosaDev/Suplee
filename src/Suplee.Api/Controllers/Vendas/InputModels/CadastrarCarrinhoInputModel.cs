@@ -5,7 +5,6 @@ namespace Suplee.Api.Controllers.Vendas.InputModels
 {
     public class CadastrarCarrinhoInputModel
     {
-        public Guid? UsuarioId { get; set; }
         public List<CarrinhoProdutoInputModel> Produtos { get; set; }
     }
 

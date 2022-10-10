@@ -6,9 +6,8 @@ namespace Suplee.Vendas.Domain.Commands
 {
     public class AtualizarProdutoCarrinhoCommand : Command<bool>
     {
-        public AtualizarProdutoCarrinhoCommand(Guid usuarioId, Guid produtoId, int quantidade)
+        public AtualizarProdutoCarrinhoCommand(Guid produtoId, int quantidade)
         {
-            UsuarioId = usuarioId;
             ProdutoId = produtoId;
             Quantidade = quantidade;
         }
@@ -16,6 +15,8 @@ namespace Suplee.Vendas.Domain.Commands
         public Guid UsuarioId { get; protected set; }
         public Guid ProdutoId { get; protected set; }
         public int Quantidade { get; protected set; }
+
+        public void VincularUsuarioId(Guid usuarioId) => UsuarioId = usuarioId;
 
         public override bool IsValid()
         {

@@ -5,7 +5,7 @@ namespace Suplee.Test.Builder.Commands.Vendas
 {
     public class IniciarPedidoCommandBuilder : IniciarPedidoCommand
     {
-        public IniciarPedidoCommandBuilder(Guid usuarioId = default, bool sucesso = default) : base(usuarioId, sucesso)
+        public IniciarPedidoCommandBuilder(Guid usuarioId = default, bool sucesso = default) : base(sucesso)
         {
         }
 

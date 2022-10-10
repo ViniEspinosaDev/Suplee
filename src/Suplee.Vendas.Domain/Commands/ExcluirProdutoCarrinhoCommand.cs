@@ -6,14 +6,15 @@ namespace Suplee.Vendas.Domain.Commands
 {
     public class ExcluirProdutoCarrinhoCommand : Command<bool>
     {
-        public ExcluirProdutoCarrinhoCommand(Guid usuarioId, Guid produtoId)
+        public ExcluirProdutoCarrinhoCommand(Guid produtoId)
         {
-            UsuarioId = usuarioId;
             ProdutoId = produtoId;
         }
 
         public Guid UsuarioId { get; protected set; }
         public Guid ProdutoId { get; protected set; }
+
+        public void VincularUsuarioId(Guid usuarioId) => UsuarioId = usuarioId;
 
         public override bool IsValid()
         {

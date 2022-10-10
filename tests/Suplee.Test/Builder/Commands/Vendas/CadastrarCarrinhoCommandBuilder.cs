@@ -9,7 +9,7 @@ namespace Suplee.Test.Builder.Commands.Vendas
     {
         public CadastrarCarrinhoCommandBuilder(
             Guid usuarioId = default,
-            List<CadastrarCarrinhoCommandProduto> produtos = default) : base(usuarioId, produtos)
+            List<CadastrarCarrinhoCommandProduto> produtos = default) : base(produtos)
         {
         }
 

@@ -8,7 +8,7 @@ namespace Suplee.Test.Builder.Commands.Vendas
         public AtualizarProdutoCarrinhoCommandBuilder(
             Guid usuarioId = default,
             Guid produtoId = default,
-            int quantidade = default) : base(usuarioId, produtoId, quantidade)
+            int quantidade = default) : base(produtoId, quantidade)
         {
         }
 

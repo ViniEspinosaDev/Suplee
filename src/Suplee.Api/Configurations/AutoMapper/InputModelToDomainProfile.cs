@@ -28,7 +28,6 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
         private void MapeiaContextoVendas()
         {
             CreateMap<CadastrarCarrinhoInputModel, CadastrarCarrinhoCommand>()
-                .ForMember(f => f.UsuarioId, opt => opt.MapFrom(m => m.UsuarioId))
                 .ForMember(f => f.Produtos, opt => opt.MapFrom(m => m.Produtos));
 
             CreateMap<CarrinhoProdutoInputModel, CadastrarCarrinhoCommandProduto>()
@@ -38,23 +37,19 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(f => f.ValorUnitario, opt => opt.MapFrom(m => m.ValorUnitario));
 
             CreateMap<InserirProdutoCarrinhoInputModel, InserirProdutoCarrinhoCommand>()
-                .ForMember(f => f.UsuarioId, opt => opt.MapFrom(m => m.UsuarioId))
                 .ForMember(f => f.ProdutoId, opt => opt.MapFrom(m => m.ProdutoId))
                 .ForMember(f => f.NomeProduto, opt => opt.MapFrom(m => m.NomeProduto))
                 .ForMember(f => f.Quantidade, opt => opt.MapFrom(m => m.Quantidade))
                 .ForMember(f => f.ValorUnitario, opt => opt.MapFrom(m => m.ValorUnitario));
 
             CreateMap<AtualizarProdutoCarrinhoInputModel, AtualizarProdutoCarrinhoCommand>()
-                .ForMember(f => f.UsuarioId, opt => opt.MapFrom(m => m.UsuarioId))
                 .ForMember(f => f.ProdutoId, opt => opt.MapFrom(m => m.ProdutoId))
                 .ForMember(f => f.Quantidade, opt => opt.MapFrom(m => m.Quantidade));
 
             CreateMap<ExcluirProdutoCarrinhoInputModel, ExcluirProdutoCarrinhoCommand>()
-                .ForMember(f => f.UsuarioId, opt => opt.MapFrom(m => m.UsuarioId))
                 .ForMember(f => f.ProdutoId, opt => opt.MapFrom(m => m.ProdutoId));
 
             CreateMap<RealizarPagamentoInputModel, IniciarPedidoCommand>()
-                .ForMember(f => f.UsuarioId, opt => opt.MapFrom(m => m.UsuarioId))
                 .ForMember(f => f.Sucesso, opt => opt.MapFrom(m => m.Sucesso));
         }
 

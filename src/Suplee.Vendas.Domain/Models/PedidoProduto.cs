@@ -21,6 +21,7 @@ namespace Suplee.Vendas.Domain.Models
         public decimal ValorUnitario { get; protected set; }
 
         public Pedido Pedido { get; protected set; }
+        public Produto Produto { get; protected set; }
 
         public void AssociarPedido(Guid pedidoId)
         {

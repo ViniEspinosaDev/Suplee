@@ -31,7 +31,7 @@ namespace Suplee.Test.Builder.Models
             return this;
         }
 
-        public PedidoProdutoBuilder ComProduto(Produto produto)
+        public PedidoProdutoBuilder ComProduto(Catalogo.Domain.Models.Produto produto)
         {
             ProdutoId = produto.Id;
             NomeProduto = produto.Nome;

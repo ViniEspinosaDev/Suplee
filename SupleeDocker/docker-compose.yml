@@ -2,17 +2,17 @@ version: '3.7'
 
 services:
 
-  suplee.api:
-    image: suplee.api
-    container_name: suplee.api
-    restart: always
-    build:
-      context: ../src
-      dockerfile: Dockerfile
-    ports:
-      - "5002:80"
-    depends_on:
-    - suplee.mongodb
+#  suplee.api:
+#    image: suplee.api
+#    container_name: suplee.api
+#    restart: always
+#    build:
+#      context: ../src
+#      dockerfile: Dockerfile
+#    ports:
+#      - "5002:80"
+#    depends_on:
+#    - suplee.mongodb
     
   suplee.database:
     image: mcr.microsoft.com/mssql/server:2017-latest
