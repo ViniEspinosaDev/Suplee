@@ -3,89 +3,29 @@ using System.Collections.Generic;
 
 namespace Suplee.Api.Controllers.Catalogo.ViewModels
 {
-    /// <summary>
-    /// Objeto de saída do Produto
-    /// </summary>
     public class ProdutoViewModel
     {
-        /// <summary>
-        /// Identificador
-        /// </summary>
         public Guid Id { get; set; }
-
-        /// <summary>
-        /// Nome
-        /// </summary>
         public string Nome { get; set; }
-
-        /// <summary>
-        /// Descrição
-        /// </summary>
         public string Descricao { get; set; }
-
-        /// <summary>
-        /// Composição
-        /// </summary>
         public string Composicao { get; set; }
-
-        /// <summary>
-        /// Quantidade em estoque
-        /// </summary>
         public int QuantidadeDisponivel { get; set; }
-
-        /// <summary>
-        /// Preço
-        /// </summary>
         public decimal Preco { get; set; }
-
-        /// <summary>
-        /// Id da Categoria
-        /// </summary>
         public CategoriaViewModel Categoria { get; set; }
-
-        /// <summary>
-        /// Imagens em Base64
-        /// </summary>
         public List<ProdutoImagemViewModel> Imagens { get; set; }
-
-        /// <summary>
-        /// Lista de Id dos Efeitos
-        /// </summary>
         public List<EfeitoViewModel> Efeitos { get; set; }
-
-        /// <summary>
-        /// Tabela de Informação Nutricional
-        /// </summary>
         public InformacaoNutricionalViewModel InformacaoNutricional { get; set; }
     }
 
-    /// <summary>
-    /// Objeto de saída da Imagem do produto
-    /// </summary>
     public class ProdutoImagemViewModel
     {
-        /// <summary>
-        /// Nome da imagem
-        /// </summary>
         public string NomeImagem { get; set; }
-        /// <summary>
-        /// Url da imagem original
-        /// </summary>
         public string UrlImagemOriginal { get; set; }
-        /// <summary>
-        /// Url da imagem reduzida
-        /// </summary>
         public string UrlImagemReduzida { get; set; }
-        /// <summary>
-        /// Url da imagem maior
-        /// </summary>
         public string UrlImagemMaior { get; set; }
 
     }
 
-    /// <summary>
-    /// Objeto de saída da Informação Nutricional
-    /// </summary>
     public class InformacaoNutricionalViewModel
     {
         /// <summary>

@@ -8,14 +8,8 @@ using System.Linq;
 
 namespace Suplee.Catalogo.Api.Configurations.AutoMapper
 {
-    /// <summary>
-    /// Mapeamento das entidades para View Model
-    /// </summary>
     public class DomainToViewModelProfile : Profile
     {
-        /// <summary>
-        /// Construtor do mapeamento
-        /// </summary>
         public DomainToViewModelProfile()
         {
             MapeiaContextoCatalogo();

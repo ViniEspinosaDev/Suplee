@@ -4,75 +4,22 @@ using System.Collections.Generic;
 
 namespace Suplee.Catalogo.Api.Controllers.Catalogo.InputModels
 {
-    /// <summary>
-    /// Entrada do Produto
-    /// </summary>
     public class ProdutoInputModel
     {
-        /// <summary>
-        /// Nome
-        /// </summary>
         public string Nome { get; set; }
-
-        /// <summary>
-        /// Descrição
-        /// </summary>
         public string Descricao { get; set; }
-
-        /// <summary>
-        /// Composição
-        /// </summary>
         public string Composicao { get; set; }
-
-        /// <summary>
-        /// Quantidade em estoque
-        /// </summary>
         public int QuantidadeDisponivel { get; set; }
-
-        /// <summary>
-        /// Preço
-        /// </summary>
         public decimal Preco { get; set; }
-
-        /// <summary>
-        /// Medida de Profundidade da embalagem
-        /// </summary>
         public decimal Profundidade { get; set; }
-
-        /// <summary>
-        /// Medida de Altura da embalagem
-        /// </summary>
         public decimal Altura { get; set; }
-
-        /// <summary>
-        /// Medida de Largura da embalagem
-        /// </summary>
         public decimal Largura { get; set; }
-
-        /// <summary>
-        /// Id da Categoria
-        /// </summary>
         public Guid CategoriaId { get; set; }
-
-        /// <summary>
-        /// Imagens em Base64
-        /// </summary>
         public List<IFormFile> Imagens { get; set; }
-
-        /// <summary>
-        /// Lista de Id dos Efeitos
-        /// </summary>
         public List<Guid> Efeitos { get; set; }
-
-        /// <summary>
-        /// Tabela com Informação Nutricional
-        /// </summary>
         public InformacaoNutricionalInputModel InformacaoNutricional { get; set; }
     }
 
-    /// <summary>
-    /// Entrada da Informacao nutricional
-    /// </summary>
     public class InformacaoNutricionalInputModel
     {
         /// <summary>
@@ -91,9 +38,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo.InputModels
         public List<CompostoNutricionalInputModel> CompostosNutricionais { get; set; }
     }
 
-    /// <summary>
-    /// Entrada do Composto nutricional
-    /// </summary>
     public class CompostoNutricionalInputModel
     {
         /// <summary>

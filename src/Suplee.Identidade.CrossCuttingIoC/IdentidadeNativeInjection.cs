@@ -52,6 +52,7 @@ namespace Suplee.Identidade.CrossCuttingIoC
             services.AddScoped<IRequestHandler<ReenviarEmailConfirmarCadastroCommand, string>, IdentidadeCommandHandler>();
             services.AddScoped<IRequestHandler<RecuperarSenhaCommand, string>, IdentidadeCommandHandler>();
             services.AddScoped<IRequestHandler<AlterarSenhaCommand, bool>, IdentidadeCommandHandler>();
+            services.AddScoped<IRequestHandler<CadastrarEnderecoCommand, bool>, IdentidadeCommandHandler>();
 
             services.AddScoped<IRequestHandler<RealizarLoginEmailCommand, Usuario>, AutenticacaoCommandHandler>();
             services.AddScoped<IRequestHandler<RealizarLoginCPFCommand, Usuario>, AutenticacaoCommandHandler>();

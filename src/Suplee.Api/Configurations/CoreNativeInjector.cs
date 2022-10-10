@@ -8,14 +8,8 @@ using Suplee.EventSourcing;
 
 namespace Suplee.Api.Configurations
 {
-    /// <summary>
-    /// Injeta dependências do Core
-    /// </summary>
     public static class CoreNativeInjector
     {
-        /// <summary>
-        /// Injeta dependências do Core
-        /// </summary>
         public static IServiceCollection ConfigurarDependencias(IServiceCollection services)
         {
             ConfigurarDependenciasPadrao(services);

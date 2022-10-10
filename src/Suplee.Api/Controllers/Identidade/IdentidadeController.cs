@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Suplee.Api.Controllers.Identidade.InputModel;
 using Suplee.Api.Controllers.Identidade.InputModels;
 using Suplee.Api.Controllers.Identidade.ViewModels;
@@ -12,7 +11,6 @@ using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Identidade.Domain.Autenticacao.Commands;
 using Suplee.Identidade.Domain.Identidade.Commands;
 using Suplee.Identidade.Domain.Interfaces;
-using Suplee.Identidade.Domain.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -30,7 +28,6 @@ namespace Suplee.Api.Controllers.Identidade
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler,
             IUsuarioLogado usuario,
-            IOptions<ConfiguracaoAplicacao> appSettings,
             IMapper mapper,
             IUsuarioRepository usuarioRepository) : base(notifications, mediatorHandler, usuario)
         {
@@ -39,11 +36,6 @@ namespace Suplee.Api.Controllers.Identidade
             _usuarioRepository = usuarioRepository;
         }
 
-        /// <summary>
-        /// Criar nova conta
-        /// </summary>
-        /// <param name="novaConta"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("cadastrar-usuario")]
         public async Task<ActionResult> CadastrarConta(CadastroUsuarioInputModel novaConta)
@@ -58,11 +50,6 @@ namespace Suplee.Api.Controllers.Identidade
             return CustomResponse($@"Confirme seu cadastro no e-mail ""{novaConta.Email}""");
         }
 
-        /// <summary>
-        /// Editar informações do usuário
-        /// </summary>
-        /// <param name="editarUsuario"></param>
-        /// <returns></returns>
         [HttpPut("editar-usuario")]
         public async Task<ActionResult> EditarConta(EditarUsuarioInputModel editarUsuario)
         {
@@ -73,12 +60,6 @@ namespace Suplee.Api.Controllers.Identidade
             return CustomResponse("Usuário atualizado com sucesso");
         }
 
-        /// <summary>
-        /// Confirmar cadastro de conta de usuário
-        /// </summary>
-        /// <param name="usuarioId"></param>
-        /// <param name="codigoConfirmacao"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("confirmar-cadastro/{usuarioId}/{codigoConfirmacao}")]
         public async Task<ActionResult> ConfirmarCadastro(Guid usuarioId, string codigoConfirmacao)
@@ -90,11 +71,6 @@ namespace Suplee.Api.Controllers.Identidade
             return CustomResponse("Sua conta foi criada com sucesso");
         }
 
-        /// <summary>
-        /// Reenviar e-mail de confirmação de conta para o usuário pelo CPF
-        /// </summary>
-        /// <param name="cpf"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("reenviar-email-confirmar-cadastro/{cpf}")]
         public async Task<ActionResult> ReenviarEmailConfirmarCadastro(string cpf)
@@ -106,11 +82,6 @@ namespace Suplee.Api.Controllers.Identidade
             return CustomResponse($@"Confirme seu cadastro no e-mail ""{email}""");
         }
 
-        /// <summary>
-        /// Recuperar senha pelo e-mail
-        /// </summary>
-        /// <param name="cpf"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("recuperar-senha/{cpf}")]
         public async Task<ActionResult> RecuperarSenha(string cpf)
@@ -122,11 +93,6 @@ namespace Suplee.Api.Controllers.Identidade
             return CustomResponse($@"Um e-mail de recuperação de senha foi enviado para ""{email}""");
         }
 
-        /// <summary>
-        /// Alterar senha do usuário
-        /// </summary>
-        /// <param name="alterarSenha"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("alterar-senha")]
         public async Task<ActionResult> AlterarSenha(AlterarSenhaInputModel alterarSenha)
@@ -138,10 +104,6 @@ namespace Suplee.Api.Controllers.Identidade
             return CustomResponse("Senha alterada com sucesso");
         }
 
-        /// <summary>
-        /// Recuperar informações para edição de usuário
-        /// </summary>
-        /// <returns></returns>
         [HttpGet("recuperar-informacoes-usuario")]
         public async Task<ActionResult> RecuperarInformacoesUsuario()
         {
@@ -156,6 +118,18 @@ namespace Suplee.Api.Controllers.Identidade
             var usuarioViewModel = _mapper.Map<UsuarioViewModel>(usuario);
 
             return CustomResponse(usuarioViewModel);
+        }
+
+        [HttpPost("cadastrar-endereco")]
+        public async Task<ActionResult> CadastrarEndereco(CadastrarEnderecoInputModel endereco)
+        {
+            var comando = _mapper.Map<CadastrarEnderecoCommand>(endereco);
+
+            comando.VincularUsuarioId(UsuarioId);
+
+            await _mediatorHandler.EnviarComando(comando);
+
+            return CustomResponse("Endereço cadastrado com sucesso");
         }
 
         // Recupear informações usuário pra edição

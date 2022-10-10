@@ -19,5 +19,7 @@ namespace Suplee.Identidade.Domain.Interfaces
 
         void Adicionar(Usuario usuario);
         void AdicionarConfirmacaoUsuario(ConfirmacaoUsuario confirmacaoUsuario);
+
+        void AdicionarEndereco(Endereco endereco);
     }
 }

@@ -42,11 +42,6 @@ namespace Suplee.Api.Controllers.Identidade
             _configuracaoAplicacao = appSettings.Value;
         }
 
-        /// <summary>
-        /// Login
-        /// </summary>
-        /// <param name="loginInputModel"></param>
-        /// <returns></returns>
         [HttpPost("login-email")]
         public async Task<ActionResult> FazerLoginEmail(LoginEmailInputModel loginInputModel)
         {
@@ -60,11 +55,6 @@ namespace Suplee.Api.Controllers.Identidade
             return CustomResponse(GerarJwt(usuario));
         }
 
-        /// <summary>
-        /// Login
-        /// </summary>
-        /// <param name="loginInputModel"></param>
-        /// <returns></returns>
         [HttpPost("login-cpf")]
         public async Task<ActionResult> FazerLoginCPF(LoginCPFInputModel loginInputModel)
         {

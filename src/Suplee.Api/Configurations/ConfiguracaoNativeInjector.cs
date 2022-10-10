@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Suplee.Api.Extensions;
@@ -10,17 +9,11 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Suplee.Api.Configurations
 {
-    /// <summary>
-    /// Injeta as dependencias das configurações
-    /// </summary>
     public static class ConfiguracaoNativeInjector
     {
         private static IEnvironment _environment;
 
-        /// <summary>
-        /// Injeta as dependencias das configurações
-        /// </summary>
-        public static void ConfigurarDependencias(IEnvironment environment, IServiceCollection services, IConfiguration configuration)
+        public static void ConfigurarDependencias(IEnvironment environment, IServiceCollection services)
         {
             _environment = environment;
 

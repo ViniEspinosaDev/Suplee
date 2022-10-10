@@ -26,8 +26,8 @@ namespace Suplee.Identidade.Data.Repository
 
         public Usuario ObterPeloId(Guid usuarioId) =>
             _identidadeContext.Usuario
-                .Include(x => x.Enderecos)
-                .FirstOrDefault(x => x.Id == usuarioId);
+            .Include(x => x.Enderecos)
+            .FirstOrDefault(x => x.Id == usuarioId);
 
         public Usuario RealizarLoginEmail(string email, string senha) =>
             _identidadeContext.Usuario.FirstOrDefault(x => x.Email == email && x.Senha == senha);
@@ -44,6 +44,8 @@ namespace Suplee.Identidade.Data.Repository
         public Usuario ObterPeloCPF(string CPF) => _identidadeContext.Usuario.FirstOrDefault(x => x.CPF == CPF);
 
         public void AdicionarConfirmacaoUsuario(ConfirmacaoUsuario confirmacaoUsuario) => _identidadeContext.ConfirmacaoUsuario.Add(confirmacaoUsuario);
+
+        public void AdicionarEndereco(Endereco endereco) => _identidadeContext.Endereco.Add(endereco);
 
         public void Dispose() => _identidadeContext?.Dispose();
     }

@@ -11,7 +11,6 @@ using Suplee.Core.API.Enviroment;
 using Suplee.ExternalService.CrossCuttingIoC;
 using Suplee.Identidade.CrossCuttingIoC;
 using Suplee.Pagamentos.CrossCuttingIoC;
-using Suplee.Teste.CrossCuttingIoC;
 using Suplee.Vendas.CrossCuttingIoC;
 
 namespace Suplee.Catalogo.Api
@@ -54,12 +53,11 @@ namespace Suplee.Catalogo.Api
 
             var environment = (IEnvironment)serviceProvider.GetService(typeof(IEnvironment));
 
-            ConfiguracaoNativeInjector.ConfigurarDependencias(environment, services, Configuration);
+            ConfiguracaoNativeInjector.ConfigurarDependencias(environment, services);
             IdentidadeNativeInjection.ConfigurarDependencias(environment, services, Configuration);
             CatalogoNativeInjection.ConfigurarDependencias(environment, services, Configuration);
             ExternalServiceNativeInjection.ConfigurarDependencias(environment, services);
             PagamentosNativeInjection.ConfigurarDependencias(services, Configuration);
-            TesteNativeInjection.ConfigurarDependencias(environment, services, Configuration);
             VendasNativeInjection.ConfigurarDependencias(environment, services);
         }
     }

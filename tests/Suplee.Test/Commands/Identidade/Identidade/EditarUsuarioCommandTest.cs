@@ -31,10 +31,9 @@ namespace Suplee.Test.Commands.Identidade.Identidade
             comando.IsValid();
             var resultadoValidacao = comando.ValidationResult;
 
-            Assert.Equal(11, resultadoValidacao.Errors.Count);
+            Assert.Equal(10, resultadoValidacao.Errors.Count);
             Assert.Contains(resultadoValidacao.Errors, v => v.PropertyName.Equals("ValidacaoUsuarioId"));
             Assert.Contains(resultadoValidacao.Errors, v => v.PropertyName.Equals("ValidacaoNome"));
-            Assert.Contains(resultadoValidacao.Errors, v => v.PropertyName.Equals("Enderecos[0].ValidacaoUsuarioId"));
             Assert.Contains(resultadoValidacao.Errors, v => v.PropertyName.Equals("Enderecos[0].ValidacaoNomeDestinatario"));
             Assert.Contains(resultadoValidacao.Errors, v => v.PropertyName.Equals("Enderecos[0].ValidacaoCEP"));
             Assert.Contains(resultadoValidacao.Errors, v => v.PropertyName.Equals("Enderecos[0].ValidacaoEstado"));

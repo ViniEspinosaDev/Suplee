@@ -5,14 +5,8 @@ using Suplee.Core.Messages.Mail;
 
 namespace Suplee.Api.Configurations
 {
-    /// <summary>
-    /// Organizar as variáveis de ambiente
-    /// </summary>
     public static class EnvironmentNativeInjector
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public static void ConfigurarVariaveisAmbiente(IServiceCollection services, IConfiguration configuration)
         {
             services

@@ -19,7 +19,8 @@ namespace Suplee.Identidade.Domain.Models
             string complemento,
             ETipoLocal tipoLocal,
             string telefone,
-            string informacaoAdicional)
+            string informacaoAdicional,
+            bool enderecoPadrao)
         {
             UsuarioId = usuarioId;
             NomeDestinatario = nomeDestinatario;
@@ -33,6 +34,7 @@ namespace Suplee.Identidade.Domain.Models
             TipoLocal = tipoLocal;
             Telefone = telefone;
             InformacaoAdicional = informacaoAdicional;
+            EnderecoPadrao = enderecoPadrao;
         }
 
         public Guid UsuarioId { get; protected set; }
@@ -52,5 +54,7 @@ namespace Suplee.Identidade.Domain.Models
         public Usuario Usuario { get; protected set; }
 
         public void VincularUsuarioId(Guid usuarioId) => UsuarioId = usuarioId;
+        public void DesmarcarEnderecoPadrao() => EnderecoPadrao = false;
+        public void MarcarComoEnderecoPadrao() => EnderecoPadrao = true;
     }
 }

@@ -16,9 +16,6 @@ using System.Threading.Tasks;
 
 namespace Suplee.Catalogo.Api.Controllers.Catalogo
 {
-    /// <summary>
-    /// Endpoints do Catalogo
-    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     public class CatalogoController : MainController
@@ -30,15 +27,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
 
         private const int QuantidadePorPagina = 12;
 
-        /// <summary>
-        /// Construtor do Catalogo
-        /// </summary>
-        /// <param name="notifications"></param>
-        /// <param name="mediatorHandler"></param>
-        /// <param name="produtoRepository"></param>
-        /// <param name="mapper"></param>
-        /// <param name="usuario"></param>
-        /// <param name="correiosService"></param>
         public CatalogoController(
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler,
@@ -53,13 +41,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             _correiosService = correiosService;
         }
 
-        /// <summary>
-        /// Obter produtos por nome
-        /// </summary>
-        /// <param name="nome"></param>
-        /// <param name="pagina"></param>
-        /// <param name="quantidade"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("produtos/nome")]
         public async Task<ActionResult> ObterProdutosPeloNome([FromQuery] string nome, [FromQuery] int? pagina, [FromQuery] int? quantidade)
@@ -87,11 +68,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             return Ok(retorno);
         }
 
-        /// <summary>
-        /// Obter todas as informações de um produto
-        /// </summary>
-        /// <param name="produtoId"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{produtoId}")]
         public async Task<ActionResult> ObterProduto(Guid produtoId)
@@ -116,13 +92,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             return Ok(produtoViewModel);
         }
 
-        /// <summary>
-        /// Obter produtos por id do Efeito
-        /// </summary>
-        /// <param name="efeitoId"></param>
-        /// <param name="pagina"></param>
-        /// <param name="quantidade"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("produtos/id-efeito")]
         public async Task<ActionResult> ObterProdutoPorIdEfeito([FromQuery] Guid efeitoId, [FromQuery] int? pagina, [FromQuery] int? quantidade)
@@ -151,13 +120,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             return Ok(retorno);
         }
 
-        /// <summary>
-        /// Obter produtos por nome do Efeito
-        /// </summary>
-        /// <param name="nomeEfeito"></param>
-        /// <param name="pagina"></param>
-        /// <param name="quantidade"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("produtos/nome-efeito")]
         public async Task<ActionResult> ObterProdutoPorNomeEfeito([FromQuery] string nomeEfeito, [FromQuery] int? pagina, [FromQuery] int? quantidade)
@@ -186,13 +148,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             return Ok(retorno);
         }
 
-        /// <summary>
-        /// Obter produtos por id da Categoria
-        /// </summary>
-        /// <param name="categoriaId"></param>
-        /// <param name="pagina"></param>
-        /// <param name="quantidade"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("produtos/id-categoria")]
         public async Task<ActionResult> ObterProdutoPorIdCategoria([FromQuery] Guid categoriaId, [FromQuery] int? pagina, [FromQuery] int? quantidade)
@@ -221,13 +176,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             return Ok(retorno);
         }
 
-        /// <summary>
-        /// Obter produtos por nome da Categoria
-        /// </summary>
-        /// <param name="nomeCategoria"></param>
-        /// <param name="pagina"></param>
-        /// <param name="quantidade"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("produtos/nome-categoria")]
         public async Task<ActionResult> ObterProdutoPorNomeCategoria([FromQuery] string nomeCategoria, [FromQuery] int? pagina, [FromQuery] int? quantidade)
@@ -256,10 +204,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             return Ok(retorno);
         }
 
-        /// <summary>
-        /// Obter todos os produtos sem filtro
-        /// </summary>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("produtos")]
         public async Task<ActionResult> ObterProdutos([FromQuery] int? pagina, [FromQuery] int? quantidade)
@@ -287,10 +231,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             return Ok(retorno);
         }
 
-        /// <summary>
-        /// Obter todos os efeitos
-        /// </summary>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("efeitos")]
         public async Task<ActionResult> ObterEfeitos()
@@ -306,10 +246,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             return Ok(efeitos);
         }
 
-        /// <summary>
-        /// Obter todas as categorias
-        /// </summary>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("categorias")]
         public async Task<ActionResult> ObterCategorias()
@@ -325,12 +261,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             return Ok(efeitos);
         }
 
-        /// <summary>
-        /// Obter valor do preço e prazo
-        /// </summary>
-        /// <param name="produtoId"></param>
-        /// <param name="cep"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("preco-prazo/{produtoId}/{cep}")]
         public ActionResult ObterPrecoPrazo(Guid produtoId, string cep)
@@ -340,11 +270,6 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             return CustomResponse(frete);
         }
 
-        /// <summary>
-        /// Criar produto
-        /// </summary>
-        /// <param name="produtoInputModel"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("produto")]
         public async Task<ActionResult> CriarProduto([FromForm] ProdutoInputModel produtoInputModel)

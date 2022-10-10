@@ -6,14 +6,8 @@ using Microsoft.Extensions.Hosting;
 
 namespace Suplee.Api.Configurations
 {
-    /// <summary>
-    /// Configuração da API
-    /// </summary>
     public static class ApiConfiguration
     {
-        /// <summary>
-        /// Adiciona a configuração da API
-        /// </summary>
         public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
         {
             services.AddControllers();
@@ -52,9 +46,6 @@ namespace Suplee.Api.Configurations
             return services;
         }
 
-        /// <summary>
-        /// Usar a configuração da API
-        /// </summary>
         public static IApplicationBuilder UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

@@ -16,14 +16,8 @@ using static Suplee.Vendas.Domain.Commands.CadastrarCarrinhoCommand;
 
 namespace Suplee.Catalogo.Api.Configurations.AutoMapper
 {
-    /// <summary>
-    /// Mapeamento dos inputs de entrada para entidade
-    /// </summary>
     public class InputModelToDomainProfile : Profile
     {
-        /// <summary>
-        /// Construtor do mapeamento
-        /// </summary>
         public InputModelToDomainProfile()
         {
             MapeiaContextoCatalogo();
@@ -98,6 +92,20 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
 
             CreateMap<EnderecoInputModel, Endereco>()
                 .ForMember(f => f.Id, opt => opt.MapFrom(m => ConverterTextoEmGuid(m.EnderecoId.Trim())))
+                .ForMember(f => f.NomeDestinatario, opt => opt.MapFrom(m => m.NomeDestinatario.Trim()))
+                .ForMember(f => f.CEP, opt => opt.MapFrom(m => m.CEP.FormatarCEPApenasNumeros()))
+                .ForMember(f => f.Estado, opt => opt.MapFrom(m => m.Estado.Trim()))
+                .ForMember(f => f.Cidade, opt => opt.MapFrom(m => m.Cidade.Trim()))
+                .ForMember(f => f.Bairro, opt => opt.MapFrom(m => m.Bairro.Trim()))
+                .ForMember(f => f.Rua, opt => opt.MapFrom(m => m.Rua.Trim()))
+                .ForMember(f => f.Numero, opt => opt.MapFrom(m => m.Numero.Trim()))
+                .ForMember(f => f.Complemento, opt => opt.MapFrom(m => m.Complemento.Trim()))
+                .ForMember(f => f.TipoLocal, opt => opt.MapFrom(m => m.TipoLocal))
+                .ForMember(f => f.Telefone, opt => opt.MapFrom(m => m.Telefone.Trim()))
+                .ForMember(f => f.InformacaoAdicional, opt => opt.MapFrom(m => m.InformacaoAdicional.Trim()))
+                .ForMember(f => f.EnderecoPadrao, opt => opt.MapFrom(m => m.EnderecoPadrao));
+
+            CreateMap<CadastrarEnderecoInputModel, CadastrarEnderecoCommand>()
                 .ForMember(f => f.NomeDestinatario, opt => opt.MapFrom(m => m.NomeDestinatario.Trim()))
                 .ForMember(f => f.CEP, opt => opt.MapFrom(m => m.CEP.FormatarCEPApenasNumeros()))
                 .ForMember(f => f.Estado, opt => opt.MapFrom(m => m.Estado.Trim()))

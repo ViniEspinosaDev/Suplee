@@ -10,14 +10,8 @@ using System.Linq;
 
 namespace Suplee.Api.Configurations
 {
-    /// <summary>
-    /// Configuração do Swagger
-    /// </summary>
     public static class SwaggerConfiguration
     {
-        /// <summary>
-        /// Adiciona a configuração do Swagger
-        /// </summary>
         public static IServiceCollection AddSwaggerConfiguration(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
@@ -59,9 +53,6 @@ namespace Suplee.Api.Configurations
             return services;
         }
 
-        /// <summary>
-        /// Usa a configuração do Swagger
-        /// </summary>
         public static IApplicationBuilder UseSwaggerConfiguration(this IApplicationBuilder app, IApiVersionDescriptionProvider provider)
         {
             //app.UseMiddleware<SwaggerAuthorizedMiddleware>();
@@ -78,23 +69,12 @@ namespace Suplee.Api.Configurations
         }
     }
 
-    /// <summary>
-    /// Configura link do swagger
-    /// </summary>
     public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
         readonly IApiVersionDescriptionProvider provider;
 
-        /// <summary>
-        /// Construtor
-        /// </summary>
-        /// <param name="provider"></param>
         public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) => this.provider = provider;
 
-        /// <summary>
-        /// Configura
-        /// </summary>
-        /// <param name="options"></param>
         public void Configure(SwaggerGenOptions options)
         {
             foreach (var description in provider.ApiVersionDescriptions)
@@ -128,16 +108,8 @@ namespace Suplee.Api.Configurations
         }
     }
 
-    /// <summary>
-    /// Swagger valores padrões
-    /// </summary>
     public class SwaggerDefaultValues : IOperationFilter
     {
-        /// <summary>
-        /// Aplica
-        /// </summary>
-        /// <param name="operation"></param>
-        /// <param name="context"></param>
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             if (operation.Parameters == null)

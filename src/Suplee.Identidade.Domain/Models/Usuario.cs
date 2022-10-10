@@ -52,5 +52,16 @@ namespace Suplee.Identidade.Domain.Models
 
             Enderecos = enderecos;
         }
+
+        public void RemoverEnderecoPadrao()
+        {
+            if (Enderecos == null) return;
+
+            foreach (var endereco in Enderecos)
+            {
+                if (endereco.EnderecoPadrao)
+                    endereco.DesmarcarEnderecoPadrao();
+            }
+        }
     }
 }

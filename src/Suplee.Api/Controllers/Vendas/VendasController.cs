@@ -13,9 +13,6 @@ using System.Threading.Tasks;
 
 namespace Suplee.Api.Controllers.Vendas
 {
-    /// <summary>
-    /// Endpoints de vendas
-    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     public class VendasController : MainController
@@ -24,14 +21,6 @@ namespace Suplee.Api.Controllers.Vendas
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IPedidoRepository _pedidoRepository;
 
-        /// <summary>
-        /// Construtor de vendas
-        /// </summary>
-        /// <param name="notifications"></param>
-        /// <param name="mediatorHandler"></param>
-        /// <param name="usuario"></param>
-        /// <param name="mapper"></param>
-        /// <param name="pedidoRepository"></param>
         public VendasController(
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler,
@@ -44,11 +33,6 @@ namespace Suplee.Api.Controllers.Vendas
             _pedidoRepository = pedidoRepository;
         }
 
-        /// <summary>
-        /// Cadastrar carrinho com os produtos
-        /// </summary>
-        /// <param name="cadastrarCarrinho"></param>
-        /// <returns></returns>
         [HttpPost("cadastrar-carrinho")]
         public async Task<ActionResult> CadastrarCarrinho(CadastrarCarrinhoInputModel cadastrarCarrinho)
         {
@@ -61,11 +45,6 @@ namespace Suplee.Api.Controllers.Vendas
             return CustomResponse();
         }
 
-        /// <summary>
-        /// Inserir produto no carrinho
-        /// </summary>
-        /// <param name="produtoCarrinho"></param>
-        /// <returns></returns>
         [HttpPost("inserir-produto-carrinho")]
         public async Task<ActionResult> InserirProdutoCarrinho(InserirProdutoCarrinhoInputModel produtoCarrinho)
         {
@@ -78,11 +57,6 @@ namespace Suplee.Api.Controllers.Vendas
             return CustomResponse();
         }
 
-        /// <summary>
-        /// Atualizar produto no carrinho
-        /// </summary>
-        /// <param name="produtoCarrinho"></param>
-        /// <returns></returns>
         [HttpPut("atualizar-produto-carrinho")]
         public async Task<ActionResult> AtualizarProdutoCarrinho(AtualizarProdutoCarrinhoInputModel produtoCarrinho)
         {
@@ -95,11 +69,6 @@ namespace Suplee.Api.Controllers.Vendas
             return CustomResponse();
         }
 
-        /// <summary>
-        /// Excluir produto do carrinho
-        /// </summary>
-        /// <param name="produtoCarrinho"></param>
-        /// <returns></returns>
         [HttpDelete("excluir-produto-carrinho")]
         public async Task<ActionResult> ExcluirProdutoCarrinho(ExcluirProdutoCarrinhoInputModel produtoCarrinho)
         {
@@ -112,11 +81,6 @@ namespace Suplee.Api.Controllers.Vendas
             return CustomResponse();
         }
 
-        /// <summary>
-        /// Fazer o pagamento do pedido
-        /// </summary>
-        /// <param name="realizarPagamento"></param>
-        /// <returns></returns>
         [HttpPost("realizar-pagamento")]
         public async Task<ActionResult> RealizarPagamento(RealizarPagamentoInputModel realizarPagamento)
         {

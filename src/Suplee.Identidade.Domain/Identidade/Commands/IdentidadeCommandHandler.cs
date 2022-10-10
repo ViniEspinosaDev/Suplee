@@ -18,7 +18,8 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
         IRequestHandler<ReenviarEmailConfirmarCadastroCommand, string>,
         IRequestHandler<RecuperarSenhaCommand, string>,
         IRequestHandler<AlterarSenhaCommand, bool>,
-        IRequestHandler<EditarUsuarioCommand, bool>
+        IRequestHandler<EditarUsuarioCommand, bool>,
+        IRequestHandler<CadastrarEnderecoCommand, bool>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IUsuarioRepository _usuarioRepository;
@@ -248,6 +249,45 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
             }
 
             usuario.Atualizar(request.Nome, request.Celular, request.Enderecos);
+
+            return await _usuarioRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(CadastrarEnderecoCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return false;
+            }
+
+            var usuario = _usuarioRepository.ObterPeloId(request.UsuarioId);
+
+            if (usuario is null)
+            {
+                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse Id");
+                return false;
+            }
+
+            if (request.EnderecoPadrao)
+                usuario.RemoverEnderecoPadrao();
+
+            var endereco = new Endereco(
+                usuarioId: usuario.Id,
+                nomeDestinatario: request.NomeDestinatario,
+                cep: request.CEP,
+                estado: request.Estado,
+                cidade: request.Cidade,
+                bairro: request.Bairro,
+                rua: request.Rua,
+                numero: request.Numero,
+                complemento: request.Complemento,
+                tipoLocal: request.TipoLocal,
+                telefone: request.Telefone,
+                informacaoAdicional: request.InformacaoAdicional,
+                enderecoPadrao: request.EnderecoPadrao);
+
+            _usuarioRepository.AdicionarEndereco(endereco);
 
             return await _usuarioRepository.UnitOfWork.Commit();
         }
