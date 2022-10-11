@@ -2,16 +2,14 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Suplee.Api.Controllers.Catalogo.ViewModels;
 using Suplee.Api.Controllers.Vendas.InputModels;
+using Suplee.Api.Controllers.Vendas.ViewModels;
 using Suplee.Catalogo.Api.Controllers;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Vendas.Domain.Commands;
-using Suplee.Vendas.Domain.Enums;
 using Suplee.Vendas.Domain.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -102,28 +100,22 @@ namespace Suplee.Api.Controllers.Vendas
         {
             var pedidoRascunho = await _pedidoRepository.ObterCarrinhoPorUsuarioId(UsuarioId);
 
-            var carrinhoViewModel = _mapper.Map<CarrinhoViewModel>(pedidoRascunho);
+            var carrinhoViewModel = _mapper.Map<PedidoViewModel>(pedidoRascunho);
 
             return CustomResponse(carrinhoViewModel);
         }
 
-        // Recuperar histórico de pedido
-    }
+        [HttpGet("recuperar-historico")]
+        public async Task<ActionResult> RecuperarHistoricoCompras()
+        {
+            var pedidos = await _pedidoRepository.ObterHistoricoPedido(UsuarioId);
 
-    public class CarrinhoViewModel
-    {
-        public string Codigo { get; set; }
-        public string Status { get; set; }
-        public decimal ValorTotal { get; set; }
-        public DateTime DataCadastro { get; set; }
-        public List<ProdutoCarrinhoViewModel> Produtos { get; set; }
-    }
+            if (pedidos == null || pedidos.Count == 0)
+                return CustomResponse(null);
 
-    public class ProdutoCarrinhoViewModel
-    {
-        public string NomeProduto { get; set; }
-        public int Quantidade { get; set; }
-        public decimal ValorUnitario { get; set; }
-        public List<ProdutoImagemViewModel> Imagens { get; set; }
+            var historicoViewModel = _mapper.Map<List<PedidoViewModel>>(pedidos);
+
+            return CustomResponse(historicoViewModel);
+        }
     }
 }

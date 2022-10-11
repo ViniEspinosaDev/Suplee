@@ -26,9 +26,5 @@
     <ProjectReference Include="..\Suplee.Vendas.CrossCuttingIoC\Suplee.Vendas.CrossCuttingIoC.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\Vendas\ViewModels\" />
-  </ItemGroup>
-
 
 </Project>

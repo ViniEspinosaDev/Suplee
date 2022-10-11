@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Suplee.Api.Controllers.Catalogo.ViewModels;
 using Suplee.Api.Controllers.Identidade.ViewModels;
-using Suplee.Api.Controllers.Vendas;
+using Suplee.Api.Controllers.Vendas.ViewModels;
 using Suplee.Catalogo.Domain.DTO;
 using Suplee.Identidade.Domain.Models;
 using System.Linq;
@@ -21,7 +21,7 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
 
         private void MapeiaContextoVendas()
         {
-            CreateMap<VendasModels.Pedido, CarrinhoViewModel>()
+            CreateMap<VendasModels.Pedido, PedidoViewModel>()
                 .ForMember(i => i.Codigo, opt => opt.MapFrom(m => m.Codigo))
                 .ForMember(i => i.Status, opt => opt.MapFrom(m => m.Status.ToString()))
                 .ForMember(i => i.ValorTotal, opt => opt.MapFrom(m => m.ValorTotal))

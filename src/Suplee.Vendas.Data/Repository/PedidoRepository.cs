@@ -4,6 +4,8 @@ using Suplee.Vendas.Domain.Enums;
 using Suplee.Vendas.Domain.Interfaces;
 using Suplee.Vendas.Domain.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Suplee.Vendas.Data.Repository
@@ -42,5 +44,16 @@ namespace Suplee.Vendas.Data.Repository
         public void AdicionarPedidoProduto(PedidoProduto pedidoProduto) => _vendasContext.PedidoProduto.Add(pedidoProduto);
 
         public void AtualizarPedidoProduto(PedidoProduto pedidoProduto) => _vendasContext.PedidoProduto.Update(pedidoProduto);
+
+        public async Task<List<Pedido>> ObterHistoricoPedido(Guid usuarioId) =>
+            await _vendasContext.Pedido
+                .Include(x => x.Produtos)
+                    .ThenInclude(x => x.Produto)
+                        .ThenInclude(x => x.Imagens)
+                .Where(x => x.UsuarioId == usuarioId && (x.Status == EPedidoStatus.Pago
+                                                        || x.Status == EPedidoStatus.Enviado
+                                                        || x.Status == EPedidoStatus.Entregue))
+            .OrderByDescending(x => x.DataCadastro)
+            .ToListAsync();
     }
 }
