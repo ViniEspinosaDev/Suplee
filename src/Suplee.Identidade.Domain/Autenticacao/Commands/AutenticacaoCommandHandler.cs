@@ -53,9 +53,6 @@ namespace Suplee.Identidade.Domain.Autenticacao.Commands
                 return default(Usuario);
             }
 
-            // TODO: Futuramente lançar evento de propagação para banco de dados de leitura
-            //await _mediatorHandler.PublicarEvento(new UsuarioLogadoEvent());
-
             return usuario;
         }
 
@@ -88,9 +85,6 @@ namespace Suplee.Identidade.Domain.Autenticacao.Commands
                 await NotificarErro(request, $@"Confirme a criação de sua conta pelo e-mail ""{usuario.Email}"" antes de fazer o login");
                 return default(Usuario);
             }
-
-            // TODO: Futuramente lançar evento de propagação para banco de dados de leitura
-            //await _mediatorHandler.PublicarEvento(new UsuarioLogadoEvent());
 
             return usuario;
         }

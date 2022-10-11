@@ -5,13 +5,16 @@ using Microsoft.AspNetCore.Mvc;
 using Suplee.Api.Controllers.Identidade.InputModel;
 using Suplee.Api.Controllers.Identidade.InputModels;
 using Suplee.Api.Controllers.Identidade.ViewModels;
+using Suplee.Api.Controllers.Vendas.ViewModels;
 using Suplee.Catalogo.Api.Controllers;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
 using Suplee.Identidade.Domain.Autenticacao.Commands;
 using Suplee.Identidade.Domain.Identidade.Commands;
 using Suplee.Identidade.Domain.Interfaces;
+using Suplee.Vendas.Domain.Interfaces;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Suplee.Api.Controllers.Identidade
@@ -23,17 +26,20 @@ namespace Suplee.Api.Controllers.Identidade
         private readonly IMapper _mapper;
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IPedidoRepository _pedidoRepository;
 
         public IdentidadeController(
             INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler,
             IUsuarioLogado usuario,
             IMapper mapper,
-            IUsuarioRepository usuarioRepository) : base(notifications, mediatorHandler, usuario)
+            IUsuarioRepository usuarioRepository,
+            IPedidoRepository pedidoRepository) : base(notifications, mediatorHandler, usuario)
         {
             _mapper = mapper;
             _mediatorHandler = mediatorHandler;
             _usuarioRepository = usuarioRepository;
+            _pedidoRepository = pedidoRepository;
         }
 
         [AllowAnonymous]
@@ -132,12 +138,38 @@ namespace Suplee.Api.Controllers.Identidade
             return CustomResponse("Endereço cadastrado com sucesso");
         }
 
-        // Recuperar todas informações usuário
-        /*
-         Informacoes básicas (nome, cpf, email, telefone)
-        Endereço (tudo)
-        Carrinho
-         
-         */
+        [HttpGet("recuperar-usuario-completo")]
+        public async Task<ActionResult> RecuperarUsuarioCompleto()
+        {
+            var usuario = _usuarioRepository.ObterPeloId(UsuarioId);
+
+            if (usuario == null)
+            {
+                NotificarErro("", "Não existe usuário para este Id");
+                return await Task.FromResult(CustomResponse());
+            }
+
+            usuario.Atualizar(usuario.Nome, usuario.Celular, usuario.Enderecos.Where(x => x.EnderecoPadrao).ToList());
+
+            var usuarioViewModel = _mapper.Map<UsuarioViewModel>(usuario);
+
+            var pedidoRascunho = await _pedidoRepository.ObterCarrinhoPorUsuarioId(UsuarioId);
+
+            if (pedidoRascunho == null)
+                return CustomResponse(MapearUsuarioCompleto(usuarioViewModel, null));
+
+            var carrinhoViewModel = _mapper.Map<PedidoViewModel>(pedidoRascunho);
+
+            return CustomResponse(MapearUsuarioCompleto(usuarioViewModel, carrinhoViewModel));
+        }
+
+        private UsuarioCompletoViewModel MapearUsuarioCompleto(UsuarioViewModel usuario, PedidoViewModel carrinho)
+        {
+            return new UsuarioCompletoViewModel()
+            {
+                Usuario = usuario,
+                Carrinho = carrinho
+            };
+        }
     }
 }
