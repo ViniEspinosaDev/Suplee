@@ -7,6 +7,7 @@ using Suplee.Identidade.Domain.Enums;
 using Suplee.Identidade.Domain.Identidade.Events;
 using Suplee.Identidade.Domain.Interfaces;
 using Suplee.Identidade.Domain.Models;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,7 +20,9 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
         IRequestHandler<RecuperarSenhaCommand, string>,
         IRequestHandler<AlterarSenhaCommand, bool>,
         IRequestHandler<EditarUsuarioCommand, bool>,
-        IRequestHandler<CadastrarEnderecoCommand, bool>
+        IRequestHandler<CadastrarEnderecoCommand, bool>,
+        IRequestHandler<ExcluirEnderecoCommand, bool>,
+        IRequestHandler<MarcarEnderecoComoPadraoCommand, bool>
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IUsuarioRepository _usuarioRepository;
@@ -269,7 +272,9 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
                 return false;
             }
 
-            if (request.EnderecoPadrao)
+            bool enderecoPadrao = request.EnderecoPadrao || usuario.Enderecos.Count == 0;
+
+            if (enderecoPadrao)
                 usuario.RemoverEnderecoPadrao();
 
             var endereco = new Endereco(
@@ -285,9 +290,66 @@ namespace Suplee.Identidade.Domain.Identidade.Commands
                 tipoLocal: request.TipoLocal,
                 telefone: request.Telefone,
                 informacaoAdicional: request.InformacaoAdicional,
-                enderecoPadrao: request.EnderecoPadrao);
+                enderecoPadrao: enderecoPadrao);
 
             _usuarioRepository.AdicionarEndereco(endereco);
+
+            return await _usuarioRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(ExcluirEnderecoCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return false;
+            }
+
+            var usuario = _usuarioRepository.ObterPeloId(request.UsuarioId);
+
+            if (usuario is null)
+            {
+                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse Id");
+                return false;
+            }
+
+            if (!usuario.Enderecos.Any(x => x.Id == request.EnderecoId))
+            {
+                await NotificarErro(request, "Não existe nenhum endereço com id informado vinculado ao usuário");
+                return false;
+            }
+
+            usuario.RemoverEndereco(request.EnderecoId);
+
+            return await _usuarioRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(MarcarEnderecoComoPadraoCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotificarErrosValidacao(request);
+                return false;
+            }
+
+            var usuario = _usuarioRepository.ObterPeloId(request.UsuarioId);
+
+            if (usuario is null)
+            {
+                await NotificarErro(request, "Não existe nenhum usuário cadastrado com esse Id");
+                return false;
+            }
+
+            if (!usuario.Enderecos.Any(x => x.Id == request.EnderecoId))
+            {
+                await NotificarErro(request, "Não existe nenhum endereço com id informado vinculado ao usuário");
+                return false;
+            }
+
+            if (usuario.Enderecos.FirstOrDefault(x => x.EnderecoPadrao)?.Id == request.EnderecoId)
+                return true;
+
+            usuario.MarcarEnderecoPadrao(request.EnderecoId);
 
             return await _usuarioRepository.UnitOfWork.Commit();
         }

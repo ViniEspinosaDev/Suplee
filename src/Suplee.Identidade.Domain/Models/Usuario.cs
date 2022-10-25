@@ -3,6 +3,7 @@ using Suplee.Core.Tools;
 using Suplee.Identidade.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Suplee.Identidade.Domain.Models
 {
@@ -62,6 +63,33 @@ namespace Suplee.Identidade.Domain.Models
                 if (endereco.EnderecoPadrao)
                     endereco.DesmarcarEnderecoPadrao();
             }
+        }
+
+        public void MarcarEnderecoPadrao(Guid enderecoId)
+        {
+            if (Enderecos == null) return;
+
+            var endereco = Enderecos.FirstOrDefault(x => x.Id == enderecoId);
+
+            if (endereco == null) return;
+
+            RemoverEnderecoPadrao();
+
+            endereco.MarcarComoEnderecoPadrao();
+        }
+
+        public void RemoverEndereco(Guid enderecoId)
+        {
+            if (Enderecos == null) return;
+
+            var endereco = Enderecos.FirstOrDefault(x => x.Id == enderecoId);
+
+            if (endereco == null) return;
+
+            Enderecos.Remove(endereco);
+
+            if(endereco.EnderecoPadrao)
+                Enderecos.FirstOrDefault()?.MarcarComoEnderecoPadrao();
         }
     }
 }

@@ -121,6 +121,8 @@ namespace Suplee.Api.Controllers.Identidade
                 return await Task.FromResult(CustomResponse());
             }
 
+            usuario.Atualizar(usuario.Nome, usuario.Celular, usuario.Enderecos.OrderByDescending(x => x.EnderecoPadrao).ToList());
+
             var usuarioViewModel = _mapper.Map<UsuarioViewModel>(usuario);
 
             return CustomResponse(usuarioViewModel);
@@ -138,6 +140,22 @@ namespace Suplee.Api.Controllers.Identidade
             return CustomResponse("Endereço cadastrado com sucesso");
         }
 
+        [HttpDelete("excluir-endereco/{enderecoId}")]
+        public async Task<ActionResult> ExcluirEndereco(Guid enderecoId)
+        {
+            await _mediatorHandler.EnviarComando(new ExcluirEnderecoCommand(UsuarioId, enderecoId));
+
+            return CustomResponse("Endereço excluído com sucesso");
+        }
+
+        [HttpPut("marcar-endereco-como-padrao/{enderecoId}")]
+        public async Task<ActionResult> MarcarEnderecoComoPadrao(Guid enderecoId)
+        {
+            await _mediatorHandler.EnviarComando(new MarcarEnderecoComoPadraoCommand(UsuarioId, enderecoId));
+
+            return CustomResponse("Endereço marcado como padrão com sucesso");
+        }
+
         [HttpGet("recuperar-usuario-completo")]
         public async Task<ActionResult> RecuperarUsuarioCompleto()
         {
@@ -149,7 +167,7 @@ namespace Suplee.Api.Controllers.Identidade
                 return await Task.FromResult(CustomResponse());
             }
 
-            usuario.Atualizar(usuario.Nome, usuario.Celular, usuario.Enderecos.Where(x => x.EnderecoPadrao).ToList());
+            usuario.Atualizar(usuario.Nome, usuario.Celular, usuario.Enderecos.OrderByDescending(x => x.EnderecoPadrao).ToList());
 
             var usuarioViewModel = _mapper.Map<UsuarioViewModel>(usuario);
 
