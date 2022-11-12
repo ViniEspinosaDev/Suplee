@@ -71,19 +71,18 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
 
         private void MapeiaContextoCatalogo()
         {
-            CreateMap<CatalogoModels.CompostoNutricional, CompostoNutricionalViewModel>()
+            CreateMap<CompostoNutricionalDTO, CompostoNutricionalViewModel>()
                .ForMember(i => i.Composto, opt => opt.MapFrom(m => m.Composto))
                .ForMember(i => i.Porcao, opt => opt.MapFrom(m => m.Porcao))
                .ForMember(i => i.ValorDiario, opt => opt.MapFrom(m => m.ValorDiario))
                .ForMember(i => i.Ordem, opt => opt.MapFrom(m => m.Ordem));
 
-
-            CreateMap<CatalogoModels.InformacaoNutricional, InformacaoNutricionalViewModel>()
+            CreateMap<InformacaoNutricionalDTO, InformacaoNutricionalViewModel>()
                 .ForMember(i => i.Cabecalho, opt => opt.MapFrom(m => m.Cabecalho))
                 .ForMember(i => i.Legenda, opt => opt.MapFrom(m => m.Legenda))
                 .ForMember(i => i.CompostosNutricionais, opt => opt.MapFrom(m => m.CompostosNutricionais));
 
-            CreateMap<CatalogoModels.Produto, ProdutoViewModel>()
+            CreateMap<ProdutoDTO, ProdutoViewModel>()
                 .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
                 .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome))
                 .ForMember(i => i.Descricao, opt => opt.MapFrom(m => m.Descricao))
@@ -92,29 +91,29 @@ namespace Suplee.Catalogo.Api.Configurations.AutoMapper
                 .ForMember(i => i.Preco, opt => opt.MapFrom(m => m.Preco))
                 .ForMember(i => i.Categoria, opt => opt.MapFrom(m => m.Categoria))
                 .ForMember(i => i.Imagens, opt => opt.MapFrom(m => m.Imagens))
-                .ForMember(i => i.Efeitos, opt => opt.MapFrom(m => m.Efeitos.ToList().Select(x => x.Efeito)))
+                .ForMember(i => i.Efeitos, opt => opt.MapFrom(m => m.Efeitos))
                 .ForMember(i => i.InformacaoNutricional, opt => opt.MapFrom(m => m.InformacaoNutricional));
 
-            CreateMap<CatalogoModels.Produto, ProdutoResumidoViewModel>()
+            CreateMap<ProdutoDTO, ProdutoResumidoViewModel>()
                 .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
                 .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome))
                 .ForMember(i => i.Preco, opt => opt.MapFrom(m => m.Preco))
                 .ForMember(i => i.NomeCategoria, opt => opt.MapFrom(m => m.Categoria.Nome))
-                .ForMember(i => i.NomeEfeito, opt => opt.MapFrom(m => m.Efeitos.Select(x => x.Efeito.Nome)))
+                .ForMember(i => i.NomeEfeito, opt => opt.MapFrom(m => m.Efeitos.Select(x => x.Nome)))
                 .ForMember(i => i.Imagens, opt => opt.MapFrom(m => m.Imagens))
                 .ForMember(i => i.QuantidadeDisponivel, opt => opt.MapFrom(m => m.QuantidadeDisponivel));
 
-            CreateMap<CatalogoModels.ProdutoImagem, ProdutoImagemViewModel>()
+            CreateMap<ProdutoImagemDTO, ProdutoImagemViewModel>()
                 .ForMember(i => i.NomeImagem, opt => opt.MapFrom(m => m.NomeImagem))
                 .ForMember(i => i.UrlImagemOriginal, opt => opt.MapFrom(m => m.UrlImagemOriginal))
                 .ForMember(i => i.UrlImagemReduzida, opt => opt.MapFrom(m => m.UrlImagemReduzida))
                 .ForMember(i => i.UrlImagemMaior, opt => opt.MapFrom(m => m.UrlImagemMaior));
 
-            CreateMap<CatalogoModels.Efeito, EfeitoViewModel>()
+            CreateMap<EfeitoDTO, EfeitoViewModel>()
                 .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
                 .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome));
 
-            CreateMap<CatalogoModels.Categoria, CategoriaViewModel>()
+            CreateMap<CategoriaDTO, CategoriaViewModel>()
                 .ForMember(i => i.Id, opt => opt.MapFrom(m => m.Id))
                 .ForMember(i => i.Nome, opt => opt.MapFrom(m => m.Nome));
 

@@ -43,7 +43,7 @@ namespace Suplee.Catalogo.Domain.Events
 
             ProdutoDTO produtoDTO = MapearProdutoEscritaParaProdutoLeitura(notification.Produto, categoria, efeitos);
 
-            //_produtoLeituraRepository.AdicionarProduto(produtoDTO);
+            _produtoLeituraRepository.AdicionarProduto(produtoDTO);
         }
 
         public async Task Handle(PedidoIniciadoEvent notification, CancellationToken cancellationToken)
@@ -65,11 +65,11 @@ namespace Suplee.Catalogo.Domain.Events
             await _estoqueService.ReporListaProdutosPedido(notification.Pedido);
         }
 
-        public Task Handle(ProdutosEstoqueDebitadoEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(ProdutosEstoqueDebitadoEvent notification, CancellationToken cancellationToken)
         {
             foreach (var produto in notification.Produtos)
             {
-                var produtoMongoDb = _produtoLeituraRepository.RecuperarProduto(produto.Id);
+                var produtoMongoDb = await _produtoLeituraRepository.RecuperarProduto(produto.Id);
 
                 int quantidadeParaDescontar = produto.Quantidade;
 
@@ -79,15 +79,13 @@ namespace Suplee.Catalogo.Domain.Events
 
                 _produtoLeituraRepository.AtualizarProduto(produtoMongoDb);
             }
-
-            return Task.CompletedTask;
         }
 
-        public Task Handle(ProdutosEstoqueRepostoEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(ProdutosEstoqueRepostoEvent notification, CancellationToken cancellationToken)
         {
             foreach (var produto in notification.Produtos)
             {
-                var produtoMongoDb = _produtoLeituraRepository.RecuperarProduto(produto.Id);
+                var produtoMongoDb = await _produtoLeituraRepository.RecuperarProduto(produto.Id);
 
                 int quantidadeParaRepor = produto.Quantidade;
 
@@ -97,8 +95,6 @@ namespace Suplee.Catalogo.Domain.Events
 
                 _produtoLeituraRepository.AtualizarProduto(produtoMongoDb);
             }
-
-            return Task.CompletedTask;
         }
 
         private ProdutoDTO MapearProdutoEscritaParaProdutoLeitura(Produto produto, Categoria categoria, List<Efeito> efeitos)

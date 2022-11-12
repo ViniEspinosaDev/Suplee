@@ -33,7 +33,7 @@ namespace Suplee.Catalogo.Domain.Services
 
             if (sucesso)
             {
-                //await _mediatorHandler.PublicarDomainEvent(new ProdutosEstoqueDebitadoEvent(pedido.Produtos.ToList()));
+                await _mediatorHandler.PublicarDomainEvent(new ProdutosEstoqueDebitadoEvent(pedido.Produtos.ToList()));
             }
 
             return sucesso;
@@ -67,7 +67,7 @@ namespace Suplee.Catalogo.Domain.Services
 
             if (sucesso)
             {
-                //await _mediatorHandler.PublicarDomainEvent(new ProdutosEstoqueRepostoEvent(pedido.Produtos.ToList()));
+                await _mediatorHandler.PublicarDomainEvent(new ProdutosEstoqueRepostoEvent(pedido.Produtos.ToList()));
             }
 
             return sucesso;
