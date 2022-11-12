@@ -49,9 +49,7 @@ namespace Suplee.Core.API.Enviroment
 
         private string MAIL_UsarSSL => RecuperarVariavelAmbiente(EnvironmentConstant.MAIL_UsarSSL);
 
-        private string MONGO_Host => RecuperarVariavelAmbiente(EnvironmentConstant.MONGO_Host);
-
-        private string MONGO_Port => RecuperarVariavelAmbiente(EnvironmentConstant.MONGO_Port);
+        private string MONGO_Conexao => RecuperarVariavelAmbiente(EnvironmentConstant.MONGO_Conexao);
 
         private bool Desenvolvimento => Environment.GetEnvironmentVariable(EnvironmentConstant.Ambiente) == "Development";
 
@@ -73,9 +71,9 @@ namespace Suplee.Core.API.Enviroment
             get
             {
                 if (Desenvolvimento)
-                    return _mongoDbConfiguration.ConnectionString;
+                    return _mongoDbConfiguration.Conexao;
 
-                return $"mongodb://{MONGO_Host}:{MONGO_Port}";
+                return MONGO_Conexao;
             }
         }
 

@@ -21,7 +21,6 @@
         public const string MAIL_Senha = "MAIL_PASSWORD";
         public const string MAIL_UsarSSL = "MAIL_USESSL";
 
-        public const string MONGO_Host = "MONGO_Host";
-        public const string MONGO_Port = "MONGO_Port";
+        public const string MONGO_Conexao = "MONGO_CONEXAO";
     }
 }

@@ -35,9 +35,6 @@
 
     public class MongoDbConfiguration
     {
-        public string Host { get; set; }
-        public string Port { get; set; }
-
-        public string ConnectionString { get => $"mongodb://{Host}:{Port}"; }
+        public string Conexao { get; set; }
     }
 }
