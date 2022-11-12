@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Suplee.Catalogo.Domain.DTO;
 using Suplee.Catalogo.Domain.Interfaces;
+using Suplee.Catalogo.Domain.Interfaces.Repositories;
 using Suplee.Catalogo.Domain.Interfaces.Services;
 using Suplee.Catalogo.Domain.Models;
 using Suplee.Core.Communication.Mediator;
@@ -15,18 +16,21 @@ namespace Suplee.Catalogo.Domain.Events
     public class CatalogoEventHandler :
         INotificationHandler<ProdutoAdicionadoEvent>,
         INotificationHandler<PedidoIniciadoEvent>,
-        INotificationHandler<PedidoProcessamentoCanceladoEvent>
+        INotificationHandler<PedidoProcessamentoCanceladoEvent>,
+        INotificationHandler<ProdutosEstoqueDebitadoEvent>,
+        INotificationHandler<ProdutosEstoqueRepostoEvent>
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IEstoqueService _estoqueService;
-        //private readonly IProdutoLeituraRepository _produtoLeituraRepository;
+        private readonly IProdutoLeituraRepository _produtoLeituraRepository;
 
-        public CatalogoEventHandler(IProdutoRepository produtoRepository, IMediatorHandler mediatorHandler, IEstoqueService estoqueService)
+        public CatalogoEventHandler(IProdutoRepository produtoRepository, IMediatorHandler mediatorHandler, IEstoqueService estoqueService, IProdutoLeituraRepository produtoLeituraRepository)
         {
             _produtoRepository = produtoRepository;
             _mediatorHandler = mediatorHandler;
             _estoqueService = estoqueService;
+            _produtoLeituraRepository = produtoLeituraRepository;
         }
 
         public async Task Handle(ProdutoAdicionadoEvent notification, CancellationToken cancellationToken)
@@ -39,7 +43,7 @@ namespace Suplee.Catalogo.Domain.Events
 
             ProdutoDTO produtoDTO = MapearProdutoEscritaParaProdutoLeitura(notification.Produto, categoria, efeitos);
 
-            // _produtoLeituraRepository.AdicionarProduto(produtoDTO);
+            //_produtoLeituraRepository.AdicionarProduto(produtoDTO);
         }
 
         public async Task Handle(PedidoIniciadoEvent notification, CancellationToken cancellationToken)
@@ -61,6 +65,42 @@ namespace Suplee.Catalogo.Domain.Events
             await _estoqueService.ReporListaProdutosPedido(notification.Pedido);
         }
 
+        public Task Handle(ProdutosEstoqueDebitadoEvent notification, CancellationToken cancellationToken)
+        {
+            foreach (var produto in notification.Produtos)
+            {
+                var produtoMongoDb = _produtoLeituraRepository.RecuperarProduto(produto.Id);
+
+                int quantidadeParaDescontar = produto.Quantidade;
+
+                if (quantidadeParaDescontar < 0) quantidadeParaDescontar *= -1;
+
+                produtoMongoDb.QuantidadeDisponivel -= quantidadeParaDescontar;
+
+                _produtoLeituraRepository.AtualizarProduto(produtoMongoDb);
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task Handle(ProdutosEstoqueRepostoEvent notification, CancellationToken cancellationToken)
+        {
+            foreach (var produto in notification.Produtos)
+            {
+                var produtoMongoDb = _produtoLeituraRepository.RecuperarProduto(produto.Id);
+
+                int quantidadeParaRepor = produto.Quantidade;
+
+                if (quantidadeParaRepor < 0) quantidadeParaRepor *= -1;
+
+                produtoMongoDb.QuantidadeDisponivel += quantidadeParaRepor;
+
+                _produtoLeituraRepository.AtualizarProduto(produtoMongoDb);
+            }
+
+            return Task.CompletedTask;
+        }
+
         private ProdutoDTO MapearProdutoEscritaParaProdutoLeitura(Produto produto, Categoria categoria, List<Efeito> efeitos)
         {
             var imagensDTO = new List<ProdutoImagemDTO>();
@@ -69,6 +109,7 @@ namespace Suplee.Catalogo.Domain.Events
             {
                 imagensDTO.Add(new ProdutoImagemDTO()
                 {
+                    Id = imagem.Id,
                     NomeImagem = imagem.NomeImagem,
                     UrlImagemOriginal = imagem.UrlImagemOriginal,
                     UrlImagemReduzida = imagem.UrlImagemReduzida,
@@ -90,6 +131,7 @@ namespace Suplee.Catalogo.Domain.Events
                 {
                     compostosNutricionaisDTO.Add(new CompostoNutricionalDTO()
                     {
+                        Id = compostoNutricional.Id,
                         Composto = compostoNutricional.Composto,
                         Porcao = compostoNutricional.Porcao,
                         ValorDiario = compostoNutricional.ValorDiario,
@@ -99,6 +141,7 @@ namespace Suplee.Catalogo.Domain.Events
 
             var informacaoNutricionalDTO = new InformacaoNutricionalDTO()
             {
+                Id = produto.InformacaoNutricional.Id,
                 Cabecalho = produto.InformacaoNutricional.Cabecalho,
                 Legenda = produto.InformacaoNutricional.Legenda,
                 CompostosNutricionais = compostosNutricionaisDTO
@@ -112,9 +155,11 @@ namespace Suplee.Catalogo.Domain.Events
                 Composicao = produto.Composicao,
                 QuantidadeDisponivel = produto.QuantidadeDisponivel,
                 Preco = produto.Preco,
-                Categoria = new CategoriaDTO() { Id = categoria.Id, Nome = categoria.Nome },
+                CategoriaId = produto.CategoriaId,
+                Categoria = new CategoriaDTO() { Id = categoria.Id, Nome = categoria.Nome, Descricao = categoria.Descricao },
                 Imagens = imagensDTO,
                 Efeitos = efeitosDTO,
+                InformacaoNutricionalId = produto.InformacaoNutricionalId,
                 InformacaoNutricional = informacaoNutricionalDTO
             };
         }

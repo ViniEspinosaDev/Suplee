@@ -1,9 +1,11 @@
-﻿using Suplee.Catalogo.Domain.Interfaces;
+﻿using Suplee.Catalogo.Domain.Events;
+using Suplee.Catalogo.Domain.Interfaces;
 using Suplee.Catalogo.Domain.Interfaces.Services;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.DomainObjects.DTO;
 using Suplee.Core.Messages.CommonMessages.Notifications;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Suplee.Catalogo.Domain.Services
@@ -20,13 +22,6 @@ namespace Suplee.Catalogo.Domain.Services
             _mediatorHandler = mediatorHandler;
         }
 
-        public async Task<bool> DebitarEstoque(Guid produtoId, int quantidade)
-        {
-            if (!await DebitarItemEstoque(produtoId, quantidade)) return false;
-
-            return await _produtoRepository.UnitOfWork.Commit();
-        }
-
         public async Task<bool> DebitarListaProdutosPedido(PedidoDomainObject pedido)
         {
             foreach (var item in pedido.Produtos)
@@ -34,7 +29,14 @@ namespace Suplee.Catalogo.Domain.Services
                 if (!await DebitarItemEstoque(item.Id, item.Quantidade)) return false;
             }
 
-            return await _produtoRepository.UnitOfWork.Commit();
+            var sucesso = await _produtoRepository.UnitOfWork.Commit();
+
+            if (sucesso)
+            {
+                //await _mediatorHandler.PublicarDomainEvent(new ProdutosEstoqueDebitadoEvent(pedido.Produtos.ToList()));
+            }
+
+            return sucesso;
         }
 
         private async Task<bool> DebitarItemEstoque(Guid produtoId, int quantidade)
@@ -61,16 +63,14 @@ namespace Suplee.Catalogo.Domain.Services
                 await ReporItemEstoque(item.Id, item.Quantidade);
             }
 
-            return await _produtoRepository.UnitOfWork.Commit();
-        }
+            var sucesso = await _produtoRepository.UnitOfWork.Commit();
 
-        public async Task<bool> ReporEstoque(Guid produtoId, int quantidade)
-        {
-            var sucesso = await ReporItemEstoque(produtoId, quantidade);
+            if (sucesso)
+            {
+                //await _mediatorHandler.PublicarDomainEvent(new ProdutosEstoqueRepostoEvent(pedido.Produtos.ToList()));
+            }
 
-            if (!sucesso) return false;
-
-            return await _produtoRepository.UnitOfWork.Commit();
+            return sucesso;
         }
 
         private async Task<bool> ReporItemEstoque(Guid produtoId, int quantidade)

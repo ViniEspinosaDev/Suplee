@@ -6,6 +6,7 @@ using Suplee.Api.Controllers.Catalogo.ViewModels;
 using Suplee.Catalogo.Api.Controllers.Catalogo.InputModels;
 using Suplee.Catalogo.Domain.Commands;
 using Suplee.Catalogo.Domain.Interfaces;
+using Suplee.Catalogo.Domain.Interfaces.Repositories;
 using Suplee.Catalogo.Domain.Interfaces.Services;
 using Suplee.Core.Communication.Mediator;
 using Suplee.Core.Messages.CommonMessages.Notifications;
@@ -21,6 +22,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
     public class CatalogoController : MainController
     {
         private readonly IProdutoRepository _produtoRepository;
+        private readonly IProdutoLeituraRepository _produtoLeituraRepository;
         private readonly IMediatorHandler _mediatorHandler;
         private readonly ICorreiosService _correiosService;
         private readonly IMapper _mapper;
@@ -32,6 +34,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             IMediatorHandler mediatorHandler,
             IUsuarioLogado usuario,
             IProdutoRepository produtoRepository,
+            IProdutoLeituraRepository produtoLeituraRepository,
             IMapper mapper,
             ICorreiosService correiosService) : base(notifications, mediatorHandler, usuario)
         {
@@ -39,6 +42,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             _produtoRepository = produtoRepository;
             _mapper = mapper;
             _correiosService = correiosService;
+            _produtoLeituraRepository = produtoLeituraRepository;
         }
 
         [AllowAnonymous]
@@ -229,6 +233,15 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             };
 
             return Ok(retorno);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("produtos-mongodb")]
+        public async Task<ActionResult> ObterProdutosMongoDb()
+        {
+            var produtos = _produtoLeituraRepository.RecuperarProdutosComEstoque();
+
+            return await Task.FromResult(CustomResponse(produtos));
         }
 
         [AllowAnonymous]

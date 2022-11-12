@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 
 namespace Suplee.Catalogo.Domain.Commands
 {
-    public class CatalogoCommandHandler :
-        CommandHandler,
+    public class CatalogoCommandHandler : CommandHandler,
         IRequestHandler<AdicionarProdutoCommand, bool>,
         IRequestHandler<AtualizarProdutoCommand, bool>
     {

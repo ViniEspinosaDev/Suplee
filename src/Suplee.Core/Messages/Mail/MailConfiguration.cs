@@ -31,6 +31,13 @@
     {
         public string SqlConnection { get; set; }
         public string EventStoreConnection { get; set; }
-        public string MongoConnection { get; set; }
+    }
+
+    public class MongoDbConfiguration
+    {
+        public string Host { get; set; }
+        public string Port { get; set; }
+
+        public string ConnectionString { get => $"mongodb://{Host}:{Port}"; }
     }
 }

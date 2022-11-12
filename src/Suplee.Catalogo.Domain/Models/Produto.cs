@@ -75,6 +75,7 @@ namespace Suplee.Catalogo.Domain.Models
 
         public void ReporEstoque(int quantidade)
         {
+            if(quantidade < 0) quantidade *= -1;
             QuantidadeDisponivel += quantidade;
         }
 

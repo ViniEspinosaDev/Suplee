@@ -13,6 +13,7 @@ namespace Suplee.Api.Configurations
                 .Configure<MailConfiguration>(configuration.GetSection("MailConfiguration"))
                 .Configure<ConnectionStringsConfiguration>(configuration.GetSection("ConnectionStrings"))
                 .Configure<ImgbbConfiguration>(configuration.GetSection("ExternalService:Imgbb"))
+                .Configure<MongoDbConfiguration>(configuration.GetSection("MongoDbSettings"))
                 .AddScoped<IEnvironment, EnvironmentVariable>();
         }
     }

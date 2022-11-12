@@ -9,15 +9,18 @@ namespace Suplee.Core.API.Enviroment
         private readonly MailConfiguration _mailConfiguration;
         private readonly ConnectionStringsConfiguration _connectionStringsConfiguration;
         private readonly ImgbbConfiguration _imgbbConfiguration;
+        private readonly MongoDbConfiguration _mongoDbConfiguration;
 
         public EnvironmentVariable(
             IOptions<MailConfiguration> mailConfiguration,
             IOptions<ConnectionStringsConfiguration> connectionStringConfiguration,
-            IOptions<ImgbbConfiguration> imgbbConfiguration)
+            IOptions<ImgbbConfiguration> imgbbConfiguration,
+            IOptions<MongoDbConfiguration> mongoDbConfiguration)
         {
             _mailConfiguration = mailConfiguration.Value;
             _connectionStringsConfiguration = connectionStringConfiguration.Value;
             _imgbbConfiguration = imgbbConfiguration.Value;
+            _mongoDbConfiguration = mongoDbConfiguration.Value;
         }
 
         private string SQL_Servidor => RecuperarVariavelAmbiente(EnvironmentConstant.SQL_Servidor);
@@ -46,6 +49,10 @@ namespace Suplee.Core.API.Enviroment
 
         private string MAIL_UsarSSL => RecuperarVariavelAmbiente(EnvironmentConstant.MAIL_UsarSSL);
 
+        private string MONGO_Host => RecuperarVariavelAmbiente(EnvironmentConstant.MONGO_Host);
+
+        private string MONGO_Port => RecuperarVariavelAmbiente(EnvironmentConstant.MONGO_Port);
+
         private bool Desenvolvimento => Environment.GetEnvironmentVariable(EnvironmentConstant.Ambiente) == "Development";
 
         private string RecuperarVariavelAmbiente(string rotulo) => Environment.GetEnvironmentVariable(rotulo);
@@ -66,9 +73,9 @@ namespace Suplee.Core.API.Enviroment
             get
             {
                 if (Desenvolvimento)
-                    return _connectionStringsConfiguration.MongoConnection;
+                    return _mongoDbConfiguration.ConnectionString;
 
-                return $"{Environment.GetEnvironmentVariable(EnvironmentConstant.Descricao)} - Necessário configurar conexão Mongo para ambiente - {Environment.GetEnvironmentVariable(EnvironmentConstant.Ambiente)}";
+                return $"mongodb://{MONGO_Host}:{MONGO_Port}";
             }
         }
 
