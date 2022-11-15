@@ -239,7 +239,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             {
                 quantidadeTotalProdutos = quantidadeTotalProdutos,
                 quantidadeTotalProdutosComEstoque = quantidadeProdutosComEstoque,
-                quantidadeProdutosPeloFiltro = quantidadeProdutosComEstoque,
+                quantidadeProdutosPeloFiltro = produtos.Count(),
                 produtos = produtosViewModel
             };
 
