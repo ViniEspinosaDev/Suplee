@@ -29,7 +29,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
         private readonly ICorreiosService _correiosService;
         private readonly IMapper _mapper;
 
-        private const int QuantidadePorPagina = 12;
+        private const int QuantidadePorPagina = 6;
 
         public CatalogoController(
             INotificationHandler<DomainNotification> notifications,
@@ -224,6 +224,8 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
 
         private async Task<object> MapearRetornoDosMetodosRecuperamProdutoReduzido(List<ProdutoDTO> produtos, int paginas, int quantidades)
         {
+            int quantidadePeloFiltro = produtos.Count();
+
             if (paginas > 0)
                 produtos = produtos.Skip((paginas - 1) * quantidades).ToList();
 
@@ -239,7 +241,8 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             {
                 quantidadeTotalProdutos = quantidadeTotalProdutos,
                 quantidadeTotalProdutosComEstoque = quantidadeProdutosComEstoque,
-                quantidadeProdutosPeloFiltro = produtos.Count(),
+                quantidadeProdutosPeloFiltro = quantidadePeloFiltro,
+                quantidadeAtual = produtos.Count(),
                 produtos = produtosViewModel
             };
 
