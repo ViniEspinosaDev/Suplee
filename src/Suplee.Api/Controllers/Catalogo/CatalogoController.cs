@@ -82,7 +82,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 return CustomResponse();
             }
 
-            var retorno = await MapearRetornoDosMetodosRecuperamProdutoReduzido(produtos, pagina ?? 0, quantidade ?? QuantidadePorPagina);
+            var retorno = await MapearRetornoDosMetodosRecuperamProdutoReduzido(produtos.OrderBy(p => p.Nome).ToList(), pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             return Ok(retorno);
         }
@@ -99,7 +99,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 return CustomResponse();
             }
 
-            var retorno = await MapearRetornoDosMetodosRecuperamProdutoReduzido(produtos, pagina ?? 0, quantidade ?? QuantidadePorPagina);
+            var retorno = await MapearRetornoDosMetodosRecuperamProdutoReduzido(produtos.OrderBy(p => p.Nome).ToList(), pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             return Ok(retorno);
         }
@@ -116,7 +116,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 return CustomResponse();
             }
 
-            var retorno = await MapearRetornoDosMetodosRecuperamProdutoReduzido(produtos, pagina ?? 0, quantidade ?? QuantidadePorPagina);
+            var retorno = await MapearRetornoDosMetodosRecuperamProdutoReduzido(produtos.OrderBy(p => p.Nome).ToList(), pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             return Ok(retorno);
         }
@@ -133,7 +133,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 return CustomResponse();
             }
 
-            var retorno = await MapearRetornoDosMetodosRecuperamProdutoReduzido(produtos, pagina ?? 0, quantidade ?? QuantidadePorPagina);
+            var retorno = await MapearRetornoDosMetodosRecuperamProdutoReduzido(produtos.OrderBy(p => p.Nome).ToList(), pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             return Ok(retorno);
         }
@@ -150,7 +150,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 return CustomResponse();
             }
 
-            var retorno = await MapearRetornoDosMetodosRecuperamProdutoReduzido(produtos, pagina ?? 0, quantidade ?? QuantidadePorPagina);
+            var retorno = await MapearRetornoDosMetodosRecuperamProdutoReduzido(produtos.OrderBy(p => p.Nome).ToList(), pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             return Ok(retorno);
         }
@@ -167,7 +167,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
                 return CustomResponse();
             }
 
-            var retorno = await MapearRetornoDosMetodosRecuperamProdutoReduzido(produtos, pagina ?? 0, quantidade ?? QuantidadePorPagina);
+            var retorno = await MapearRetornoDosMetodosRecuperamProdutoReduzido(produtos.OrderBy(p => p.Nome).ToList(), pagina ?? 0, quantidade ?? QuantidadePorPagina);
 
             return Ok(retorno);
         }
@@ -227,7 +227,7 @@ namespace Suplee.Catalogo.Api.Controllers.Catalogo
             int quantidadePeloFiltro = produtos.Count();
 
             if (paginas > 0)
-                produtos = produtos.Skip((paginas - 1) * quantidades).ToList();
+                produtos = produtos.Skip(paginas * quantidades).ToList();
 
             if (quantidades > 0)
                 produtos = produtos.Take(quantidades).ToList();
